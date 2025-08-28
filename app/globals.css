@@ -80,6 +80,24 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+    /* Chakra colors
+    --chakra-root: #FF0000;
+    --chakra-sacral: #FF7F00;
+    --chakra-solar: #FFFF00;
+    --chakra-heart: #00FF00;
+    --chakra-throat: #00BFFF;
+    --chakra-third-eye: #4B0082;
+    --chakra-crown: #8B00FF;
+     */
+
+    /* Chakra gradients */
+    --chakra-root-gradient: linear-gradient(135deg, #FF0000 0%, #c66262 100%);
+    --chakra-sacral-gradient: linear-gradient(135deg, #b74304 0%, #f17c1d 100%);
+    --chakra-solar-gradient: linear-gradient(135deg, #ffd500 0%, #e5c65e 100%);
+    --chakra-heart-gradient: linear-gradient(135deg, #0cab0c 0%, #9ed74a 100%);
+    --chakra-throat-gradient: linear-gradient(135deg, #0b8eb6 0%, #aad3ea 100%);
+    --chakra-third-eye-gradient: linear-gradient(135deg, #5e36d0 0%, #7476f3 100%);
+    --chakra-crown-gradient: linear-gradient(135deg, #7d18cc 0%, #7e83da 100%);
 }
 
 .dark {
@@ -114,4 +132,17 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.439 0 0);
+}
+
+.animated-bg {
+  overflow: hidden;
+}
+.bg-fade {
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+@keyframes fadeInBg {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
