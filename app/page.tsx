@@ -14,8 +14,12 @@ import {
     CarouselNext,
     type CarouselApi,
 } from "@/components/ui/carousel";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
-// Gradientes de chakras
+/**
+ * Gradientes CSS para cada chakra, usados como fondo dinámico.
+ * @type {string[]}
+ */
 const chakraGradients = [
     "var(--chakra-root-gradient)",
     "var(--chakra-sacral-gradient)",
@@ -26,6 +30,10 @@ const chakraGradients = [
     "var(--chakra-crown-gradient)",
 ];
 
+/**
+ * Rutas de imágenes de los santras para el carrusel.
+ * @type {string[]}
+ */
 const santrasImages = [
     "/img/SANTRAS/RAIZ.jpg",
     "/img/SANTRAS/SACRO.jpg",
@@ -36,6 +44,10 @@ const santrasImages = [
     "/img/SANTRAS/CORONILLA.jpg",
 ];
 
+/**
+ * Información de cada chakra para la galería.
+ * @type {{name: string, file: string}[]}
+ */
 const chakras = [
     { name: "Raíz", file: "/img/SANTRAS/RAIZ.jpg" },
     { name: "Sacro", file: "/img/SANTRAS/SACRO.jpg" },
@@ -46,12 +58,32 @@ const chakras = [
     { name: "Corona", file: "/img/SANTRAS/CORONILLA.jpg" },
 ];
 
+/**
+ * Componente principal de la página Home.
+ * Muestra el carrusel, navbar, descripción y galería de chakras.
+ * @returns {JSX.Element}
+ */
 export default function Home() {
+    /**
+     * Referencia a la API del carrusel para controlar navegación y eventos.
+     * @type {[CarouselApi|null, Function]}
+     */
     const [api, setApi] = useState<CarouselApi | null>(null);
+    /**
+     * Índice actual del carrusel, usado para el fondo.
+     * @type {[number, Function]}
+     */
     const [current, setCurrent] = useState(0);
+    /**
+     * Referencia al temporizador de autoplay.
+     * @type {React.MutableRefObject<NodeJS.Timeout|null>}
+     */
     const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
-    // --- helpers autoplay ---
+    /**
+     * Detiene el autoplay del carrusel.
+     * @function
+     */
     const stop = useCallback(() => {
         if (autoplayRef.current) {
             clearInterval(autoplayRef.current);
@@ -59,13 +91,20 @@ export default function Home() {
         }
     }, []);
 
+    /**
+     * Inicia el autoplay del carrusel, avanzando cada 30s.
+     * @function
+     */
     const start = useCallback(() => {
         if (!api) return;
         stop();
         autoplayRef.current = setInterval(() => api.scrollNext(), 30000);
     }, [api, stop]);
 
-    // Sincronizar índice actual (para fondo) y reiniciar autoplay tras cambios
+    /**
+     * Sincroniza el fondo con el slide actual y reinicia autoplay tras cambios.
+     * @effect
+     */
     useEffect(() => {
         if (!api) return;
 
@@ -83,14 +122,20 @@ export default function Home() {
         };
     }, [api, start]);
 
-    // Iniciar autoplay al montar y limpiar al desmontar
+    /**
+     * Inicia autoplay al montar y limpia al desmontar.
+     * @effect
+     */
     useEffect(() => {
         if (!api) return;
         start();
         return stop;
     }, [api, start, stop]);
 
-    // Pausar en drag (pointer down) y reanudar cuando se selecciona (arriba ya reinicia en select)
+    /**
+     * Pausa autoplay al arrastrar el carrusel.
+     * @effect
+     */
     useEffect(() => {
         if (!api) return;
 
@@ -110,12 +155,19 @@ export default function Home() {
           <span className="bg-gray-200 rounded-full p-2">
             <Info className="w-6 h-6 text-gray-700" />
           </span>
+          {/* Icono de usuario para futura funcionalidad de login */}
+          <span className="bg-gray-200 rounded-full p-2 ml-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-gray-700">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+            </svg>
+          </span>
                 </div>
                 <div className="flex gap-2">
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Link href="/">
-                                <button className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition">
+                                <button className="px-4 py-2 rounded-lg bg-white text-black font-semibold hover:bg-gray-200 transition border border-gray-300">
                                     Inicio
                                 </button>
                             </Link>
@@ -125,7 +177,7 @@ export default function Home() {
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Link href="/collections">
-                                <button className="px-4 py-2 rounded-lg bg-purple-500 text-white font-semibold hover:bg-purple-600 transition">
+                                <button className="px-4 py-2 rounded-lg bg-white text-black font-semibold hover:bg-gray-200 transition border border-gray-300">
                                     Colecciones
                                 </button>
                             </Link>
@@ -181,33 +233,45 @@ export default function Home() {
             </section>
 
             {/* Gallery */}
-            <section className="w-full max-w-6xl mx-auto mt-12 mb-8">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <section className="w-full max-w-6xl mx-auto mt-12">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6" style={{ overflow: 'visible' }}>
                     {chakras.map((chakra, idx) => (
                         <Card
                             key={idx}
-                            className="aspect-square flex flex-col items-center justify-center p-2 shadow-lg bg-white/50 border-0"
+                            className="aspect-square flex flex-col items-center justify-center p-2 shadow-lg bg-white/50 border-0" style={{ overflow: 'visible' }}
                         >
-                            <Image
-                                src={chakra.file}
-                                alt={`Santras Gallery ${idx + 1}`}
-                                width={200}
-                                height={200}
-                                className="object-cover rounded-lg w-full h-full"
-                            />
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Link
-                                        href={`/galeria/${chakra.name.toLowerCase().replace(/\s+/g, "-")}`}
-                                        className="mt-2 text-center text-base font-semibold text-gray-700 hover:text-purple-700 focus:outline-none focus:underline cursor-pointer bg-transparent border-none"
-                                    >
-                                        {chakra.name}
-                                    </Link>
+                                    <div className="w-full h-full flex flex-col items-center justify-center" style={{ overflow: 'visible' }}>
+                                        <AspectRatio ratio={1} className="w-full h-full relative group" style={{ overflow: 'visible' }}>
+                                            <Link
+                                                href={`/galeria/${chakra.name.toLowerCase().replace(/\s+/g, "-")}`}
+                                                className="absolute inset-0 z-20"
+                                                tabIndex={0}
+                                                aria-label={`Ver detalles de ${chakra.name}`}
+                                                style={{ zIndex: 20 }}
+                                            >
+                                                <Image
+                                                    src={chakra.file}
+                                                    alt={`Santras Gallery ${idx + 1}`}
+                                                    fill
+                                                    sizes="100%"
+                                                    draggable={false}
+                                                    onContextMenu={e => e.preventDefault()}
+                                                    className="rounded-lg object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-125 select-none pointer-events-auto"
+                                                    style={{ userSelect: 'none', zIndex: 30 }}
+                                                />
+                                            </Link>
+                                        </AspectRatio>
+                                    </div>
                                 </TooltipTrigger>
                                 <TooltipContent sideOffset={6}>
                                     Ver detalles de {chakra.name}
                                 </TooltipContent>
                             </Tooltip>
+                            <span className="mt-2 text-center text-base font-semibold text-gray-700 select-none pointer-events-none">
+                                {chakra.name}
+                            </span>
                         </Card>
                     ))}
                 </div>
