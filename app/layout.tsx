@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { DEFAULT_SEO, ENV } from '@/lib/config';
+import './globals.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +15,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "YoSoySanas",
-  description: "Galeria de santras",
+  title: DEFAULT_SEO.title,
+  description: DEFAULT_SEO.description,
+  keywords: DEFAULT_SEO.keywords,
+  openGraph: DEFAULT_SEO.openGraph,
+  twitter: DEFAULT_SEO.twitter,
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
+  metadataBase: new URL(ENV.BASE_URL),
 };
 
 export default function RootLayout({
@@ -23,11 +34,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <TooltipProvider>
+          {children}
+        </TooltipProvider>
       </body>
     </html>
   );

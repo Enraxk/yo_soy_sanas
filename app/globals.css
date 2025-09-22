@@ -146,3 +146,29 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+.chakra-bg-transition {
+  transition: background 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cross-fade helper for background overlay */
+.bg-fade-layer {
+  opacity: 0;
+  animation: fadeInBg 700ms ease both;
+  will-change: opacity;
+}
+
+/* Cross-fade helper for top image */
+.img-fade-layer {
+  opacity: 0;
+  animation: fadeInBg 700ms ease both;
+  will-change: opacity;
+}
+
+/* Reduced motion: disable animation */
+@media (prefers-reduced-motion: reduce) {
+  .bg-fade-layer,
+  .img-fade-layer {
+    animation: none;
+    opacity: 1;
+  }
+}
