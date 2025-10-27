@@ -40,8 +40,8 @@
   /* Chakra colors inline */
   --chakra-root: #FF0000;
   --chakra-sacral: #FF7F00;
-  --chakra-solar: #FFFF00;
-  --chakra-heart: #00FF00;
+  --chakra-solar: #ffff00;
+  --chakra-heart: #9ed74a;
   --chakra-throat: #00BFFF;
   --chakra-third-eye: #4B0082;
   --chakra-crown: #8B00FF;
@@ -132,6 +132,19 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.439 0 0);
+}
+
+@font-face {
+  font-family: 'Gaya';
+  src: url('/fonts/gaya/gaya-regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gaya';
+  src: url('/fonts/gaya/gaya-italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
 }
 
 .animated-bg {

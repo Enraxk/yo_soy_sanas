@@ -16,6 +16,13 @@ import { CHAKRAS } from '@/lib/chakras';
 import { useAuth } from '@/hooks/useAuth';
 import { APP_CONFIG, ROUTES } from '@/lib/config';
 import { DEV_UTILS } from '@/lib/config';
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
+import Navbar from '@/components/ui/Navbar';
 
 /**
  * Componente principal de la página Home optimizada.
@@ -140,202 +147,22 @@ export default function Home() {
       )}
 
       {/* Navbar optimizada con nuevas funcionalidades */}
-      <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-4 py-2 bg-white/40 shadow-md rounded-b-xl backdrop-blur-sm z-50">
-        {/* Sección izquierda - Info y usuario */}
-        <div className="flex items-center gap-2">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <span className="bg-gray-200 rounded-full p-2 hover:bg-gray-300 transition cursor-help">
-                <Info className="w-6 h-6 text-gray-700" />
-              </span>
-            </TooltipTrigger>
-            <TooltipContent sideOffset={6} className="max-w-xs">
-              <div className="space-y-2">
-                <div className="font-semibold">{APP_CONFIG.siteName}</div>
-                <div className="text-xs">{APP_CONFIG.description}</div>
-                <div className="text-xs text-muted-foreground">
-                  Versión {APP_CONFIG.version}
-                </div>
-              </div>
-            </TooltipContent>
-          </Tooltip>
-
-          {/* Icono de usuario con estado dinámico */}
-          {isLoggedIn ? (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="bg-green-200 rounded-full p-2 ml-2 hover:bg-green-300 transition"
-                  onClick={handleLogout}
-                >
-                  <LogOut className="w-6 h-6 text-green-700" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent sideOffset={6}>
-                Cerrar sesión ({authState.email})
-              </TooltipContent>
-            </Tooltip>
-          ) : (
-            <Dialog open={loginDialogOpen} onOpenChange={handleLoginDialogChange}>
-              <DialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="bg-gray-200 rounded-full p-2 ml-2 hover:bg-gray-300 transition"
-                  aria-label="Iniciar sesión"
-                >
-                  <User className="w-6 h-6 text-gray-700" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                  <DialogTitle>
-                    {needsVerification ? 'Verificar Código' : 'Iniciar Sesión'}
-                  </DialogTitle>
-                  <DialogDescription>
-                    {needsVerification 
-                      ? `Ingresa el código enviado a ${pendingEmail}`
-                      : 'Accede con tu cuenta para continuar'
-                    }
-                  </DialogDescription>
-                </DialogHeader>
-
-                {/* Mostrar errores del hook useAuth */}
-                {authState.error && (
-                  <div className="text-sm text-destructive bg-destructive/10 p-3 rounded">
-                    {authState.error}
-                  </div>
-                )}
-
-                <form onSubmit={handleLoginSubmit} className="grid gap-4">
-                  {!needsVerification ? (
-                    // Paso 1: Login inicial
-                    <>
-                      <div className="grid gap-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          placeholder="tu@email.com"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          disabled={authState.isLoading}
-                          required
-                          autoFocus
-                        />
-                      </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="password">Contraseña</Label>
-                        <Input
-                          id="password"
-                          type="password"
-                          placeholder="••••••••"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          disabled={authState.isLoading}
-                          required
-                        />
-                      </div>
-                    </>
-                  ) : (
-                    // Paso 2: Verificación de código
-                    <div className="grid gap-2">
-                      <Label htmlFor="code">Código de Verificación</Label>
-                      <Input
-                        id="code"
-                        type="text"
-                        placeholder="123456"
-                        value={code}
-                        onChange={(e) => setCode(e.target.value)}
-                        disabled={authState.isLoading}
-                        maxLength={6}
-                        required
-                        autoFocus
-                      />
-                      <div className="text-xs text-muted-foreground">
-                        Revisa tu bandeja de entrada. El código expira en 5 minutos.
-                      </div>
-                    </div>
-                  )}
-
-                  <DialogFooter>
-                    <Button 
-                      type="button" 
-                      variant="secondary" 
-                      onClick={() => setLoginDialogOpen(false)}
-                      disabled={authState.isLoading}
-                    >
-                      Cancelar
-                    </Button>
-                    <Button 
-                      type="submit" 
-                      disabled={authState.isLoading}
-                    >
-                      {authState.isLoading 
-                        ? (needsVerification ? 'Verificando...' : 'Enviando...') 
-                        : (needsVerification ? 'Verificar' : 'Continuar')
-                      }
-                    </Button>
-                  </DialogFooter>
-                </form>
-              </DialogContent>
-            </Dialog>
-          )}
-        </div>
-
-        {/* Sección derecha - Navegación */}
-        <div className="flex gap-2">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="px-4 py-2 bg-white text-black font-semibold hover:bg-gray-200 transition border border-gray-300"
-                asChild
-              >
-                <Link href={ROUTES.HOME}>
-                  Inicio
-                </Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent sideOffset={6}>Ir a Inicio</TooltipContent>
-          </Tooltip>
-          
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="px-4 py-2 bg-white text-black font-semibold hover:bg-gray-200 transition border border-gray-300"
-                asChild
-              >
-                <Link href={ROUTES.GALERIA}>
-                  Galería
-                </Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent sideOffset={6}>Explorar todos los chakras</TooltipContent>
-          </Tooltip>
-          
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="px-4 py-2 bg-white text-black font-semibold hover:bg-gray-200 transition border border-gray-300"
-                asChild
-              >
-                <Link href={ROUTES.COLLECTIONS}>
-                  Colecciones
-                </Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent sideOffset={6}>Ver todas las colecciones</TooltipContent>
-          </Tooltip>
-        </div>
-      </nav>
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        authState={authState}
+        handleLogout={handleLogout}
+        loginDialogOpen={loginDialogOpen}
+        handleLoginDialogChange={handleLoginDialogChange}
+        needsVerification={needsVerification}
+        pendingEmail={pendingEmail}
+        handleLoginSubmit={handleLoginSubmit}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        code={code}
+        setCode={setCode}
+      />
 
       {/* Espaciador de navbar */}
       <div className="h-16" />
@@ -357,7 +184,7 @@ export default function Home() {
               className="w-4 h-4 rounded-full"
               style={{ backgroundColor: currentChakra.color }}
             />
-            <h2 className="text-2xl font-bold text-gray-800">
+            <h2 className="text-2xl font-bold text-gray-800" style={{ fontFamily: 'Gaya, sans-serif', fontStyle: 'normal' }}>
               {currentChakra.name} - {currentChakra.sanskrit}
             </h2>
           </div>
@@ -387,7 +214,7 @@ export default function Home() {
       {/* Galería optimizada con componentes ChakraCard */}
       <section className="w-full max-w-6xl mx-auto mt-12">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-white/90 mb-2">
+          <h2 className="text-3xl font-bold text-white/90 mb-2" style={{ fontFamily: 'Gaya, sans-serif', fontStyle: 'normal' }}>
             Explora los 7 Chakras
           </h2>
           <p className="text-white/70">
@@ -398,12 +225,11 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6" style={{ overflow: 'visible' }}>
           {CHAKRAS.map((chakra, idx) => (
             <ChakraCard
-              key={chakra.id}
+              key={chakra.name}
               chakra={chakra}
               isActive={idx === currentChakraIndex}
               onClick={() => handleChakraCardClick(idx)}
               showDetails={true}
-              className="hover:scale-105 transition-transform duration-300"
             />
           ))}
         </div>
