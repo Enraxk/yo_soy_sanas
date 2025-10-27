@@ -1,0 +1,171 @@
+﻿html {
+  scroll-snap-type: y mandatory;
+  timeline-scope: --section, --main, --site-header;
+}
+
+.section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  view-timeline: --section;
+  height: 100dvh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-welcome {
+  background: #000 !important;
+}
+
+.content {
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: blink ease-in-out both;
+  animation-timeline: --section;
+  --contrast: 4;
+  --blur: 0.5rem;
+}
+
+@keyframes blink {
+  0%, 100% {
+    filter: blur(var(--blur)) contrast(var(--contrast));
+    opacity: 0;
+    visibility: hidden;
+  }
+  50% {
+    filter: blur(0) contrast(1);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.santra-img {
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
+  background: #fff2;
+  object-fit: cover;
+  width: 880px;
+  height: 880px;
+  max-width: 90vw;
+  max-height: 60vh;
+  /* En móvil, el tamaño se ajusta automáticamente */
+}
+
+@media (max-width: 900px) {
+  .santra-img {
+    width: 80vw;
+    height: 80vw;
+    max-width: 95vw;
+    max-height: 60vh;
+  }
+}
+
+@media (max-width: 600px) {
+  .santra-img {
+    width: 90vw;
+    height: 60vw;
+    max-width: 98vw;
+    max-height: 60vh;
+  }
+}
+
+.santra-caption {
+  font-family: 'Gaya', sans-serif;
+  font-weight: normal;
+  text-align: center;
+  letter-spacing: 0.04em;
+  margin-top: 0.5rem;
+}
+
+.chakra-scroll-indicator {
+  position: fixed;
+  top: 50%;
+  left: 2vw;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.chakra-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  background: transparent;
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  pointer-events: auto;
+}
+
+.chakra-dot.filled {
+  background: var(--chakra-dot-gradient, #fff3);
+}
+
+.chakra-dot.active {
+  box-shadow: 0 0 0 4px rgba(0,0,0,0.12);
+  border-width: 3px;
+}
+
+@media (max-width: 600px) {
+  .chakra-scroll-indicator {
+    left: 1vw;
+    gap: 0.7rem;
+  }
+  .chakra-dot {
+    width: 14px;
+    height: 14px;
+    border-width: 2px;
+  }
+}
+
+.welcome-title {
+  font-family: 'Gaya', sans-serif;
+  font-size: 2.7rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.welcome-subtitle {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.scroll-arrow-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+}
+
+.scroll-arrow {
+  display: inline-block;
+  font-size: 2.5rem;
+  color: #fff;
+  animation: arrow-bounce 1.2s infinite cubic-bezier(.4,0,.2,1);
+  margin-top: 0.2rem;
+}
+
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(18px); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .welcome-title { font-size: 2rem; }
+  .welcome-subtitle { font-size: 1rem; }
+  .scroll-arrow { font-size: 2rem; }
+}
