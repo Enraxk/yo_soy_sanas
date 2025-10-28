@@ -34,7 +34,7 @@ export default function MaderasPage() {
                 setCode={() => {}}
             />
             {/* Encabezado dentro de contenedor */}
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-6xl mx-auto mt-16">
                 {/* Breadcrumb eliminado */}
                 <h1 className="text-3xl font-bold mb-2">Maderas</h1>
                 <p className="text-muted-foreground">

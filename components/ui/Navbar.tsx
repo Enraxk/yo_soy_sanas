@@ -101,7 +101,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 }
               </DialogDescription>
             </DialogHeader>
-            {authState.error && (
+            {authState?.error && (
               <div className="text-sm text-destructive bg-destructive/10 p-3 rounded">
                 {authState.error}
               </div>
