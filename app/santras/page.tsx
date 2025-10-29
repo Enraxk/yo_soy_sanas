@@ -8,9 +8,9 @@ export default function SantrasPage() {
     const sectionRefs = useRef<(HTMLElement | null)[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
     const [showDialog, setShowDialog] = useState(false);
-    const [selectedChakra, setSelectedChakra] = useState<null | typeof CHAKRAS[0]>(null);
+    const [selectedChakra, setSelectedChakra] = useState<null | (typeof CHAKRAS)[number]>(null);
 
-    const handleContactClick = useCallback((chakra) => {
+    const handleContactClick = useCallback((chakra: (typeof CHAKRAS)[number]) => {
         setSelectedChakra(chakra);
         setShowDialog(true);
     }, []);
@@ -19,7 +19,7 @@ export default function SantrasPage() {
         if (!selectedChakra) return;
         const subject = `Interesado en la obra ${selectedChakra.name}`;
         const body = `Hola, me gustaría recibir información sobre la obra ${selectedChakra.name}.`;
-        let url = '';
+        let url: string;
         if (option === 'gmail') {
             url = `https://mail.google.com/mail/?view=cm&to=yosoysanas@outlook.es&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         } else {
@@ -72,7 +72,7 @@ export default function SantrasPage() {
                 />
             </div>
             {/* Sección de bienvenida arriba del todo */}
-            <section className="section section-welcome" style={{ background: '#000' }} ref={el => sectionRefs.current[0] = el}>
+            <section className="section section-welcome" style={{ background: '#000' }} ref={el => { sectionRefs.current[0] = el; }}>
                 <div className="content flex flex-col items-center justify-center h-full">
                     <h1 className="welcome-title text-white" style={{ fontFamily: "'Gaya', sans-serif", fontSize: '2.7rem', fontWeight: 700, marginBottom: '1.2rem', textAlign: 'center' }}>
                         Explora los Santras
@@ -152,7 +152,7 @@ export default function SantrasPage() {
                     key={chakra.id}
                     className="section"
                     style={{ background: chakra.gradient }}
-                    ref={el => sectionRefs.current[idx + 1] = el}
+                    ref={el => { sectionRefs.current[idx + 1] = el; }}
                 >
                     <div className="content flex flex-col items-center justify-center h-full">
                         <img
