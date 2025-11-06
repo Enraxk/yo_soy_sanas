@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Info, User, LogOut } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
@@ -65,22 +65,6 @@ const Navbar: React.FC<NavbarProps> = ({
   const InfoSection: React.FC = () => {
     return (
       <div className="flex items-center gap-2">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="bg-gray-200 rounded-full p-2 hover:bg-gray-300 transition cursor-help">
-              <Info className="w-6 h-6 text-gray-700" />
-            </span>
-          </TooltipTrigger>
-          <TooltipContent sideOffset={6} className="max-w-xs">
-            <div className="space-y-2">
-              <div className="font-semibold">{APP_CONFIG.siteName}</div>
-              <div className="text-xs">{APP_CONFIG.description}</div>
-              <div className="text-xs text-muted-foreground">
-                Versión {APP_CONFIG.version}
-              </div>
-            </div>
-          </TooltipContent>
-        </Tooltip>
 
         {isLoggedIn ? (
           <Tooltip>
