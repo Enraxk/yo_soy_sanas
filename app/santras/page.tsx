@@ -9,6 +9,7 @@ export default function SantrasPage() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [showDialog, setShowDialog] = useState(false);
     const [selectedChakra, setSelectedChakra] = useState<null | (typeof CHAKRAS)[number]>(null);
+    const [animationType, setAnimationType] = useState('blink');
 
     const handleContactClick = useCallback((chakra: (typeof CHAKRAS)[number]) => {
         setSelectedChakra(chakra);
@@ -29,6 +30,17 @@ export default function SantrasPage() {
         setShowDialog(false);
         setSelectedChakra(null);
     };
+    // Función robusta para scroll
+    const handleScrollToSection = useCallback((refIdx: number) => {
+        const el = sectionRefs.current[refIdx];
+        if (el && typeof el.scrollIntoView === 'function') {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else if (el) {
+            const rect = el.getBoundingClientRect();
+            window.scrollTo({ top: window.scrollY + rect.top, behavior: 'smooth' });
+        }
+    }, []);
+
 
     useEffect(() => {
         const onScroll = () => {
@@ -47,7 +59,23 @@ export default function SantrasPage() {
         };
         window.addEventListener('scroll', onScroll);
         onScroll();
-        return () => window.removeEventListener('scroll', onScroll);
+        // Animación fallback para navegadores sin animation-timeline
+        const contents = document.querySelectorAll('.content');
+        if ('IntersectionObserver' in window) {
+            const observer = new window.IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fallback');
+                    } else {
+                        entry.target.classList.remove('animate-fallback');
+                    }
+                });
+            }, { threshold: 0.5 });
+            contents.forEach(el => observer.observe(el));
+        }
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+        };
     }, []);
 
     return (
@@ -72,14 +100,20 @@ export default function SantrasPage() {
                 />
             </div>
             {/* Sección de bienvenida arriba del todo */}
-            <section className="section section-welcome" style={{ background: '#000' }} ref={el => { sectionRefs.current[0] = el; }}>
+            <section
+                className="section section-welcome"
+                style={{ background: 'linear-gradient(180deg, #FF0000 0%, #FF7F00 16%, #ffd500 32%, #0cab0c 48%, #0b8eb6 64%, #5e36d0 80%, #7d18cc 100%)', backgroundColor: 'transparent' }}
+                ref={el => { sectionRefs.current[0] = el; }}
+            >
                 <div className="content flex flex-col items-center justify-center h-full">
                     <h1 className="welcome-title text-white" style={{ fontFamily: "'Gaya', sans-serif", fontSize: '2.7rem', fontWeight: 700, marginBottom: '1.2rem', textAlign: 'center' }}>
                         Explora los Santras
                     </h1>
-                    <h2 className="welcome-subtitle text-white/80" style={{ fontSize: '1.3rem', fontWeight: 400, marginBottom: '2.5rem', textAlign: 'center' }}>
-                        Desliza para ver más
-                    </h2>
+                    <div className="welcome-description" style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 400, marginBottom: '2.5rem', textAlign: 'center', opacity: 0.85 }}>
+                        <p>La Serie SANTRAS es una colección compuesta por siete obras originales, en acuarela sobre lienzo de tamaño medio.</p>
+                        <p>Cada una de ellas representa una sutil energía relacionada directamente con los siete chakras principales más conocidos en occidente en la actualidad.</p>
+                        <p style={{ marginTop: '1.2rem', fontSize: '1.3rem', fontWeight: 500, opacity: 1 }}>Desliza para ver más</p>
+                    </div>
                     <div className="scroll-arrow-container">
                         <span className="scroll-arrow">&#x25BC;</span>
                     </div>
@@ -88,22 +122,44 @@ export default function SantrasPage() {
             {/* Indicador de scroll tipo puntos interactivo */}
             <div className="chakra-scroll-indicator">
                 {CHAKRAS.map((chakra, idx) => (
-                    <button
-                        key={chakra.id}
-                        className={`chakra-dot${activeIndex >= idx + 1 ? ' filled' : ''}${activeIndex === idx + 1 ? ' active' : ''}`}
-                        style={{
-                            background: activeIndex >= idx + 1 ? chakra.gradient : 'transparent',
-                            borderColor: '#fff'
-                        }}
-                        aria-label={chakra.name}
-                        onClick={() => {
-                            sectionRefs.current[idx + 1]?.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                        tabIndex={0}
-                        type="button"
-                    />
+                    <div key={chakra.id} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginRight: 16 }}>
+                        <button
+                            className={`chakra-dot filled${activeIndex === idx + 1 ? ' active' : ''}`}
+                            style={{
+                                background: chakra.gradient,
+                                borderColor: '#fff',
+                                marginBottom: 2,
+                                marginRight: 6,
+                            }}
+                            aria-label={chakra.name}
+                            onClick={() => handleScrollToSection(idx + 1)}
+                            tabIndex={0}
+                            type="button"
+                        />
+                        <button
+                            style={{
+                                fontSize: '0.75rem',
+                                color: '#fff',
+                                opacity: 0.8,
+                                fontFamily: 'Gaya, sans-serif',
+                                letterSpacing: '0.03em',
+                                background: 'none',
+                                border: 'none',
+                                padding: 0,
+                                cursor: 'pointer',
+                                userSelect: 'none',
+                                marginLeft: 0,
+                            }}
+                            onClick={() => handleScrollToSection(idx + 1)}
+                            tabIndex={0}
+                            aria-label={`Ir a ${chakra.sanskrit}`}
+                        >
+                            {chakra.sanskrit}
+                        </button>
+                    </div>
                 ))}
             </div>
+
             {/* Modal de selección de correo */}
             {showDialog && selectedChakra && (
                 <div className="contact-modal-bg" style={{
