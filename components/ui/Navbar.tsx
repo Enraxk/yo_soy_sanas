@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { APP_CONFIG, ROUTES } from "@/lib/config";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 interface NavbarProps {
   isLoggedIn?: boolean;
@@ -60,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({
     return () => {
       if (drawerTimeout.current) clearTimeout(drawerTimeout.current);
     };
-  }, [mobileOpen]);
+  }, [mobileOpen, drawerVisible]);
 
   const InfoSection: React.FC = () => {
     return (
@@ -94,7 +96,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 <User className="w-6 h-6 text-gray-700" />
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
                 <DialogTitle>
                   {needsVerification ? "Verificar Código" : "Iniciar Sesión"}
@@ -111,12 +113,12 @@ const Navbar: React.FC<NavbarProps> = ({
                   {authState.error}
                 </div>
               )}
-              <form onSubmit={handleLoginSubmit} className="grid gap-4">
+              <form onSubmit={handleLoginSubmit} className="grid gap-4 pt-2">
                 {!needsVerification ? (
                   <>
-                    <div className="grid gap-2">
-                      <label htmlFor="email">Email</label>
-                      <input
+                    <div className="grid gap-3">
+                      <Label htmlFor="email">Email</Label>
+                      <Input
                         id="email"
                         type="email"
                         placeholder="tu@email.com"
@@ -126,9 +128,9 @@ const Navbar: React.FC<NavbarProps> = ({
                         autoFocus
                       />
                     </div>
-                    <div className="grid gap-2">
-                      <label htmlFor="password">Contraseña</label>
-                      <input
+                    <div className="grid gap-3">
+                      <Label htmlFor="password">Contraseña</Label>
+                      <Input
                         id="password"
                         type="password"
                         placeholder="••••••••"
@@ -139,9 +141,9 @@ const Navbar: React.FC<NavbarProps> = ({
                     </div>
                   </>
                 ) : (
-                  <div className="grid gap-2">
-                    <label htmlFor="code">Código de Verificación</label>
-                    <input
+                  <div className="grid gap-3">
+                    <Label htmlFor="code">Código de Verificación</Label>
+                    <Input
                       id="code"
                       type="text"
                       placeholder="123456"

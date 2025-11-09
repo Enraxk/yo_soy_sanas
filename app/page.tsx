@@ -2,11 +2,18 @@
 
 import Link from "next/link";
 import Navbar from '@/components/ui/Navbar';
+import React, { useState } from "react";
 
 export default function Home() {
+  // Estado para el modal de login
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+
   return (
     <>
-      <Navbar />
+      <Navbar
+        loginDialogOpen={loginDialogOpen}
+        handleLoginDialogChange={setLoginDialogOpen}
+      />
       <main
         className="min-h-screen flex flex-col items-center justify-center relative"
         style={{

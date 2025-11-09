@@ -10,6 +10,8 @@ export default function SantrasPage() {
     const [showDialog, setShowDialog] = useState(false);
     const [selectedChakra, setSelectedChakra] = useState<null | (typeof CHAKRAS)[number]>(null);
     const [animationType, setAnimationType] = useState('blink');
+    // Estado para el modal de login
+    const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
     const handleContactClick = useCallback((chakra: (typeof CHAKRAS)[number]) => {
         setSelectedChakra(chakra);
@@ -40,7 +42,6 @@ export default function SantrasPage() {
             window.scrollTo({ top: window.scrollY + rect.top, behavior: 'smooth' });
         }
     }, []);
-
 
     useEffect(() => {
         const onScroll = () => {
@@ -86,8 +87,8 @@ export default function SantrasPage() {
                     isLoggedIn={false}
                     authState={{}}
                     handleLogout={() => {}}
-                    loginDialogOpen={false}
-                    handleLoginDialogChange={() => {}}
+                    loginDialogOpen={loginDialogOpen}
+                    handleLoginDialogChange={setLoginDialogOpen}
                     needsVerification={false}
                     pendingEmail=""
                     handleLoginSubmit={() => {}}

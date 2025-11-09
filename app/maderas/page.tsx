@@ -3,9 +3,12 @@
 
 import { CHAKRAS } from '@/lib/chakras';
 import Navbar from '@/components/ui/Navbar';
+import React, { useState } from "react";
 
 export default function MaderasPage() {
     const count = CHAKRAS.length;
+    // Estado para el modal de login
+    const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
     return (
         <main className="min-h-screen p-6 flex flex-col">
@@ -13,8 +16,8 @@ export default function MaderasPage() {
                 isLoggedIn={false}
                 authState={{}}
                 handleLogout={() => {}}
-                loginDialogOpen={false}
-                handleLoginDialogChange={() => {}}
+                loginDialogOpen={loginDialogOpen}
+                handleLoginDialogChange={setLoginDialogOpen}
                 needsVerification={false}
                 pendingEmail=""
                 handleLoginSubmit={() => {}}
