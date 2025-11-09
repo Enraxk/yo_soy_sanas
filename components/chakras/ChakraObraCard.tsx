@@ -19,11 +19,7 @@ function ChakraObraCard({
                             ...props
                         }: ChakraCardProps) {
     const chakraSlug = chakra.name.toLowerCase().replace(/\s+/g, "-");
-    const chakraColor =
-        (chakra as any).color ||
-        (chakra as any).hexColor ||
-        (chakra as any).hex ||
-        "var(--primary)";
+    const chakraColor = chakra.color || chakra.hexColor || chakra.hex || "var(--primary)";
     const obraTitle = chakra.sanskrit;
 
     // Usar el gradiente directamente del objeto chakra
