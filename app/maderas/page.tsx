@@ -1,14 +1,6 @@
 "use client";
 
 
-import {
-    Breadcrumb,
-    BreadcrumbList,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import { CHAKRAS } from '@/lib/chakras';
 import Navbar from '@/components/ui/Navbar';
 
