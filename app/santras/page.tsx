@@ -124,6 +124,10 @@ export default function SantrasPage() {
                     <div key={chakra.id} className="chakra-scroll-item">
                         <button
                             className={`chakra-dot filled${activeIndex === idx + 1 ? ' active' : ''}`}
+                            style={{
+                                // Aplica el gradiente/color único de cada chakra
+                                "--chakra-dot-gradient": chakra.gradient
+                            } as React.CSSProperties}
                             aria-label={chakra.name}
                             onClick={() => handleScrollToSection(idx + 1)}
                             tabIndex={0}

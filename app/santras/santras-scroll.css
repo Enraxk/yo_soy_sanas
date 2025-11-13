@@ -111,10 +111,29 @@
   pointer-events: none;
 }
 
-@media (max-width: 768px) {
-  .chakra-scroll-indicator {
-    display: none !important;
-  }
+.chakra-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  background: var(--chakra-dot-gradient, #fff3);
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  pointer-events: auto;
+  margin-bottom: 2px;
+  margin-right: 6px;
+}
+
+.chakra-dot.filled {
+  background: var(--chakra-dot-gradient, linear-gradient(135deg, #ff9800 0%, #ff5722 100%));
+  /* fallback vibrante para desktop */
+}
+
+.chakra-dot.active {
+  box-shadow: 0 0 0 4px rgba(0,0,0,0.12);
+  border-width: 3px;
+  /* Elimino el borde amarillo para el chakra seleccionado */
+  border-color: #fff;
 }
 
 .chakra-scroll-item {
@@ -125,52 +144,29 @@
   gap: 0.5rem;
 }
 
-.chakra-dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  background: transparent;
-  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-  pointer-events: auto;
-  margin-bottom: 2px;
-  margin-right: 6px;
-}
-
-.chakra-dot.filled {
-  background: var(--chakra-dot-gradient, #fff3);
-}
-
-.chakra-dot.active {
-  box-shadow: 0 0 0 4px rgba(0,0,0,0.12);
-  border-width: 3px;
-}
-
-.welcome-title {
-  font-family: 'Gaya', sans-serif;
-  font-size: 2.7rem;
-  font-weight: 700;
-  margin-bottom: 1.2rem;
-  text-align: center;
-}
-
-.welcome-description {
+.scroll-nav-text {
+  font-size: 0.75rem;
   color: #fff;
-  font-size: 1.15rem;
-  font-weight: 400;
-  margin-bottom: 2.5rem;
-  text-align: center;
-  opacity: 0.85;
-  max-width: 800px;
-  padding: 0 1rem;
+  opacity: 1;
+  font-family: 'Gaya', sans-serif;
+  letter-spacing: 0.03em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  user-select: none;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
 
-.welcome-description-highlight {
-  margin-top: 1.2rem;
-  font-size: 1.3rem;
-  font-weight: 500;
-  opacity: 1;
+@media (max-width: 768px) {
+  .chakra-scroll-indicator {
+    display: none !important;
+  }
+  .scroll-nav-text {
+    opacity: 0.8;
+  }
 }
 
 .scroll-arrow-container {
@@ -318,7 +314,7 @@
 .scroll-nav-text {
   font-size: 0.75rem;
   color: #fff;
-  opacity: 0.8;
+  opacity: 1;
   font-family: 'Gaya', sans-serif;
   letter-spacing: 0.03em;
   background: none;
@@ -328,6 +324,7 @@
   user-select: none;
   margin-left: 0.5rem;
   white-space: nowrap;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
 
 @media (max-width: 768px) {
