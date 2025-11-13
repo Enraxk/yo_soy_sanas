@@ -19,6 +19,13 @@
 
 .section-welcome {
   padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  width: 100vw;
+  text-align: center;
+  background: linear-gradient(180deg, #FF0000 0%, #FF7F00 16%, #ffd500 32%, #0cab0c 48%, #0b8eb6 64%, #5e36d0 80%, #7d18cc 100%);
 }
 
 .content {
@@ -125,8 +132,7 @@
 }
 
 .chakra-dot.filled {
-  background: var(--chakra-dot-gradient, linear-gradient(135deg, #ff9800 0%, #ff5722 100%));
-  /* fallback vibrante para desktop */
+  background: var(--chakra-dot-gradient, #fff3);
 }
 
 .chakra-dot.active {
@@ -227,10 +233,28 @@
 
   .section-welcome {
     padding: 1.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+    width: 100vw;
+    text-align: center;
+    background: linear-gradient(180deg, #FF0000 0%, #FF7F00 16%, #ffd500 32%, #0cab0c 48%, #0b8eb6 64%, #5e36d0 80%, #7d18cc 100%);
   }
 
-  .content {
-    padding: 0.5rem;
+  .welcome-title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .welcome-description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
+
+  .scroll-arrow {
+    font-size: 2rem;
   }
 
   .chakra-scroll-indicator {
@@ -300,6 +324,14 @@
     font-size: 0.9rem;
   }
 
+  .welcome-description-highlight {
+    font-size: 1rem;
+  }
+
+  .scroll-arrow {
+    font-size: 1.5rem;
+  }
+
   .chakra-description {
     font-size: 0.95rem;
   }
@@ -310,7 +342,162 @@
   }
 }
 
-/* Estilos para el scroll navigation lateral */
+/* Restaurar y asegurar estilos correctos para ambas resoluciones y la fuente Gaya en el título principal */
+@font-face {
+  font-family: 'Gaya';
+  src: url('/fonts/gaya/gaya-regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.welcome-title {
+  font-family: 'Gaya', sans-serif;
+  font-size: 2.7rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+@media (max-width: 768px) {
+  .welcome-title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-title {
+    font-size: 1.7rem;
+  }
+}
+
+.section-welcome {
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  width: 100vw;
+  text-align: center;
+  background: linear-gradient(180deg, #FF0000 0%, #FF7F00 16%, #ffd500 32%, #0cab0c 48%, #0b8eb6 64%, #5e36d0 80%, #7d18cc 100%);
+}
+
+@media (max-width: 768px) {
+  .section-welcome {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-welcome {
+    padding: 1rem 0.5rem;
+  }
+}
+
+.welcome-description {
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  opacity: 0.85;
+  max-width: 800px;
+  padding: 0 1rem;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .welcome-description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
+}
+@media (max-width: 480px) {
+  .welcome-description {
+    font-size: 0.9rem;
+  }
+}
+
+.welcome-description-highlight {
+  margin-top: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  opacity: 1;
+  color: #fff;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .welcome-description-highlight {
+    font-size: 1.1rem;
+  }
+}
+@media (max-width: 480px) {
+  .welcome-description-highlight {
+    font-size: 1rem;
+  }
+}
+
+.scroll-arrow {
+  font-size: 2.5rem;
+  color: #fff;
+}
+@media (max-width: 768px) {
+  .scroll-arrow {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 480px) {
+  .scroll-arrow {
+    font-size: 1.5rem;
+  }
+}
+
+.chakra-scroll-indicator {
+  position: fixed;
+  top: 50%;
+  left: 2vw;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.chakra-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  background: var(--chakra-dot-gradient, #fff3);
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  pointer-events: auto;
+  margin-bottom: 2px;
+  margin-right: 6px;
+}
+
+.chakra-dot.filled {
+  background: var(--chakra-dot-gradient, #fff3);
+}
+
+.chakra-dot.active {
+  box-shadow: 0 0 0 4px rgba(0,0,0,0.12);
+  border-width: 3px;
+  /* Elimino el borde amarillo para el chakra seleccionado */
+  border-color: #fff;
+}
+
+.chakra-scroll-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 16px;
+  gap: 0.5rem;
+}
+
 .scroll-nav-text {
   font-size: 0.75rem;
   color: #fff;
@@ -328,16 +515,178 @@
 }
 
 @media (max-width: 768px) {
+  .chakra-scroll-indicator {
+    display: none !important;
+  }
   .scroll-nav-text {
-    font-size: 0.65rem;
-    margin-left: 0.3rem;
+    opacity: 0.8;
+  }
+}
+
+.scroll-arrow-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+}
+
+.scroll-arrow {
+  display: inline-block;
+  font-size: 2.5rem;
+  color: #fff;
+  animation: arrow-bounce 1.2s infinite cubic-bezier(.4,0,.2,1);
+  margin-top: 0.2rem;
+}
+
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(18px); opacity: 1; }
+}
+
+.chakra-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  text-align: center;
+  max-width: 600px;
+  line-height: 1.5;
+  margin: 1rem 0;
+  padding: 0 1rem;
+}
+
+.contact-btn {
+  margin-top: 2rem;
+  background: #fff;
+  color: #222;
+  border-radius: 2rem;
+  padding: 0.7rem 2.2rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+}
+
+.contact-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Media queries para móviles */
+@media (max-width: 768px) {
+  .section {
+    padding: 0.5rem;
+  }
+
+  .section-welcome {
+    padding: 1.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+    width: 100vw;
+    text-align: center;
+    background: linear-gradient(180deg, #FF0000 0%, #FF7F00 16%, #ffd500 32%, #0cab0c 48%, #0b8eb6 64%, #5e36d0 80%, #7d18cc 100%);
+  }
+
+  .welcome-title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .welcome-description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
+
+  .scroll-arrow {
+    font-size: 2rem;
+  }
+
+  .chakra-scroll-indicator {
+    left: 0.5vw;
+    gap: 0.8rem;
+  }
+
+  .chakra-dot {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+  }
+
+  .santra-caption {
+    font-size: 1.8rem;
+    margin: 1rem 0 0.5rem 0;
+  }
+
+  .welcome-title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .welcome-description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
+
+  .scroll-arrow {
+    font-size: 2rem;
+  }
+
+  .chakra-description {
+    font-size: 1rem;
+    max-width: 90%;
+    padding: 0 0.5rem;
+  }
+
+  .contact-btn {
+    padding: 0.6rem 1.8rem;
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .scroll-nav-text {
-    font-size: 0.6rem;
-    margin-left: 0.2rem;
+  .chakra-scroll-indicator {
+    left: 0.2vw;
+    gap: 0.6rem;
+  }
+
+  .chakra-dot {
+    width: 14px;
+    height: 14px;
+    border-width: 2px;
+  }
+
+  .santra-caption {
+    font-size: 1.6rem;
+  }
+
+  .welcome-title {
+    font-size: 1.9rem;
+  }
+
+  .welcome-description {
+    font-size: 0.9rem;
+  }
+
+  .welcome-description-highlight {
+    font-size: 1rem;
+  }
+
+  .scroll-arrow {
+    font-size: 1.5rem;
+  }
+
+  .chakra-description {
+    font-size: 0.95rem;
+  }
+
+  .contact-btn {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.95rem;
   }
 }
 
