@@ -22,7 +22,8 @@ export async function POST(req: NextRequest) {
   
   // Clear verification data after successful verification
   clearVerificationData();
-  
+
   return NextResponse.json({ ok: true });
 }
+
 

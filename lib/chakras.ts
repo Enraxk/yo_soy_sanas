@@ -16,6 +16,9 @@ export interface ChakraInfo {
   keywords: string[];
   santraImage: string;
   audioFile?: string;
+  // optional alternate hex fields for backwards compatibility
+  hexColor?: string;
+  hex?: string;
 }
 
 export const CHAKRAS: ChakraInfo[] = [
