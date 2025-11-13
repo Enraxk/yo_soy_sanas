@@ -9,7 +9,6 @@ export default function SantrasPage() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [showDialog, setShowDialog] = useState(false);
     const [selectedChakra, setSelectedChakra] = useState<null | (typeof CHAKRAS)[number]>(null);
-    const [animationType, setAnimationType] = useState('blink');
 
     const handleContactClick = useCallback((chakra: (typeof CHAKRAS)[number]) => {
         setSelectedChakra(chakra);
@@ -106,13 +105,13 @@ export default function SantrasPage() {
                 ref={el => { sectionRefs.current[0] = el; }}
             >
                 <div className="content flex flex-col items-center justify-center h-full">
-                    <h1 className="welcome-title text-white" style={{ fontFamily: "'Gaya', sans-serif", fontSize: '2.7rem', fontWeight: 700, marginBottom: '1.2rem', textAlign: 'center' }}>
+                    <h1 className="welcome-title text-white">
                         Explora los Santras
                     </h1>
-                    <div className="welcome-description" style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 400, marginBottom: '2.5rem', textAlign: 'center', opacity: 0.85 }}>
+                    <div className="welcome-description">
                         <p>La Serie SANTRAS es una colección compuesta por siete obras originales, en acuarela sobre lienzo de tamaño medio.</p>
                         <p>Cada una de ellas representa una sutil energía relacionada directamente con los siete chakras principales más conocidos en occidente en la actualidad.</p>
-                        <p style={{ marginTop: '1.2rem', fontSize: '1.3rem', fontWeight: 500, opacity: 1 }}>Desliza para ver más</p>
+                        <p className="welcome-description-highlight">Desliza para ver más</p>
                     </div>
                     <div className="scroll-arrow-container">
                         <span className="scroll-arrow">&#x25BC;</span>
@@ -122,34 +121,16 @@ export default function SantrasPage() {
             {/* Indicador de scroll tipo puntos interactivo */}
             <div className="chakra-scroll-indicator">
                 {CHAKRAS.map((chakra, idx) => (
-                    <div key={chakra.id} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginRight: 16 }}>
+                    <div key={chakra.id} className="chakra-scroll-item">
                         <button
                             className={`chakra-dot filled${activeIndex === idx + 1 ? ' active' : ''}`}
-                            style={{
-                                background: chakra.gradient,
-                                borderColor: '#fff',
-                                marginBottom: 2,
-                                marginRight: 6,
-                            }}
                             aria-label={chakra.name}
                             onClick={() => handleScrollToSection(idx + 1)}
                             tabIndex={0}
                             type="button"
                         />
                         <button
-                            style={{
-                                fontSize: '0.75rem',
-                                color: '#fff',
-                                opacity: 0.8,
-                                fontFamily: 'Gaya, sans-serif',
-                                letterSpacing: '0.03em',
-                                background: 'none',
-                                border: 'none',
-                                padding: 0,
-                                cursor: 'pointer',
-                                userSelect: 'none',
-                                marginLeft: 0,
-                            }}
+                            className="scroll-nav-text"
                             onClick={() => handleScrollToSection(idx + 1)}
                             tabIndex={0}
                             aria-label={`Ir a ${chakra.sanskrit}`}
@@ -162,43 +143,14 @@ export default function SantrasPage() {
 
             {/* Modal de selección de correo */}
             {showDialog && selectedChakra && (
-                <div className="contact-modal-bg" style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100vw',
-                    height: '100vh',
-                    background: 'rgba(0,0,0,0.45)',
-                    zIndex: 9999,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
-                    <div className="contact-modal" style={{
-                        background: '#fff',
-                        borderRadius: '1.2rem',
-                        padding: '2rem 1.5rem',
-                        boxShadow: '0 8px 32px 0 rgba(0,0,0,0.18)',
-                        minWidth: 260,
-                        maxWidth: '90vw',
-                        textAlign: 'center',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '1.2rem',
-                        alignItems: 'center',
-                    }}>
-                        <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.5rem', color: '#222' }}>
+                <div className="contact-modal-bg">
+                    <div className="contact-modal">
+                        <h3 className="contact-modal-title">
                             ¿Cómo prefieres contactar?
                         </h3>
-                        <button className="contact-modal-btn" style={{
-                            background: '#e34133', color: '#fff', border: 'none', borderRadius: '2rem', padding: '0.7rem 2.2rem', fontWeight: 600, fontSize: '1.1rem', marginBottom: 8, cursor: 'pointer', width: '100%',
-                        }} onClick={() => handleDialogOption('gmail')}>Gmail</button>
-                        <button className="contact-modal-btn" style={{
-                            background: '#0072c6', color: '#fff', border: 'none', borderRadius: '2rem', padding: '0.7rem 2.2rem', fontWeight: 600, fontSize: '1.1rem', marginBottom: 8, cursor: 'pointer', width: '100%',
-                        }} onClick={() => handleDialogOption('outlook')}>Outlook</button>
-                        <button className="contact-modal-cancel" style={{
-                            background: 'transparent', color: '#222', border: 'none', borderRadius: '2rem', padding: '0.7rem 2.2rem', fontWeight: 500, fontSize: '1rem', cursor: 'pointer', width: '100%',
-                        }} onClick={() => setShowDialog(false)}>Cancelar</button>
+                        <button className="contact-modal-btn gmail" onClick={() => handleDialogOption('gmail')}>Gmail</button>
+                        <button className="contact-modal-btn outlook" onClick={() => handleDialogOption('outlook')}>Outlook</button>
+                        <button className="contact-modal-cancel" onClick={() => setShowDialog(false)}>Cancelar</button>
                     </div>
                 </div>
             )}
@@ -215,37 +167,13 @@ export default function SantrasPage() {
                             src={chakra.santraImage}
                             alt={chakra.name}
                             className="santra-img mb-8"
-                            style={{ width: 880, height: 880 }}
                         />
-                        <h2
-                            className="santra-caption"
-                            style={{
-                                color: "#fff",
-                                fontFamily: "'Gaya', sans-serif",
-                                fontSize: "2.2rem",
-                                textShadow: "0 2px 8px rgba(0,0,0,0.18)",
-                                marginBottom: "0.5rem",
-                            }}
-                        >
+                        <h2 className="santra-caption">
                             {chakra.name}
                         </h2>
-                        <p className="text-white/90 text-lg text-center max-w-xl">{chakra.description}</p>
+                        <p className="chakra-description">{chakra.description}</p>
                         <button
                             className="contact-btn"
-                            style={{
-                                marginTop: '2rem',
-                                background: '#fff',
-                                color: '#222',
-                                borderRadius: '2rem',
-                                padding: '0.7rem 2.2rem',
-                                fontWeight: 600,
-                                fontSize: '1.1rem',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
-                                textDecoration: 'none',
-                                transition: 'background 0.2s, color 0.2s',
-                                display: 'inline-block',
-                                cursor: 'pointer',
-                            }}
                             onClick={() => handleContactClick(chakra)}
                         >
                             Solicitar información
