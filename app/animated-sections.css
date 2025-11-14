@@ -1,206 +1,247 @@
 ﻿:root {
-  --text-color: hsl(230 16% 28%);
-  --header-bg: hsl(0 0% 100% / 75%);
-  --section: hsl(0 0% 93%);
-  --section-even: hsl(210deg 15% 92%);
-  --red: hsl(10 83% 52%);
-  --green: hsl(157 91% 43%);
-  --blue: hsl(210 100% 45%);
-  --purple: hsl(266 100% 67%);
-  --yellow: hsl(49 100% 73%);
-  --black: hsl(0 0% 0%);
-  --cubic: cubic-bezier(0.25, 0.1, 0, 2.05);
+	--text-color: hsl(230 16% 28%);
+
+	/* header */
+	--header-bg: hsl(0 0% 100% / 75%);
+
+	/* section */
+	--section: hsl(0 0% 93%);
+	--section-even: hsl(210deg 15% 92%);
+
+	/* tiles */
+	--red: hsl(10 83% 52%);
+	--green: hsl(157 91% 43%);
+	--blue: hsl(210 100% 45%);
+	--purple: hsl(266 100% 67%);
+	--yellow: hsl(49 100% 73%);
+	--black: hsl(0 0% 0%);
+
+	/*  */
+	--cubic: cubic-bezier(0.25, 0.1, 0, 2.05);
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
 }
 
 body {
-  margin: 0;
-  font-family: "Righteous", sans-serif;
+	margin: 0;
+	display: grid;
+	overflow-x: hidden;
+	font-family: "Righteous", sans-serif;
+
+	/* scope */
+	timeline-scope: --masthead-s, --tiles-s, --text-s, --two-columns-s,
+		--subscribe-s;
 }
 
 header {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  width: 100%;
-  background-color: var(--header-bg);
-  backdrop-filter: blur(6px);
-  transition: all 200ms linear;
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	width: 100%;
+	background-color: var(--header-bg);
+	backdrop-filter: blur(6px);
+	transition: all 200ms linear;
 }
 
 .menu {
-  position: fixed;
-  top: 0.25rem;
-  left: 0.25rem;
-  z-index: 3;
-  cursor: pointer;
+	position: fixed;
+	top: 0.25rem;
+	left: 0.25rem;
+	z-index: 3;
+	cursor: pointer;
 }
 .menu input[type="checkbox"] {
-  display: none;
+	display: none;
 }
 .burger {
-  background-color: var(--header-bg);
+	background-color: var(--header-bg);
 }
 .burger path {
-  fill: none;
-  stroke: currentcolor;
-  stroke-width: 3;
-  transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 3;
+	transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
 }
 .burger .top {
-  stroke-dasharray: 40 172;
+	stroke-dasharray: 40 172;
 }
 .burger .middle {
-  stroke-dasharray: 40 111;
+	stroke-dasharray: 40 111;
 }
 .burger .bottom {
-  stroke-dasharray: 40 172;
+	stroke-dasharray: 40 172;
 }
 .menu input[type="checkbox"]:checked ~ .burger .top {
-  stroke-dashoffset: -132px;
+	stroke-dashoffset: -132px;
 }
 .menu input[type="checkbox"]:checked ~ .burger .middle {
-  stroke-dashoffset: -71px;
+	stroke-dashoffset: -71px;
 }
 .menu input[type="checkbox"]:checked ~ .burger .bottom {
-  stroke-dashoffset: -132px;
+	stroke-dashoffset: -132px;
 }
 nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--header-bg);
-  width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--header-bg);
+	width: 100%;
 }
 ul.animated-nav {
-  list-style-type: none;
-  display: flex;
-  gap: 3rem;
-  padding: 0;
+	list-style-type: none;
+	display: flex;
+	gap: 3rem;
+	padding: 0;
 }
 ul.animated-nav li {
-  position: relative;
-  padding: 0.5rem 1rem;
-  text-transform: uppercase;
-  color: var(--text-color);
-  transition: transform 0.25s var(--cubic);
+	position: relative;
+	padding: 0.5rem 1rem;
+	text-transform: uppercase;
+	color: var(--text-color);
+	transition: transform 0.25s var(--cubic);
 }
 ul.animated-nav li::after {
-  position: absolute;
-  content: "";
-  left: 0;
-  bottom: 0;
-  z-index: -1;
-  width: 100%;
-  height: 10%;
-  background-color: var(--yellow);
-  transition: all 0.25s var(--cubic);
+	position: absolute;
+	content: "";
+	left: 0;
+	bottom: 0;
+	z-index: -1;
+	width: 100%;
+	height: 10%;
+	background-color: var(--yellow);
+	transition: all 0.25s var(--cubic);
 }
 ul.animated-nav li:hover::after {
-  height: 70%;
+	height: 70%;
 }
 
 section {
-  min-height: 100vh;
-  background-color: var(--section);
-}
-section:nth-child(even) {
-  background-color: var(--section-even);
+	min-block-size: 100vh;
+	background-color: var(--section);
+
+	/* for animation */
+	view-timeline-name: var(--name);
+
+	&:nth-child(even) {
+		--section: var(--section-even);
+	}
 }
 
 .flying-squares {
-  position: absolute;
-  z-index: 1;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
+	position: absolute;
+	z-index: 1;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
 }
 .square {
-  position: absolute;
-  width: 15vw;
-  height: 15vw;
-  opacity: 0.3;
-  animation: flying 2s infinite alternate both;
+	position: absolute;
+	width: 15vw;
+	height: 15vw;
+	opacity: 0.3;
+	animation: flying 2s infinite alternate both;
 }
 .square.red {
-  top: 17vh;
-  left: 8vw;
-  background-color: var(--red);
-  animation-delay: 1s;
+	top: 17vh;
+	left: 8vw;
+	background-color: var(--red);
+	animation-delay: 1s;
 }
 .square.purple {
-  top: 8vh;
-  left: 76vw;
-  background-color: var(--purple);
+	top: 8vh;
+	left: 76vw;
+	background-color: var(--purple);
 }
 .square.green {
-  top: 60vh;
-  left: 40vw;
-  background-color: var(--green);
-  animation-delay: 0.5s;
+	top: 60vh;
+	left: 40vw;
+	background-color: var(--green);
+	animation-delay: 0.5s;
 }
 @keyframes flying {
-  to {
-    transform: translateY(-5vh);
-  }
+	to {
+		transform: translateY(-5vh);
+	}
 }
 
 .tile-section {
 	position: sticky;
 	top: 0;
 	max-inline-size: 100vw;
-	block-size: 200vh;
-	overflow: hidden;
-}
-.tile-container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	translate: -50% -50%;
-	scale: 3;
-	inline-size: 100%;
 	block-size: 100vh;
-	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(5, 1fr);
-	rotate: 0.12turn;
+	overflow: hidden;
+
+	& .tile-container {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		translate: -50% -50%;
+		scale: 2.5;
+		inline-size: 100%;
+		block-size: 100vh;
+		display: grid;
+		grid-template: repeat(4, 1fr) / repeat(5, 1fr);
+		rotate: 0.12turn;
+
+		& .tile {
+			inline-size: 100%;
+			block-size: 100%;
+			background-color: var(--tile);
+
+			/* animation */
+			animation: tile both linear;
+			animation-timeline: var(--name);
+			animation-range: entry 0% exit 100%;
+
+			&:nth-of-type(5n + 2),
+			&:nth-of-type(5n + 4) {
+				--tile: var(--green);
+				--vertical: 100%;
+				--horizontal: 100%;
+
+				&:nth-of-type(odd) {
+					--tile: var(--red);
+					--vertical: 100%;
+					--horizontal: -100%;
+				}
+			}
+
+			&:nth-of-type(5n + 1),
+			&:nth-of-type(5n + 3),
+			&:nth-of-type(5n + 5) {
+				--tile: var(--blue);
+				--vertical: -100%;
+				--horizontal: 100%;
+
+				&:not(:nth-of-type(odd)) {
+					--tile: var(--yellow);
+					--vertical: -100%;
+					--horizontal: -100%;
+				}
+			}
+		}
+	}
 }
-.tile {
-	inline-size: 100%;
-	block-size: 100%;
-	background-color: var(--tile);
-	animation: tile both linear;
-	animation-timeline: var(--name);
-	animation-range: entry 100% exit 0%;
-}
-.tile.animate-fallback {
-	animation: tile-fallback 1.2s cubic-bezier(0.25, 0.1, 0, 2.05) both;
-}
+
 @keyframes tile {
 	0% {
 		translate: 0 0;
 	}
+
 	50% {
 		translate: 0 var(--vertical);
 	}
+
 	100% {
 		translate: var(--horizontal) var(--vertical);
-	}
-}
-@keyframes tile-fallback {
-	0% {
-		opacity: 0;
-		transform: scale(0.8) rotate(-8deg);
-	}
-	60% {
-		opacity: 1;
-		transform: scale(1.05) rotate(2deg);
-	}
-	100% {
-		opacity: 1;
-		transform: scale(1) rotate(0deg);
 	}
 }
 
