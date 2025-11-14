@@ -341,16 +341,14 @@ footer.animated-footer a span {
   max-inline-size: 80ch;
   margin-inline: auto;
   padding: 3rem 1rem;
-  counter-reset: chapter 0;
 }
 .text > *:not(h2) {
   text-wrap: pretty;
-  counter-increment: chapter 1;
   animation: show-text both linear;
   animation-timeline: view(y 80vh auto);
 }
 .text > *:not(h2)::before {
-  content: counter(chapter, upper-roman) ". ";
+  content: none;
 }
 @keyframes show-text {
   from {
@@ -381,22 +379,7 @@ footer.animated-footer a span {
   );
   opacity: 0;
   transition: opacity 200ms linear;
-  animation: read-text both linear;
-  animation-timeline: var(--name);
-  animation-range: entry 100% exit 100%;
 }
 .read div {
   filter: invert(100%);
-}
-@keyframes read-text {
-  1% {
-    opacity: 1;
-  }
-  99% {
-    inline-size: 100%;
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
 }
