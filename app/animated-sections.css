@@ -149,50 +149,59 @@ section:nth-child(even) {
 }
 
 .tile-section {
-  position: sticky;
-  top: 0;
-  width: 100vw;
-  min-height: 200vh;
-  overflow: hidden;
+	position: sticky;
+	top: 0;
+	max-inline-size: 100vw;
+	block-size: 200vh;
+	overflow: hidden;
 }
 .tile-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(3) rotate(0.12turn);
-  width: 100%;
-  height: 100vh;
-  display: grid;
-  grid-template: repeat(4, 1fr) / repeat(5, 1fr);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	scale: 3;
+	inline-size: 100%;
+	block-size: 100vh;
+	display: grid;
+	grid-template: repeat(4, 1fr) / repeat(5, 1fr);
+	rotate: 0.12turn;
 }
 .tile {
-  width: 100%;
-  height: 100%;
-  background-color: var(--blue);
-  animation: tile 2s infinite alternate both;
+	inline-size: 100%;
+	block-size: 100%;
+	background-color: var(--tile);
+	animation: tile both linear;
+	animation-timeline: var(--name);
+	animation-range: entry 100% exit 0%;
 }
-.tile.green {
-  background-color: var(--green);
-}
-.tile.red {
-  background-color: var(--red);
-}
-.tile.yellow {
-  background-color: var(--yellow);
-}
-.tile.purple {
-  background-color: var(--purple);
+.tile.animate-fallback {
+	animation: tile-fallback 1.2s cubic-bezier(0.25, 0.1, 0, 2.05) both;
 }
 @keyframes tile {
-  0% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(0, 100%);
-  }
-  100% {
-    transform: translate(100%, 100%);
-  }
+	0% {
+		translate: 0 0;
+	}
+	50% {
+		translate: 0 var(--vertical);
+	}
+	100% {
+		translate: var(--horizontal) var(--vertical);
+	}
+}
+@keyframes tile-fallback {
+	0% {
+		opacity: 0;
+		transform: scale(0.8) rotate(-8deg);
+	}
+	60% {
+		opacity: 1;
+		transform: scale(1.05) rotate(2deg);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1) rotate(0deg);
+	}
 }
 
 .two-columns {
@@ -271,4 +280,3 @@ footer.animated-footer a {
 footer.animated-footer a span {
   filter: invert(75%);
 }
-
