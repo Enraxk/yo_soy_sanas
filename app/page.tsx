@@ -7,7 +7,6 @@ import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
 import AnimatedTiles from "@/components/AnimatedTiles";
 import TwoColumns from "@/components/TwoColumns";
-import ScrollIndicator from "@/components/ScrollIndicator";
 import AnimatedTextSection from "@/components/AnimatedTextSection";
 import "./animated-sections.css";
 
@@ -18,13 +17,7 @@ export default function Home() {
 
     return (
         <>
-            <Script
-                src="https://unpkg.com/scroll-timeline/dist/scroll-timeline.js"
-                strategy="beforeInteractive"
-                type="module"
-            />
             <Navbar />
-            <ScrollIndicator />
 
             <section id="masthead" style={{ ["--name" as any]: "--masthead-s" } as React.CSSProperties}>
                 <main
