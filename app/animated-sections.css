@@ -306,6 +306,20 @@ section {
   font-weight: bold;
 }
 
+.scroll-arrow {
+  display: inline-block;
+  animation: bounce-arrow 1.2s infinite;
+}
+
+@keyframes bounce-arrow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(12px);
+  }
+}
+
 footer.animated-footer {
   display: grid;
   place-content: center;
@@ -320,4 +334,69 @@ footer.animated-footer a {
 }
 footer.animated-footer a span {
   filter: invert(75%);
+}
+
+/* Animaciones y estilos para la sección text */
+.text {
+  max-inline-size: 80ch;
+  margin-inline: auto;
+  padding: 3rem 1rem;
+  counter-reset: chapter 0;
+}
+.text > *:not(h2) {
+  text-wrap: pretty;
+  counter-increment: chapter 1;
+  animation: show-text both linear;
+  animation-timeline: view(y 80vh auto);
+}
+.text > *:not(h2)::before {
+  content: counter(chapter, upper-roman) ". ";
+}
+@keyframes show-text {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.read {
+  position: fixed;
+  top: 68px;
+  left: 0;
+  z-index: 3;
+  inline-size: 0;
+  max-inline-size: 100%;
+  text-align: right;
+  white-space: nowrap;
+  padding-block: 0.125rem;
+  padding-inline-end: 0.5rem;
+  background-image: linear-gradient(
+    0.25turn,
+    var(--red),
+    var(--yellow),
+    var(--green),
+    var(--blue),
+    var(--purple)
+  );
+  opacity: 0;
+  transition: opacity 200ms linear;
+  animation: read-text both linear;
+  animation-timeline: var(--name);
+  animation-range: entry 100% exit 100%;
+}
+.read div {
+  filter: invert(100%);
+}
+@keyframes read-text {
+  1% {
+    opacity: 1;
+  }
+  99% {
+    inline-size: 100%;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

@@ -8,6 +8,7 @@ import Navbar from "@/components/ui/Navbar";
 import AnimatedTiles from "@/components/AnimatedTiles";
 import TwoColumns from "@/components/TwoColumns";
 import ScrollIndicator from "@/components/ScrollIndicator";
+import AnimatedTextSection from "@/components/AnimatedTextSection";
 import "./animated-sections.css";
 
 import "./animated-sections.css"; // si tu CSS es global, evita reimportar aquí
@@ -106,11 +107,20 @@ export default function Home() {
                 </span>
                             </div>
                         </div>
+                        {/* Texto informativo sobre la sección del creador */}
+                        <div className="mt-2 text-base md:text-lg text-white text-center flex flex-col items-center" style={{ fontFamily: "Gaya, sans-serif" }}>
+                            Sobre el creador
+                            <span className="scroll-arrow mt-1 text-2xl" style={{ color: '#fff', opacity: 0.8 }}>&#x25BC;</span>
+                        </div>
                     </div>
                 </main>
             </section>
 
             <AnimatedTiles />
+
+            {/* Sección "text" modular */}
+            <AnimatedTextSection />
+
             <TwoColumns />
         </>
     );
