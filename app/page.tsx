@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import Script from "next/script";
+import React from "react";
 import Link from "next/link";
 
 import Navbar from "@/components/ui/Navbar";
@@ -13,13 +12,11 @@ import "./animated-sections.css";
 import "./animated-sections.css"; // si tu CSS es global, evita reimportar aquí
 
 export default function Home() {
-    const [loginDialogOpen, setLoginDialogOpen] = useState(false);
-
     return (
         <>
             <Navbar />
 
-            <section id="masthead" style={{ ["--name" as any]: "--masthead-s" } as React.CSSProperties}>
+            <section id="masthead" style={{ ["--name" as string]: "--masthead-s" } as React.CSSProperties}>
                 <main
                     className="min-h-screen flex flex-col items-center justify-center relative"
                     style={{
@@ -71,7 +68,7 @@ export default function Home() {
                             Explora mis creaciones
                         </div>
 
-                        <div className="flex flex-row items-end justify-center gap-12 md:gap-24 w-full max-w-xs md:max-w-2xl px-8 sm:px-16 md:px-4 mb-8 items-end">
+                        <div className="flex flex-row items-end justify-center gap-12 md:gap-24 w-full max-w-xs md:max-w-2xl px-8 sm:px-16 md:px-4 mb-8">
                             <div className="flex flex-col items-center">
                                 <Link href="/santras">
                                     <img
