@@ -3,34 +3,22 @@
 const text1 =
   "SANAS es un artista autodidacta que ha creado esta serie de siete SANTRAS con la\n" +
     "única intención de ofrecer una nueva y práctica herramienta de sanación y\n" +
-    "crecimiento interior para el observador.\n" +
+    "crecimiento interior para el observador.\n\n" +
+
     "Su trabajo se sustenta en un tránsito existencial hacia lo más profundo de la psique\n" +
     "humana. Esta introspección es fruto de una experiencia evolutiva consciente y de\n" +
     "una creatividad desbordante, canalizada durante el intenso proceso de creación de\n" +
-    "la serie SANTRAS y otras obras del artista.\n" +
+    "la serie SANTRAS y otras obras del artista.\n\n" +
+
     "Han sido dos años de intensa exigencia vital y regeneración para SANAS, de los\n" +
-    "cuales ha nacido esta maravillosa serie de siete SANTRAS.\n" +
+    "cuales ha nacido esta maravillosa serie de siete SANTRAS.\n\n" +
+
     "Con ellas, el artista ha alcanzado la serenidad y la salud que en algún momento\n" +
     "perdió por circunstancias comunes de la vida moderna, las mismas que afectan a\n" +
-    "tantas personas y que también impulsaron su propio proceso evolutivo.\n" +
+    "tantas personas y que también impulsaron su propio proceso evolutivo.\n\n" +
+
     "Hoy, la vida continúa para SANAS con aceptación y confianza, agradecido por la\n" +
     "oportunidad de volver a ser consciente del instante presente.";
-const text2 =
-  "Pedro Manuel Lapuente Feliu es la persona que da vida a SANAS.\n" +
-    "Es un hombre maduro y experimentado en la universidad cotidiana de la Vida, un\n" +
-    "autodidacta pleno que, a sus cincuenta y un años, conserva la mirada y el ánimo\n" +
-    "esencial con los que dio sus primeros pasos por las tierras madrileñas donde nació y\n" +
-    "creció. De origen humilde y obrero, se ha forjado a sí mismo con esfuerzo y\n" +
-    "determinación. Su espíritu y temperamento libertario han sido decisivos para que hoy\n" +
-    "su espiritualidad se manifieste en todas sus tareas y empeños vitales.\n" +
-    "De profesión principal bombero forestal, ha podido atender también otra de sus\n" +
-    "grandes pasiones: el cuidado y la protección de los bienes naturales y humanos. Su\n" +
-    "vocación le permite poner al servicio de los demás sus altas cualidades y su extensa\n" +
-    "experiencia en esta noble y exigente labor.\n" +
-    "Para Pedro —o SANAS—, reconocerse siempre como un ser humano más, que\n" +
-    "manifiesta sus talentos en armonía con la existencia consciente y creativa, es una\n" +
-    "bendición.\n" +
-    "Hoy, todo ello representa su contribución más valiosa a la Vida.";
 
 export default function AnimatedTextSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -75,7 +63,7 @@ export default function AnimatedTextSection() {
     <section
       id="text"
       ref={sectionRef}
-      style={{ ['--name' as any]: '--text-s' } as React.CSSProperties}
+      style={{ ['--name' as string]: '--text-s', width: '100%', height: 'auto', minHeight: 0 } as React.CSSProperties}
     >
       <div
         className="read"
@@ -89,9 +77,7 @@ export default function AnimatedTextSection() {
       </div>
       <div className="text" style={{ fontSize: '1.35rem', lineHeight: 1.8 }}>
         <h2 style={{ fontFamily: 'Gaya, sans-serif', fontSize: '2.2rem', marginBottom: '2rem' }}>El creador</h2>
-        <p style={{ marginBottom: '2.5rem', fontSize: '1.35rem', fontFamily: 'inherit', textIndent: '0' }}>{text1}</p>
-        <h2 style={{ fontFamily: 'Gaya, sans-serif', fontSize: '2.2rem', marginBottom: '2rem' }}>El Artista, el Ser</h2>
-        <p style={{ marginBottom: '2.5rem', fontSize: '1.35rem', fontFamily: 'inherit', textIndent: '0' }}>{text2}</p>
+        <pre style={{ fontFamily: 'inherit', background: 'none', border: 'none', padding: 0, margin: 0, fontSize: '1.35rem', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}>{text1}</pre>
       </div>
     </section>
   );
