@@ -8,13 +8,14 @@
 	--section: hsl(0 0% 93%);
 	--section-even: hsl(210deg 15% 92%);
 
-	/* tiles */
-	--red: hsl(10 83% 52%);
-	--green: hsl(157 91% 43%);
-	--blue: hsl(210 100% 45%);
-	--purple: hsl(266 100% 67%);
-	--yellow: hsl(49 100% 73%);
-	--black: hsl(0 0% 0%);
+	/* tiles - usando gradientes de chakras */
+	--tile-gradient-1: var(--chakra-root-gradient);
+	--tile-gradient-2: var(--chakra-sacral-gradient);
+	--tile-gradient-3: var(--chakra-solar-gradient);
+	--tile-gradient-4: var(--chakra-heart-gradient);
+	--tile-gradient-5: var(--chakra-throat-gradient);
+	--tile-gradient-6: var(--chakra-third-eye-gradient);
+	--tile-gradient-7: var(--chakra-crown-gradient);
 
 	/*  */
 	--cubic: cubic-bezier(0.25, 0.1, 0, 2.05);
