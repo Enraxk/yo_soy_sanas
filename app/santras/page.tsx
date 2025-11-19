@@ -103,7 +103,6 @@ export default function SantrasPage() {
             {/* Sección de bienvenida arriba del todo */}
             <section
                 className="section section-welcome"
-                style={{ background: 'linear-gradient(180deg, #FF0000 0%, #FF7F00 16%, #ffd500 32%, #0cab0c 48%, #0b8eb6 64%, #5e36d0 80%, #7d18cc 100%)', backgroundColor: 'transparent' }}
                 ref={el => { sectionRefs.current[0] = el; }}
             >
                 <div className="content flex flex-col items-center justify-center h-full">

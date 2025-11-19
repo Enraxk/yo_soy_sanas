@@ -371,12 +371,12 @@ footer.animated-footer a span {
   padding-block: 0.125rem;
   padding-inline-end: 0.5rem;
   background-image: linear-gradient(
-    0.25turn,
-    var(--red),
-    var(--yellow),
-    var(--green),
+    to top,
+    var(--purple),
     var(--blue),
-    var(--purple)
+    var(--green),
+    var(--yellow),
+    var(--red)
   );
   opacity: 0;
   transition: opacity 200ms linear;
