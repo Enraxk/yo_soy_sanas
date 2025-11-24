@@ -1,13 +1,13 @@
 ﻿"use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, Settings, Home } from "lucide-react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
-import { APP_CONFIG, ROUTES } from "@/lib/config";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
@@ -44,257 +44,235 @@ const Navbar: React.FC<NavbarProps> = ({
   code = '',
   setCode = () => {},
 }) => {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [drawerVisible, setDrawerVisible] = useState(false);
-  const [drawerActive, setDrawerActive] = useState(false); // Para animación
-  const drawerTimeout = useRef<NodeJS.Timeout | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const pathname = usePathname();
 
-  // Maneja el montaje/desmontaje para animación de salida y entrada
-  useEffect(() => {
-    if (mobileOpen) {
-      setDrawerVisible(true);
-      // Forzar animación en el siguiente tick
-      setTimeout(() => setDrawerActive(true), 10);
-    } else if (drawerVisible) {
-      setDrawerActive(false);
-      drawerTimeout.current = setTimeout(() => setDrawerVisible(false), 300);
+  // Función para determinar si una ruta está activa
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return pathname === '/';
     }
-    return () => {
-      if (drawerTimeout.current) clearTimeout(drawerTimeout.current);
-    };
-  }, [mobileOpen, drawerVisible]);
-
-  const InfoSection: React.FC = () => {
-    return (
-      <div className="flex items-center gap-2">
-
-        {isLoggedIn ? (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="bg-green-200 rounded-full p-2 ml-2 hover:bg-green-300 transition"
-                onClick={handleLogout}
-              >
-                <LogOut className="w-6 h-6 text-green-700" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent sideOffset={6}>
-              Cerrar sesión ({authState.email})
-            </TooltipContent>
-          </Tooltip>
-        ) : (
-          <Dialog open={loginDialogOpen} onOpenChange={handleLoginDialogChange}>
-            <DialogTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="bg-gray-200 rounded-full p-2 ml-2 hover:bg-gray-300 transition"
-                aria-label="Iniciar sesión"
-              >
-                <User className="w-6 h-6 text-gray-700" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>
-                  {needsVerification ? "Verificar Código" : "Iniciar Sesión"}
-                </DialogTitle>
-                <DialogDescription>
-                  {needsVerification
-                    ? `Ingresa el código enviado a ${pendingEmail}`
-                    : "Accede con tu cuenta para continuar"
-                  }
-                </DialogDescription>
-              </DialogHeader>
-              {authState?.error && (
-                <div className="text-sm text-destructive bg-destructive/10 p-3 rounded">
-                  {authState.error}
-                </div>
-              )}
-              <form onSubmit={handleLoginSubmit} className="grid gap-4 pt-2">
-                {!needsVerification ? (
-                  <>
-                    <div className="grid gap-3">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="tu@email.com"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        required
-                        autoFocus
-                      />
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="password">Contraseña</Label>
-                      <Input
-                        id="password"
-                        type="password"
-                        placeholder="••••••••"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                      />
-                    </div>
-                  </>
-                ) : (
-                  <div className="grid gap-3">
-                    <Label htmlFor="code">Código de Verificación</Label>
-                    <Input
-                      id="code"
-                      type="text"
-                      placeholder="123456"
-                      value={code}
-                      onChange={e => setCode(e.target.value)}
-                      maxLength={6}
-                      required
-                      autoFocus
-                    />
-                    <div className="text-xs text-muted-foreground">
-                      Revisa tu bandeja de entrada. El código expira en 5 minutos.
-                    </div>
-                  </div>
-                )}
-                <DialogFooter>
-                  <Button type="button" variant="secondary" onClick={() => handleLoginDialogChange(false)}>
-                    Cancelar
-                  </Button>
-                  <Button type="submit">
-                    {needsVerification ? "Verificar" : "Continuar"}
-                  </Button>
-                </DialogFooter>
-              </form>
-            </DialogContent>
-          </Dialog>
-        )}
-      </div>
-    );
+    return pathname.startsWith(path);
   };
 
-  const LinksSection: React.FC<{vertical?: boolean; onItemClick?: () => void}> = ({ vertical = false, onItemClick }) => {
-    const baseClass = vertical ? 'flex flex-col gap-3' : 'gap-2 hidden sm:flex';
-    return (
-      <div className={baseClass}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="px-4 py-2 bg-white text-black font-semibold hover:bg-gray-200 transition border border-gray-300"
-              asChild
-            >
-              <Link href={ROUTES.HOME} onClick={() => onItemClick?.()}>Inicio</Link>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent sideOffset={6}>Ir a Inicio</TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="px-4 py-2 bg-white text-black font-semibold hover:bg-gray-200 transition border border-gray-300"
-              asChild
-            >
-              <Link href={ROUTES.GALERIA} onClick={() => onItemClick?.()}>Galería</Link>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent sideOffset={6}>Explorar todos los chakras</TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <DropdownMenu>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      className="px-4 py-2 bg-white text-black font-semibold hover:bg-gray-200 transition border border-gray-300"
-                      aria-label="Colecciones"
-                    >
-                      Colecciones
-                    </Button>
-                  </DropdownMenuTrigger>
-                </TooltipTrigger>
-                <TooltipContent sideOffset={6}>Ver colecciones</TooltipContent>
-              </Tooltip>
-              <DropdownMenuContent align={vertical ? 'start' : 'end'} sideOffset={6} className="w-44">
-                <DropdownMenuItem asChild>
-                  <Link href="/maderas" onClick={() => onItemClick?.()}>Maderas</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/santras" onClick={() => onItemClick?.()}>Santras</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TooltipTrigger>
-          <TooltipContent sideOffset={6}>Ver todas las colecciones</TooltipContent>
-        </Tooltip>
-      </div>
-    );
+  // Función para obtener las clases de resaltado
+  const getActiveStyles = (isActive: boolean) => {
+    return isActive
+      ? 'drop-shadow-2xl brightness-150 scale-105 filter saturate-150 shadow-white shadow-lg'
+      : 'drop-shadow-lg hover:drop-shadow-xl hover:scale-105 hover:brightness-110';
   };
 
   return (
-    <>
-      {/* Navbar visible solo en escritorio */}
-      <nav className="hidden sm:flex fixed top-0 left-0 w-full items-center justify-between px-4 py-2 bg-white/40 shadow-md rounded-b-xl backdrop-blur-sm z-50">
-        {/* Info y usuario */}
-        <InfoSection />
-        {/* Enlaces */}
-        <LinksSection />
-      </nav>
+    <nav className="fixed top-0 left-0 z-50 p-4">
+      <div className="flex items-center gap-3">
+        {/* Icono de Home */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link href="/">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="rounded-full p-2 bg-transparent hover:bg-transparent border-none shadow-none"
+                aria-label="Inicio"
+              >
+                <Home className={`w-5 h-5 text-white transition-all duration-300 ${getActiveStyles(isActive('/'))}`} />
+              </Button>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent sideOffset={8}>
+            Inicio {isActive('/') && '(Activo)'}
+          </TooltipContent>
+        </Tooltip>
 
-      {/* Icono hamburguesa solo en móvil, fijo arriba a la derecha */}
-      <button
-        className="sm:hidden fixed top-3 right-4 z-50 flex items-center justify-center p-2 rounded bg-white/80 shadow-md hover:bg-gray-200 transition"
-        aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
-        onClick={() => setMobileOpen(prev => !prev)}
-        type="button"
-      >
-        <svg className="w-7 h-7 text-gray-700" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-          {mobileOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
-      </button>
+        {/* Icono de Maderas */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link href="/maderas">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="rounded-full p-0 bg-transparent hover:bg-transparent border-none shadow-none transition-all duration-300"
+                aria-label="Maderas"
+              >
+                <Image
+                  src="/img/iconos/pngmaderas.png"
+                  alt="Maderas"
+                  width={36}
+                  height={36}
+                  className={`w-9 h-9 transition-all duration-300 ${getActiveStyles(isActive('/maderas'))}`}
+                  style={isActive('/maderas') ? {
+                    filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
+                  } : {}}
+                />
+              </Button>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent sideOffset={8}>
+            Maderas {isActive('/maderas') && '(Activo)'}
+          </TooltipContent>
+        </Tooltip>
 
-      {/* Drawer móvil: navbar completa con animación y blur */}
-      {drawerVisible && (
-        <div className="fixed inset-0 z-50 flex">
-          {/* Overlay animado */}
-          <div
-            className={`transition-opacity duration-300 ease-in-out fixed inset-0 bg-black/40 backdrop-blur-sm ${drawerActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-            onClick={() => setMobileOpen(false)}
-          />
-          {/* Drawer animado */}
-          <div
-            className={`fixed right-0 top-0 h-full w-72 shadow-lg p-6 flex flex-col bg-white/70 backdrop-blur-lg transition-all duration-300 ease-in-out
-              ${drawerActive ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
-            style={{ willChange: 'transform, opacity' }}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="font-bold text-lg">{APP_CONFIG.siteName}</div>
-              <button aria-label="Cerrar menú" onClick={() => setMobileOpen(false)} type="button" className="p-2 rounded hover:bg-gray-100">
-                <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="mb-4"><InfoSection /></div>
-            <nav className="flex flex-col gap-3 mt-4"><LinksSection vertical onItemClick={() => setMobileOpen(false)} /></nav>
-            <div className="flex-1" />
-          </div>
-        </div>
-      )}
-    </>
+        {/* Icono de Santras */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link href="/santras">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="rounded-full p-0 bg-transparent hover:bg-transparent border-none shadow-none transition-all duration-300"
+                aria-label="Santras"
+              >
+                <Image
+                  src="/img/iconos/pngchakras.png"
+                  alt="Santras"
+                  width={36}
+                  height={36}
+                  className={`w-9 h-9 transition-all duration-300 ${getActiveStyles(isActive('/santras'))}`}
+                  style={isActive('/santras') ? {
+                    filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
+                  } : {}}
+                />
+              </Button>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent sideOffset={8}>
+            Santras {isActive('/santras') && '(Activo)'}
+          </TooltipContent>
+        </Tooltip>
+
+        {/* Separador visual */}
+        <div className="w-px h-6 bg-white bg-opacity-20 mx-1"></div>
+
+        {/* Icono de Login */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            {isLoggedIn ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="rounded-full p-2 bg-transparent hover:bg-transparent border-none shadow-none"
+                onClick={handleLogout}
+                aria-label="Cerrar sesión"
+              >
+                <LogOut className="w-5 h-5 text-white drop-shadow-lg hover:drop-shadow-xl transition-all duration-200" />
+              </Button>
+            ) : (
+              <Dialog open={loginDialogOpen} onOpenChange={handleLoginDialogChange}>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="rounded-full p-2 bg-transparent hover:bg-transparent border-none shadow-none"
+                    aria-label="Iniciar sesión"
+                  >
+                    <User className="w-5 h-5 text-white drop-shadow-lg hover:drop-shadow-xl transition-all duration-200" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Iniciar sesión</DialogTitle>
+                    <DialogDescription>
+                      Ingresa tus credenciales para continuar
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    {!needsVerification ? (
+                      <>
+                        <div className="space-y-2">
+                          <Label htmlFor="email">Email</Label>
+                          <Input
+                            id="email"
+                            type="email"
+                            placeholder="tu@email.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="password">Contraseña</Label>
+                          <Input
+                            id="password"
+                            type="password"
+                            placeholder="••••••••"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="space-y-2">
+                        <Label htmlFor="code">Código de verificación</Label>
+                        <Input
+                          id="code"
+                          type="text"
+                          placeholder="000000"
+                          value={code}
+                          onChange={(e) => setCode(e.target.value)}
+                        />
+                        <p className="text-sm text-gray-500">
+                          Se envió un código de verificación a {pendingEmail}
+                        </p>
+                      </div>
+                    )}
+                    {authState.error && (
+                      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+                        {authState.error}
+                      </div>
+                    )}
+                  </div>
+                  <DialogFooter>
+                    <Button
+                      onClick={handleLoginSubmit}
+                      disabled={authState.isLoading === true}
+                      className="w-full"
+                    >
+                      {authState.isLoading ? "Procesando..." : needsVerification ? "Verificar" : "Iniciar sesión"}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            )}
+          </TooltipTrigger>
+          <TooltipContent sideOffset={8}>
+            {isLoggedIn ? `Cerrar sesión (${authState.email})` : "Iniciar sesión"}
+          </TooltipContent>
+        </Tooltip>
+
+        {/* Icono de Configuración */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="rounded-full p-2 bg-transparent hover:bg-transparent border-none shadow-none"
+                  aria-label="Configuración"
+                >
+                  <Settings className="w-5 h-5 text-white drop-shadow-lg hover:drop-shadow-xl transition-all duration-200" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Configuración</DialogTitle>
+                  <DialogDescription>
+                    Opciones y preferencias de la aplicación
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="text-sm text-gray-600">
+                    Aquí irán las opciones de configuración
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </TooltipTrigger>
+          <TooltipContent sideOffset={8}>
+            Configuración
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    </nav>
   );
 };
 

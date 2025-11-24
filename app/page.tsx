@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
+import Image from 'next/image';
 
 import Navbar from "@/components/ui/Navbar";
 import AnimatedTiles from "@/components/AnimatedTiles";
@@ -9,14 +10,33 @@ import TwoColumns from "@/components/TwoColumns";
 import AnimatedTextSection from "@/components/AnimatedTextSection";
 import "./animated-sections.css";
 
-import "./animated-sections.css"; // si tu CSS es global, evita reimportar aquí
-
 export default function Home() {
+    useEffect(() => {
+        const elements: HTMLElement[] = Array.from(document.querySelectorAll('.smooth-section, .smooth-fade')) as HTMLElement[];
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        // Si quieres que se animen sólo una vez, comenta la siguiente línea
+                        entry.target.classList.remove('in-view');
+                    }
+                });
+            }, { threshold: 0.35 });
+            elements.forEach(el => observer.observe(el));
+            return () => observer.disconnect();
+        } else {
+            // Fallback: marca todo visible
+            elements.forEach(el => el.classList.add('in-view'));
+        }
+    }, []);
+
     return (
         <>
             <Navbar />
 
-            <section id="masthead" style={{ ["--name" as string]: "--masthead-s" } as React.CSSProperties}>
+            <section id="masthead" className="smooth-section" style={{ ["--name" as string]: "--masthead-s" } as React.CSSProperties}>
                 <main
                     className="min-h-screen flex flex-col items-center justify-center relative"
                     style={{
@@ -71,11 +91,14 @@ export default function Home() {
                         <div className="flex flex-row items-end justify-center gap-12 md:gap-24 w-full max-w-xs md:max-w-2xl px-8 sm:px-16 md:px-4 mb-8">
                             <div className="flex flex-col items-center">
                                 <Link href="/santras">
-                                    <img
+                                    <Image
                                         src="/img/iconos/pngchakras.png"
                                         alt="Santras"
+                                        width={224}
+                                        height={224}
                                         className="w-40 h-40 md:w-56 md:h-56 object-contain cursor-pointer hover:scale-105 transition-transform bg-transparent"
                                         style={{ background: "transparent" }}
+                                        priority
                                     />
                                 </Link>
                                 <span className="mt-4 text-xl text-white" style={{ fontFamily: "Gaya, sans-serif" }}>
@@ -85,9 +108,11 @@ export default function Home() {
 
                             <div className="flex flex-col items-center">
                                 <Link href="/maderas">
-                                    <img
+                                    <Image
                                         src="/img/iconos/pngmaderas.png"
                                         alt="Maderas"
+                                        width={240}
+                                        height={240}
                                         className="w-48 h-48 md:w-60 md:h-60 object-contain cursor-pointer transition-transform scale-150 hover:scale-[1.6] bg-transparent mt-8 md:mt-0"
                                         style={{ background: "transparent" }}
                                     />
@@ -105,13 +130,15 @@ export default function Home() {
                     </div>
                 </main>
             </section>
-
-            <AnimatedTiles />
-
-            {/* Sección "text" modular */}
-            <AnimatedTextSection />
-
-            <TwoColumns />
+            <div className="smooth-section" style={{ background: 'var(--section-even)' }}>
+                <AnimatedTiles />
+            </div>
+            <div className="smooth-section">
+                <AnimatedTextSection />
+            </div>
+            <div className="smooth-section">
+                <TwoColumns />
+            </div>
         </>
     );
 }
