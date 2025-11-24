@@ -3,13 +3,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Navbar from '@/components/ui/Navbar';
 import { CHAKRAS } from '@/lib/chakras';
 import "./santras-scroll.css";
+import Image from 'next/image';
+
+// Tipo para estilos con variables personalizadas de chakra
+type ChakraSectionStyle = React.CSSProperties & { '--chakra-color': string; '--next-chakra-color': string };
 
 export default function SantrasPage() {
     const sectionRefs = useRef<(HTMLElement | null)[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
     const [showDialog, setShowDialog] = useState(false);
     const [selectedChakra, setSelectedChakra] = useState<null | (typeof CHAKRAS)[number]>(null);
-    const [animationType, setAnimationType] = useState('blink');
     // Estado para el modal de login
     const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
@@ -102,7 +105,7 @@ export default function SantrasPage() {
             </div>
             {/* Sección de bienvenida arriba del todo */}
             <section
-                className="section section-welcome"
+                className={`section section-welcome ${activeIndex === 0 ? 'section-active' : ''}`}
                 ref={el => { sectionRefs.current[0] = el; }}
             >
                 <div className="content flex flex-col items-center justify-center h-full">
@@ -203,56 +206,66 @@ export default function SantrasPage() {
                 </div>
             )}
             {/* Secciones de chakras */}
-            {CHAKRAS.map((chakra, idx) => (
-                <section
-                    key={chakra.id}
-                    className="section"
-                    style={{ background: chakra.gradient }}
-                    ref={el => { sectionRefs.current[idx + 1] = el; }}
-                >
-                    <div className="content flex flex-col items-center justify-center h-full">
-                        <img
-                            src={chakra.santraImage}
-                            alt={chakra.name}
-                            className="santra-img mb-8"
-                            style={{ width: 880, height: 880 }}
-                        />
-                        <h2
-                            className="santra-caption"
-                            style={{
-                                color: "#fff",
-                                fontFamily: "'Gaya', sans-serif",
-                                fontSize: "2.2rem",
-                                textShadow: "0 2px 8px rgba(0,0,0,0.18)",
-                                marginBottom: "0.5rem",
-                            }}
-                        >
-                            {chakra.name}
-                        </h2>
-                        <p className="text-white/90 text-lg text-center max-w-xl">{chakra.description}</p>
-                        <button
-                            className="contact-btn"
-                            style={{
-                                marginTop: '2rem',
-                                background: '#fff',
-                                color: '#222',
-                                borderRadius: '2rem',
-                                padding: '0.7rem 2.2rem',
-                                fontWeight: 600,
-                                fontSize: '1.1rem',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
-                                textDecoration: 'none',
-                                transition: 'background 0.2s, color 0.2s',
-                                display: 'inline-block',
-                                cursor: 'pointer',
-                            }}
-                            onClick={() => handleContactClick(chakra)}
-                        >
-                            Solicitar información
-                        </button>
-                    </div>
-                </section>
-            ))}
+            {CHAKRAS.map((chakra, idx) => {
+                const nextColor = CHAKRAS[idx + 1]?.color || chakra.color;
+                const styleVars: ChakraSectionStyle = {
+                    '--chakra-color': chakra.color,
+                    '--next-chakra-color': nextColor,
+                };
+                return (
+                    <section
+                        key={chakra.id}
+                        className={`section chakra-blended ${activeIndex === idx + 1 ? 'section-active' : ''}`}
+                        style={styleVars}
+                        ref={el => { sectionRefs.current[idx + 1] = el; }}
+                    >
+                        <div className="content flex flex-col items-center justify-center h-full">
+                            <Image
+                                src={chakra.santraImage}
+                                alt={chakra.name}
+                                className="santra-img mb-8"
+                                width={880}
+                                height={880}
+                                style={{ width: 880, height: 880 }}
+                                priority={idx === 0}
+                            />
+                            <h2
+                                className="santra-caption"
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: "'Gaya', sans-serif",
+                                    fontSize: "2.2rem",
+                                    textShadow: "0 2px 8px rgba(0,0,0,0.18)",
+                                    marginBottom: "0.5rem",
+                                }}
+                            >
+                                {chakra.name}
+                            </h2>
+                            <p className="text-white/90 text-lg text-center max-w-xl">{chakra.description}</p>
+                            <button
+                                className="contact-btn"
+                                style={{
+                                    marginTop: '2rem',
+                                    background: '#fff',
+                                    color: '#222',
+                                    borderRadius: '2rem',
+                                    padding: '0.7rem 2.2rem',
+                                    fontWeight: 600,
+                                    fontSize: '1.1rem',
+                                    boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
+                                    textDecoration: 'none',
+                                    transition: 'background 0.2s, color 0.2s',
+                                    display: 'inline-block',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={() => handleContactClick(chakra)}
+                            >
+                                Solicitar información
+                            </button>
+                        </div>
+                    </section>
+                );
+            })}
         </main>
     );
 }
