@@ -58,13 +58,13 @@ const Navbar: React.FC<NavbarProps> = ({
   // Función para obtener las clases de resaltado
   const getActiveStyles = (isActive: boolean) => {
     return isActive
-      ? 'drop-shadow-2xl brightness-150 scale-105 filter saturate-150 shadow-white shadow-lg'
-      : 'drop-shadow-lg hover:drop-shadow-xl hover:scale-105 hover:brightness-110';
+      ? 'brightness-200 scale-110 saturate-300'
+      : 'hover:scale-105 hover:brightness-110';
   };
 
   return (
-    <nav className="fixed top-0 left-0 z-50 p-4">
-      <div className="flex items-center gap-3">
+    <nav className="fixed top-0 left-0 z-[9999] p-4" style={{ backgroundColor: 'transparent', position: 'fixed' }}>
+      <div className="flex items-center gap-3" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
         {/* Icono de Home */}
         <Tooltip>
           <TooltipTrigger asChild>
@@ -73,9 +73,11 @@ const Navbar: React.FC<NavbarProps> = ({
                 variant="ghost"
                 size="sm"
                 className="rounded-full p-2 bg-transparent hover:bg-transparent border-none shadow-none"
+                style={{ backgroundColor: 'transparent !important', border: 'none !important' }}
                 aria-label="Inicio"
               >
-                <Home className={`w-5 h-5 text-white transition-all duration-300 ${getActiveStyles(isActive('/'))}`} />
+                <Home className={`w-5 h-5 text-white transition-all duration-300 ${getActiveStyles(isActive('/'))}`}
+                      style={{ color: 'white !important' }} />
               </Button>
             </Link>
           </TooltipTrigger>
@@ -92,6 +94,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 variant="ghost"
                 size="sm"
                 className="rounded-full p-0 bg-transparent hover:bg-transparent border-none shadow-none transition-all duration-300"
+                style={{ backgroundColor: 'transparent !important', border: 'none !important' }}
                 aria-label="Maderas"
               >
                 <Image
@@ -100,9 +103,12 @@ const Navbar: React.FC<NavbarProps> = ({
                   width={36}
                   height={36}
                   className={`w-9 h-9 transition-all duration-300 ${getActiveStyles(isActive('/maderas'))}`}
-                  style={isActive('/maderas') ? {
-                    filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
-                  } : {}}
+                  style={{
+                    ...(isActive('/maderas') ? {
+                      filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
+                    } : {}),
+                    display: 'block !important'
+                  }}
                 />
               </Button>
             </Link>
@@ -120,6 +126,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 variant="ghost"
                 size="sm"
                 className="rounded-full p-0 bg-transparent hover:bg-transparent border-none shadow-none transition-all duration-300"
+                style={{ backgroundColor: 'transparent !important', border: 'none !important' }}
                 aria-label="Santras"
               >
                 <Image
@@ -128,9 +135,12 @@ const Navbar: React.FC<NavbarProps> = ({
                   width={36}
                   height={36}
                   className={`w-9 h-9 transition-all duration-300 ${getActiveStyles(isActive('/santras'))}`}
-                  style={isActive('/santras') ? {
-                    filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
-                  } : {}}
+                  style={{
+                    ...(isActive('/santras') ? {
+                      filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
+                    } : {}),
+                    display: 'block !important'
+                  }}
                 />
               </Button>
             </Link>
@@ -141,7 +151,7 @@ const Navbar: React.FC<NavbarProps> = ({
         </Tooltip>
 
         {/* Separador visual */}
-        <div className="w-px h-6 bg-white bg-opacity-20 mx-1"></div>
+        <div className="w-px h-6 bg-white bg-opacity-20 mx-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}></div>
 
         {/* Icono de Login */}
         <Tooltip>
