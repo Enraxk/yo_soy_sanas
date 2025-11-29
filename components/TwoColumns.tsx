@@ -12,8 +12,7 @@ const bioText = [
   "Hoy, todo ello representa su contribución más valiosa a la Vida."
 ];
 
-const text =
-  "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, tenetur deserunt! Obcaecati eius aut, facere porro amet atque laborum eos, numquam asperiores minus accusantium et tempore repellat voluptatum natus corrupti?";
+
 
 export default function TwoColumns() {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,13 +31,14 @@ export default function TwoColumns() {
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
