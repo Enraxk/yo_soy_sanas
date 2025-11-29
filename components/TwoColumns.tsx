@@ -39,7 +39,7 @@ export default function TwoColumns() {
         observer.unobserve(currentRef);
       }
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section

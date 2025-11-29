@@ -13,8 +13,7 @@ export default function SantrasPage() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [showDialog, setShowDialog] = useState(false);
     const [selectedChakra, setSelectedChakra] = useState<null | (typeof CHAKRAS)[number]>(null);
-    // Estado para el modal de login
-    const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+
 
     const handleContactClick = useCallback((chakra: (typeof CHAKRAS)[number]) => {
         setSelectedChakra(chakra);
@@ -86,22 +85,7 @@ export default function SantrasPage() {
         <main>
             {/* Navbar siempre visible arriba del todo */}
             <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
-                <Navbar
-                    isLoggedIn={false}
-                    authState={{}}
-                    handleLogout={() => {}}
-                    loginDialogOpen={loginDialogOpen}
-                    handleLoginDialogChange={setLoginDialogOpen}
-                    needsVerification={false}
-                    pendingEmail=""
-                    handleLoginSubmit={() => {}}
-                    email=""
-                    setEmail={() => {}}
-                    password=""
-                    setPassword={() => {}}
-                    code=""
-                    setCode={() => {}}
-                />
+                <Navbar />
             </div>
             {/* Sección de bienvenida arriba del todo */}
             <section
