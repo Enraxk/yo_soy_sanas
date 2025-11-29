@@ -2,48 +2,19 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { User, LogOut, Settings, Home } from "lucide-react";
+import { Settings, Home } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
+import { AdminAuth } from "@/components/AdminAuth";
 
 interface NavbarProps {
-  isLoggedIn?: boolean;
-  authState?: { email?: string; error?: string; [key: string]: unknown };
-  handleLogout?: () => void;
-  loginDialogOpen?: boolean;
-  handleLoginDialogChange?: (open: boolean) => void;
-  needsVerification?: boolean;
-  pendingEmail?: string;
-  handleLoginSubmit?: (e: React.FormEvent) => void;
-  email?: string;
-  setEmail?: (v: string) => void;
-  password?: string;
-  setPassword?: (v: string) => void;
-  code?: string;
-  setCode?: (v: string) => void;
+  // Navbar simplificada - AdminAuth maneja su propio estado
 }
 
-const Navbar: React.FC<NavbarProps> = ({
-  isLoggedIn = false,
-  authState = {},
-  handleLogout = () => {},
-  loginDialogOpen = false,
-  handleLoginDialogChange = () => {},
-  needsVerification = false,
-  pendingEmail = '',
-  handleLoginSubmit = () => {},
-  email = '',
-  setEmail = () => {},
-  password = '',
-  setPassword = () => {},
-  code = '',
-  setCode = () => {},
-}) => {
+const Navbar: React.FC<NavbarProps> = ({}) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -153,100 +124,11 @@ const Navbar: React.FC<NavbarProps> = ({
         {/* Separador visual */}
         <div className="w-px h-6 bg-white bg-opacity-20 mx-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}></div>
 
-        {/* Icono de Login */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            {isLoggedIn ? (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="rounded-full p-2 bg-transparent hover:bg-transparent border-none shadow-none"
-                onClick={handleLogout}
-                aria-label="Cerrar sesión"
-              >
-                <LogOut className="w-5 h-5 text-white drop-shadow-lg hover:drop-shadow-xl transition-all duration-200" />
-              </Button>
-            ) : (
-              <Dialog open={loginDialogOpen} onOpenChange={handleLoginDialogChange}>
-                <DialogTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="rounded-full p-2 bg-transparent hover:bg-transparent border-none shadow-none"
-                    aria-label="Iniciar sesión"
-                  >
-                    <User className="w-5 h-5 text-white drop-shadow-lg hover:drop-shadow-xl transition-all duration-200" />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Iniciar sesión</DialogTitle>
-                    <DialogDescription>
-                      Ingresa tus credenciales para continuar
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-4 py-4">
-                    {!needsVerification ? (
-                      <>
-                        <div className="space-y-2">
-                          <Label htmlFor="email">Email</Label>
-                          <Input
-                            id="email"
-                            type="email"
-                            placeholder="tu@email.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="password">Contraseña</Label>
-                          <Input
-                            id="password"
-                            type="password"
-                            placeholder="••••••••"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                          />
-                        </div>
-                      </>
-                    ) : (
-                      <div className="space-y-2">
-                        <Label htmlFor="code">Código de verificación</Label>
-                        <Input
-                          id="code"
-                          type="text"
-                          placeholder="000000"
-                          value={code}
-                          onChange={(e) => setCode(e.target.value)}
-                        />
-                        <p className="text-sm text-gray-500">
-                          Se envió un código de verificación a {pendingEmail}
-                        </p>
-                      </div>
-                    )}
-                    {authState.error && (
-                      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
-                        {authState.error}
-                      </div>
-                    )}
-                  </div>
-                  <DialogFooter>
-                    <Button
-                      onClick={handleLoginSubmit}
-                      disabled={authState.isLoading === true}
-                      className="w-full"
-                    >
-                      {authState.isLoading ? "Procesando..." : needsVerification ? "Verificar" : "Iniciar sesión"}
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            )}
-          </TooltipTrigger>
-          <TooltipContent sideOffset={8}>
-            {isLoggedIn ? `Cerrar sesión (${authState.email})` : "Iniciar sesión"}
-          </TooltipContent>
-        </Tooltip>
+        {/* Acceso de Administrador */}
+        <AdminAuth 
+          adminUsername={process.env.NEXT_PUBLIC_ADMIN_USER || "El_rinchi"} 
+          adminPassword={process.env.NEXT_PUBLIC_ADMIN_PASS || "***REMOVED***"} 
+        />
 
         {/* Icono de Configuración */}
         <Tooltip>
