@@ -10,11 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { AdminAuth } from "@/components/AdminAuth";
 
-interface NavbarProps {
-  // Navbar simplificada - AdminAuth maneja su propio estado
-}
-
-const Navbar: React.FC<NavbarProps> = ({}) => {
+// Navbar simplificada - AdminAuth maneja su propio estado
+const Navbar: React.FC = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const pathname = usePathname();
 
