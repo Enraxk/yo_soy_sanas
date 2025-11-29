@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import React, { useState } from "react";
+import React, {JSX, useState} from "react";
 import Link from "next/link";
 import { Settings, Home } from "lucide-react";
 import Image from "next/image";
@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { AdminAuth } from "@/components/AdminAuth";
 
 // Navbar simplificada - AdminAuth maneja su propio estado
-const Navbar: React.FC = () => {
+const Navbar = (): JSX.Element => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const pathname = usePathname();
 
