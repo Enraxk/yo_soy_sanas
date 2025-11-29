@@ -19,7 +19,7 @@ export default function AnimatedTiles() {
         <section
             id="tiles"
             // Inyectamos la variable que el CSS utiliza como view-timeline-name
-            style={{ "--name": "--tiles-s" } as React.CSSProperties}
+            style={{ "--name": "--tiles-s" } as React.CSSProperties & { "--name": string }}
         >
             <div className="tile-section">
                 <div className="tile-container" role="presentation" aria-hidden="true">

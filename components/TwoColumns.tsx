@@ -12,8 +12,6 @@ const bioText = [
   "Hoy, todo ello representa su contribución más valiosa a la Vida."
 ];
 
-
-
 export default function TwoColumns() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -41,7 +39,7 @@ export default function TwoColumns() {
         observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section
