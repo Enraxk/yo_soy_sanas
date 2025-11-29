@@ -3,31 +3,14 @@
 
 import { CHAKRAS } from '@/lib/chakras';
 import Navbar from '@/components/ui/Navbar';
-import React, { useState } from "react";
+import React from "react";
 
 export default function MaderasPage() {
     const count = CHAKRAS.length;
-    // Estado para el modal de login
-    const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
     return (
         <main className="min-h-screen p-6 flex flex-col">
-            <Navbar
-                isLoggedIn={false}
-                authState={{}}
-                handleLogout={() => {}}
-                loginDialogOpen={loginDialogOpen}
-                handleLoginDialogChange={setLoginDialogOpen}
-                needsVerification={false}
-                pendingEmail=""
-                handleLoginSubmit={() => {}}
-                email=""
-                setEmail={() => {}}
-                password=""
-                setPassword={() => {}}
-                code=""
-                setCode={() => {}}
-            />
+            <Navbar />
             {/* Encabezado dentro de contenedor */}
             <div className="max-w-6xl mx-auto mt-16">
                 {/* Breadcrumb eliminado */}
