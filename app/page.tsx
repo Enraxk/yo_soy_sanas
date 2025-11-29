@@ -8,9 +8,13 @@ import Navbar from "@/components/ui/Navbar";
 import AnimatedTiles from "@/components/AnimatedTiles";
 import TwoColumns from "@/components/TwoColumns";
 import AnimatedTextSection from "@/components/AnimatedTextSection";
+import { EditableText } from "@/components/EditableText";
+import { useSimpleEdit } from "@/hooks/useSimpleEdit";
 import "./animated-sections.css";
 
 export default function Home() {
+    const { isEditMode } = useSimpleEdit();
+
     useEffect(() => {
         const elements: HTMLElement[] = Array.from(document.querySelectorAll('.smooth-section, .smooth-fade')) as HTMLElement[];
         if ('IntersectionObserver' in window) {
@@ -40,7 +44,7 @@ export default function Home() {
                 <main
                     className="min-h-screen relative"
                     style={{
-                        paddingTop: "64px",
+                        paddingTop: isEditMode ? "104px" : "64px", // 40px extra para la barra de admin
                         backgroundImage: "url('/img/fondo/banderashimalaya.jpeg')",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
@@ -58,13 +62,17 @@ export default function Home() {
                         </div>
 
                         <div className="mt-16 text-center">
-                            <div
+                            <EditableText 
+                                storageKey="home-welcome-text"
                                 className="text-lg md:text-2xl mb-2 bg-clip-text text-transparent"
                                 style={{ fontFamily: "Gaya, sans-serif", backgroundImage: "var(--chakra-third-eye-gradient)" }}
+                                placeholder="Texto de bienvenida..."
                             >
                                 Bienvenidos a mi página creativa
-                            </div>
-                            <h1
+                            </EditableText>
+                            <EditableText
+                                storageKey="home-main-title"
+                                isTitle={true}
                                 className="font-bold mb-8 bg-clip-text text-transparent w-full max-w-full text-center leading-tight"
                                 style={{
                                     fontFamily: "Gaya, sans-serif",
@@ -76,15 +84,21 @@ export default function Home() {
                                     hyphens: "auto",
                                     lineHeight: 1.05,
                                 }}
+                                placeholder="Título principal..."
                             >
                                 YosoySanas
-                            </h1>
+                            </EditableText>
                         </div>
 
                         <div className="flex flex-col items-center w-full mt-40 md:mt-32">
-                            <div className="text-2xl md:text-3xl text-white mb-4" style={{ fontFamily: "Gaya, sans-serif" }}>
+                            <EditableText
+                                storageKey="home-explore-text"
+                                className="text-2xl md:text-3xl text-white mb-4"
+                                style={{ fontFamily: "Gaya, sans-serif" }}
+                                placeholder="Texto de exploración..."
+                            >
                                 Explora mis creaciones
-                            </div>
+                            </EditableText>
 
                             <div className="flex flex-row items-end justify-center gap-12 md:gap-24 w-full max-w-xs md:max-w-2xl px-8 sm:px-16 md:px-4 mb-8">
                                 <div className="flex flex-col items-center">
@@ -99,9 +113,14 @@ export default function Home() {
                                             priority
                                         />
                                     </Link>
-                                    <span className="mt-4 text-xl text-white" style={{ fontFamily: "Gaya, sans-serif" }}>
-                  Santras
-                </span>
+                                    <EditableText
+                                        storageKey="home-santras-label"
+                                        className="mt-4 text-xl text-white"
+                                        style={{ fontFamily: "Gaya, sans-serif" }}
+                                        placeholder="Etiqueta Santras..."
+                                    >
+                                        Santras
+                                    </EditableText>
                                 </div>
 
                                 <div className="flex flex-col items-center">
@@ -115,9 +134,14 @@ export default function Home() {
                                             style={{ background: "transparent" }}
                                         />
                                     </Link>
-                                    <span className="mt-4 text-xl text-white" style={{ fontFamily: "Gaya, sans-serif" }}>
-                  Maderas
-                </span>
+                                    <EditableText
+                                        storageKey="home-maderas-label"
+                                        className="mt-4 text-xl text-white"
+                                        style={{ fontFamily: "Gaya, sans-serif" }}
+                                        placeholder="Etiqueta Maderas..."
+                                    >
+                                        Maderas
+                                    </EditableText>
                                 </div>
                             </div>
                             {/* Texto informativo sobre la sección del creador */}
