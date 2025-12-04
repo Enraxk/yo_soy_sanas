@@ -31,8 +31,8 @@ const Navbar = (): JSX.Element => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 z-[9999] p-4" style={{ backgroundColor: 'transparent', position: 'fixed' }}>
-      <div className="flex items-center gap-3" style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
+    <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-[9999] p-4 w-auto" style={{ backgroundColor: 'transparent', position: 'fixed' }}>
+      <div className="flex items-center gap-2 sm:gap-3" style={{ justifyContent: 'center', alignItems: 'center' }}>
         {/* Icono de Home */}
         <Tooltip>
           <TooltipTrigger asChild>
@@ -40,11 +40,11 @@ const Navbar = (): JSX.Element => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="rounded-full p-2 bg-transparent hover:bg-transparent border-none shadow-none"
+                className="rounded-full p-1.5 sm:p-2 bg-transparent hover:bg-transparent border-none shadow-none"
                 style={{ backgroundColor: 'transparent !important', border: 'none !important' }}
                 aria-label="Inicio"
               >
-                <Home className={`w-5 h-5 text-white transition-all duration-300 ${getActiveStyles(isActive('/'))}`}
+                <Home className={`w-4 h-4 sm:w-5 sm:h-5 text-white transition-all duration-300 ${getActiveStyles(isActive('/'))}`}
                       style={{ color: 'white !important' }} />
               </Button>
             </Link>
@@ -70,7 +70,7 @@ const Navbar = (): JSX.Element => {
                   alt="Maderas"
                   width={36}
                   height={36}
-                  className={`w-9 h-9 transition-all duration-300 ${getActiveStyles(isActive('/maderas'))}`}
+                  className={`w-7 h-7 sm:w-9 sm:h-9 transition-all duration-300 ${getActiveStyles(isActive('/maderas'))}`}
                   style={{
                     ...(isActive('/maderas') ? {
                       filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
@@ -102,7 +102,7 @@ const Navbar = (): JSX.Element => {
                   alt="Santras"
                   width={36}
                   height={36}
-                  className={`w-9 h-9 transition-all duration-300 ${getActiveStyles(isActive('/santras'))}`}
+                  className={`w-7 h-7 sm:w-9 sm:h-9 transition-all duration-300 ${getActiveStyles(isActive('/santras'))}`}
                   style={{
                     ...(isActive('/santras') ? {
                       filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
@@ -119,7 +119,7 @@ const Navbar = (): JSX.Element => {
         </Tooltip>
 
         {/* Separador visual */}
-        <div className="w-px h-6 bg-white bg-opacity-20 mx-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}></div>
+        <div className="w-px h-5 sm:h-6 bg-white bg-opacity-20 mx-0.5 sm:mx-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}></div>
 
         {/* Acceso de Administrador */}
         <AdminAuth 
@@ -135,10 +135,10 @@ const Navbar = (): JSX.Element => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="rounded-full p-2 bg-transparent hover:bg-transparent border-none shadow-none"
+                  className="rounded-full p-1.5 sm:p-2 bg-transparent hover:bg-transparent border-none shadow-none"
                   aria-label="Configuración"
                 >
-                  <Settings className="w-5 h-5 text-white drop-shadow-lg hover:drop-shadow-xl transition-all duration-200" />
+                  <Settings className="w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow-lg hover:drop-shadow-xl transition-all duration-200" />
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">

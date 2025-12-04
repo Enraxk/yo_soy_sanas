@@ -42,20 +42,18 @@ export default function Home() {
 
             <section id="masthead" className="smooth-section" style={{ ["--name" as string]: "--masthead-s" } as React.CSSProperties}>
                 <main
-                    className="min-h-screen relative"
+                    className="min-h-screen relative overflow-x-hidden"
                     style={{
                         paddingTop: isEditMode ? "104px" : "64px", // 40px extra para la barra de admin
                         backgroundImage: "url('/img/fondo/banderashimalaya.jpeg')",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
-                        width: "100vw",
-                        height: "100vh",
-                        maxWidth: "100vw",
-                        minHeight: "100vh",
+                        width: "100%",
+                        maxWidth: "100%",
                     }}
                 >
-                    <div className="flex flex-col items-center justify-center h-full">
+                    <div className="flex flex-col items-center justify-center h-screen px-4">
                         <div className="flying-squares" aria-hidden="true">
                             <div className="square red" />
                             <div className="square purple" />
@@ -64,7 +62,7 @@ export default function Home() {
                         <div className="mt-16 text-center">
                             <EditableText 
                                 storageKey="home-welcome-text"
-                                className="text-lg md:text-2xl mb-2 bg-clip-text text-transparent"
+                                className="text-lg md:text-2xl mb-2 bg-clip-text text-transparent block"
                                 style={{ fontFamily: "Gaya, sans-serif", backgroundImage: "var(--chakra-third-eye-gradient)" }}
                                 placeholder="Texto de bienvenida..."
                             >
@@ -73,7 +71,7 @@ export default function Home() {
                             <EditableText
                                 storageKey="home-main-title"
                                 isTitle={true}
-                                className="font-bold mb-8 bg-clip-text text-transparent w-full max-w-full text-center leading-tight"
+                                className="font-bold mb-8 bg-clip-text text-transparent w-full max-w-full text-center leading-tight block"
                                 style={{
                                     fontFamily: "Gaya, sans-serif",
                                     backgroundImage: "var(--chakra-root-gradient)",

@@ -136,6 +136,13 @@ section {
 	}
 }
 
+/* Deshabilitar sticky en la primera sección (masthead) */
+section#masthead {
+	position: relative;
+	/* Remover cualquier animación de scroll timeline en masthead */
+	animation: none;
+}
+
 .flying-squares {
 	position: absolute;
 	z-index: 1;
