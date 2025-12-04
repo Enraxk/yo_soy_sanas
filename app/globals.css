@@ -253,4 +253,19 @@
 
 body {
   overflow-x: hidden;
+  max-width: 100vw;
+}
+
+html {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Prevenir desbordamiento en todos los elementos */
+*:not(dialog) {
+  max-width: 100%;
 }
