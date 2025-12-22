@@ -89,6 +89,7 @@ header {
 .menu input[type="checkbox"]:checked ~ .burger .bottom {
 	stroke-dashoffset: -132px;
 }
+/* Comentado para no afectar la navbar principal
 nav {
 	display: flex;
 	align-items: center;
@@ -96,6 +97,7 @@ nav {
 	background-color: var(--header-bg);
 	width: 100%;
 }
+*/
 ul.animated-nav {
 	list-style-type: none;
 	display: flex;
