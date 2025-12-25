@@ -141,7 +141,8 @@ section {
 .flying-squares {
 	position: absolute;
 	z-index: 1;
-	width: 100vw;
+	/* Avoid horizontal overflow caused by 100vw on scrollbars */
+	width: 100%;
 	height: var(--app-full-height);
 	pointer-events: none;
 }
@@ -178,7 +179,8 @@ section {
 .tile-section {
 	position: sticky;
 	top: 0;
-	max-inline-size: 100vw;
+	/* Match container to viewport without including scrollbar width */
+	max-inline-size: 100%;
 	block-size: var(--app-full-height);
 	overflow: hidden;
 
@@ -256,6 +258,8 @@ section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+	/* Prevent transient horizontal gaps while cards animate/load */
+	overflow-x: clip;
 }
 .cards {
   display: flex;
@@ -266,6 +270,8 @@ section {
   box-shadow: inset 0 0 0.125rem var(--text-color);
   padding: 1rem;
   background: #fff;
+	/* Isolate layout during animations to avoid affecting siblings */
+	contain: layout paint;
 }
 .card .title {
   font-weight: bold;
