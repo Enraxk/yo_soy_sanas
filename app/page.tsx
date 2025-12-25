@@ -42,7 +42,7 @@ export default function Home() {
                     className="min-h-screen relative"
                     style={{
                         paddingTop: "64px",
-                        backgroundImage: "url('/img/fondo/banderashimalaya.jpeg')",
+                        backgroundImage: "url('/img/fondo/Fondo2.jpeg')",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
@@ -59,12 +59,6 @@ export default function Home() {
                         </div>
 
                         <div className="mt-16 text-center">
-                            <span 
-                                className="text-lg md:text-2xl mb-2 bg-clip-text text-transparent block"
-                                style={{ fontFamily: "Gaya, sans-serif", backgroundImage: "var(--chakra-third-eye-gradient)" }}
-                            >
-                                Bienvenidos a mi página creativa
-                            </span>
                             <span
                                 className="font-bold mb-8 bg-clip-text text-transparent w-full max-w-full text-center leading-tight block"
                                 style={{
