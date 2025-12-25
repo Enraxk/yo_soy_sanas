@@ -127,8 +127,8 @@ ul.animated-nav li:hover::after {
 }
 
 section {
-	min-block-size: 100vh;
-	background-color: var(--section);
+	min-block-size: var(--app-full-height);
+    background-color: var(--section);
 
 	/* for animation */
 	view-timeline-name: var(--name);
@@ -142,7 +142,7 @@ section {
 	position: absolute;
 	z-index: 1;
 	width: 100vw;
-	height: 100vh;
+	height: var(--app-full-height);
 	pointer-events: none;
 }
 .square {
@@ -179,7 +179,7 @@ section {
 	position: sticky;
 	top: 0;
 	max-inline-size: 100vw;
-	block-size: 100vh;
+	block-size: var(--app-full-height);
 	overflow: hidden;
 
 	& .tile-container {
@@ -189,7 +189,7 @@ section {
 		translate: -50% -50%;
 		scale: 2.5;
 		inline-size: 100%;
-		block-size: 100vh;
+		block-size: var(--app-full-height);
 		display: grid;
 		grid-template: repeat(4, 1fr) / repeat(5, 1fr);
 		rotate: 0.12turn;
@@ -251,7 +251,7 @@ section {
 .two-columns {
   max-width: 80ch;
   margin: 0 auto;
-  min-height: 100vh;
+	min-height: var(--app-full-height);
   padding: 3rem 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;

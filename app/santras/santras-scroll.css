@@ -7,7 +7,7 @@
   scroll-snap-align: start;
   scroll-snap-stop: always;
   view-timeline: --section;
-  height: 100dvh;
+  height: var(--app-full-height);
   width: 100vw;
   position: relative;
   overflow: hidden;
@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100dvh;
+  min-height: var(--app-full-height);
   width: 100vw;
   text-align: center;
   background: linear-gradient(180deg, #7d18cc 0%, #5e36d0 16%, #0b8eb6 32%, #0cab0c 48%, #ffd500 64%, #FF7F00 80%, #FF0000 100%) !important;
@@ -246,7 +246,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: var(--app-full-height);
   background: rgba(0,0,0,0.45);
   z-index: 9999;
   display: flex;
