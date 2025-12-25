@@ -154,7 +154,7 @@ export default function SantrasPage() {
                     top: 0,
                     left: 0,
                     width: '100vw',
-                    height: '100vh',
+                    height: 'var(--app-full-height)',
                     background: 'rgba(0,0,0,0.45)',
                     zIndex: 9999,
                     display: 'flex',

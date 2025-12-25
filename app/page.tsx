@@ -47,9 +47,9 @@ export default function Home() {
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
                         width: "100vw",
-                        height: "100vh",
+                        height: "var(--app-full-height)",
                         maxWidth: "100vw",
-                        minHeight: "100vh",
+                        minHeight: "var(--app-full-height)",
                     }}
                 >
                     <div className="flex flex-col items-center justify-center h-full">

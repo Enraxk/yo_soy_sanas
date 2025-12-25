@@ -98,7 +98,16 @@
     --chakra-throat-gradient: linear-gradient(135deg, #0b8eb6 0%, #aad3ea 100%);
     --chakra-third-eye-gradient: linear-gradient(135deg, #2329da 0%, #4a61c9 100%);
     --chakra-crown-gradient: linear-gradient(135deg, #7d18cc 0%, #7e83da 100%);
+
+    /* Full-viewport height fallback: 100vh first, upgrade to 100dvh when supported */
+    --app-full-height: 100vh;
 }
+
+  @supports (height: 100dvh) {
+    :root {
+      --app-full-height: 100dvh;
+    }
+  }
 
 .dark {
     --background: oklch(0.145 0 0);
@@ -152,7 +161,7 @@
 }
 .bg-fade {
   width: 100vw;
-  height: 100vh;
+  height: var(--app-full-height);
   pointer-events: none;
 }
 @keyframes fadeInBg {
