@@ -10,23 +10,14 @@ import { type AppConfig } from './types';
  */
 export const ENV = {
   NODE_ENV: process.env.NODE_ENV || 'development',
-  
-  // Email/SMTP Configuration
-  ADMIN_EMAIL: process.env.ADMIN_EMAIL || '',
-  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || '',
-  SMTP_HOST: process.env.SMTP_HOST || '',
-  SMTP_PORT: Number(process.env.SMTP_PORT) || 587,
-  SMTP_USER: process.env.SMTP_USER || '',
-  SMTP_PASS: process.env.SMTP_PASS || '',
-  
+
   // App Configuration
   BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
   SITE_NAME: process.env.NEXT_PUBLIC_SITE_NAME || 'Yo Soy Sanas',
-  
+
   // Features
-  ENABLE_AUTH: process.env.NEXT_PUBLIC_ENABLE_AUTH === 'true',
   ENABLE_AUDIO: process.env.NEXT_PUBLIC_ENABLE_AUDIO === 'true',
-  
+
   // Development
   DEBUG: process.env.NODE_ENV === 'development',
 } as const;
@@ -39,7 +30,7 @@ export const APP_CONFIG: AppConfig = {
   description: 'Galería interactiva de chakras y santras para tu viaje espiritual. Explora los 7 chakras principales con imágenes sagradas, mantras y meditación guiada.',
   version: '1.0.0',
   author: 'Equipo Yo Soy Sanas',
-  contactEmail: ENV.ADMIN_EMAIL || 'contacto@yosoysanas.com',
+  contactEmail: 'contacto@yosoysanas.com',
   social: {
     instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL,
     facebook: process.env.NEXT_PUBLIC_FACEBOOK_URL,
@@ -94,15 +85,7 @@ export const ROUTES = {
   GALERIA: '/galeria',
   CHAKRAS: '/chakras',
   COLLECTIONS: '/collections',
-  LOGIN: '/login',
-  ADMIN: '/admin',
-  
-  // API Routes
-  API: {
-    LOGIN: '/api/login',
-    VERIFY_CODE: '/api/verify-code',
-  },
-  
+
   // Dynamic Routes
   CHAKRA_DETAIL: (chakraId: string) => `/chakras/${chakraId}`,
   GALERIA_DETAIL: (chakraId: string) => `/galeria/${chakraId}`,
@@ -157,26 +140,6 @@ export const UI_CONFIG = {
     XL: 1280,
   },
 } as const;
-
-/**
- * Validación de configuración crítica
- */
-export function validateConfig(): { isValid: boolean; errors: string[] } {
-  const errors: string[] = [];
-  
-  if (ENV.ENABLE_AUTH) {
-    if (!ENV.ADMIN_EMAIL) errors.push('ADMIN_EMAIL es requerido cuando AUTH está habilitado');
-    if (!ENV.ADMIN_PASSWORD) errors.push('ADMIN_PASSWORD es requerido cuando AUTH está habilitado');
-    if (!ENV.SMTP_HOST) errors.push('SMTP_HOST es requerido cuando AUTH está habilitado');
-    if (!ENV.SMTP_USER) errors.push('SMTP_USER es requerido cuando AUTH está habilitado');
-    if (!ENV.SMTP_PASS) errors.push('SMTP_PASS es requerido cuando AUTH está habilitado');
-  }
-  
-  return {
-    isValid: errors.length === 0,
-    errors,
-  };
-}
 
 /**
  * Utilidades para desarrollo

@@ -20,8 +20,6 @@
 - 📱 **Diseño responsive** optimizado para móvil y desktop
 - 🔮 **Información detallada** de cada chakra (sanskrito, mantras, elementos)
 - 🎵 **Soporte para mantras** y meditación guiada
-- 🔐 **Sistema de autenticación** opcional con códigos por email
-- ✏️ **Sistema de edición admin** para modificar contenido en tiempo real
 - 🎭 **Tooltips informativos** con propiedades espirituales
 - ⚡ **Optimización SEO** con metadata dinámica por chakra
 
@@ -77,9 +75,6 @@ yo_soy_sanas/
 ├── 📁 app/                    # Next.js App Router
 │   ├── chakras/[chakra]/      # Páginas dinámicas de chakras
 │   ├── galeria/               # Galería general
-│   ├── api/                   # API Routes
-│   │   ├── login/             # Autenticación
-│   │   └── verify-code/       # Verificación por email
 │   └── Error/                 # Páginas de error personalizadas
 ├── 📁 components/
 │   ├── chakras/               # Componentes especializados
@@ -88,8 +83,7 @@ yo_soy_sanas/
 │   │   └── index.ts           # Exportaciones
 │   └── ui/                    # Componentes UI (shadcn/ui)
 ├── 📁 hooks/                  # Hooks personalizados
-│   ├── useChakraCarousel.ts   # Lógica del carrusel
-│   └── useAuth.ts             # Autenticación
+│   └── useChakraCarousel.ts   # Lógica del carrusel
 ├── 📁 lib/                    # Utilidades y configuración
 │   ├── chakras.ts             # Datos centralizados
 │   ├── types.ts               # Definiciones TypeScript
@@ -106,7 +100,6 @@ yo_soy_sanas/
 - **Styling:** Tailwind CSS con tema personalizado
 - **UI Components:** shadcn/ui + Radix UI
 - **Iconos:** Lucide React
-- **Email:** Nodemailer (para autenticación)
 - **Carrusel:** Embla Carousel
 
 ## 🌟 Características Avanzadas
@@ -131,29 +124,6 @@ Cada chakra incluye información completa:
 - **Indicadores:** Puntos de progreso visuales
 - **Sincronización:** Fondo cambia con el chakra activo
 
-### 🔐 Autenticación (Opcional)
-
-- **Login por email:** Sistema seguro con códigos
-- **Verificación 2FA:** Códigos temporales por email
-- **Panel admin:** Funcionalidades administrativas
-- **Configuración flexible:** Habilitación via variables de entorno
-
-### ✏️ Sistema de Administración Editable
-
-- **Acceso via navbar:** Haz clic en el ícono de usuario
-- **Credenciales simples:** Usuario y contraseña configurable
-- **Edición en tiempo real:** Hover sobre textos para editarlos
-- **Persistencia local:** Cambios guardados en localStorage
-- **Interfaz intuitiva:** Botones de edición aparecen automáticamente
-- **Sin interrupciones:** No afecta la navegación normal
-
-#### Cómo Usar:
-1. Haz clic en el ícono de usuario (👤) en la navbar
-2. Ingresa credenciales: El_rinchi / XTC#d$lS*HlkGxWw2i4&
-3. Aparece barra azul indicando modo admin activo
-4. Haz hover sobre textos para ver el ícono de editar ✏️
-5. Edita contenido y guarda cambios automáticamente
-
 ## ⚙️ Configuración
 
 ### Variables de Entorno
@@ -166,19 +136,7 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000
 NEXT_PUBLIC_SITE_NAME="Yo Soy Sanas"
 
 # Funcionalidades opcionales
-NEXT_PUBLIC_ENABLE_AUTH=false
 NEXT_PUBLIC_ENABLE_AUDIO=false
-
-# Sistema de Administración Editable (YA CONFIGURADO)
-NEXT_PUBLIC_ADMIN_USER=El_rinchi
-NEXT_PUBLIC_ADMIN_PASS=XTC#d$lS*HlkGxWw2i4&
-
-# SMTP (solo si AUTH=true)
-ADMIN_EMAIL=admin@yosoysanas.com
-ADMIN_PASSWORD=tu_contraseña_segura
-SMTP_HOST=smtp.gmail.com
-SMTP_USER=tu_email@gmail.com
-SMTP_PASS=tu_app_password
 ```
 
 ### Personalización de Chakras
@@ -219,19 +177,6 @@ npm run lint         # Linting con ESLint
 import { ChakraCard, SantrasCarousel } from '@/components/chakras';
 import { CHAKRAS } from '@/lib/chakras';
 
-// Sistema de edición
-import { EditableText } from '@/components/EditableText';
-import { useSimpleEdit } from '@/hooks/useSimpleEdit';
-
-// Hacer textos editables
-<EditableText 
-  storageKey="clave-unica"
-  className="text-2xl font-bold"
-  isTitle={true}
->
-  Texto Editable
-</EditableText>
-
 // Carrusel con configuración personalizada
 <SantrasCarousel 
   chakras={CHAKRAS}
@@ -256,9 +201,6 @@ const { state, currentChakra, controls } = useChakraCarousel({
   autoplayDelay: 30000,
   pauseOnHover: true
 });
-
-// Hook para autenticación
-const { authState, login, verifyCode } = useAuth();
 ```
 
 ## 🎨 Personalización Visual
