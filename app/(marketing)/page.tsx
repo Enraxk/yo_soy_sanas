@@ -4,11 +4,11 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from 'next/image';
 
-import Navbar from "@/components/ui/Navbar";
-import AnimatedTiles from "@/components/AnimatedTiles";
-import TwoColumns from "@/components/TwoColumns";
-import AnimatedTextSection from "@/components/AnimatedTextSection";
-import "./animated-sections.css";
+import Navbar from "@/components/shared/Navbar";
+import AnimatedTiles from "@/components/landing/AnimatedTiles";
+import TwoColumns from "@/components/landing/TwoColumns";
+import AnimatedTextSection from "@/components/landing/AnimatedTextSection";
+import "../animated-sections.css";
 
 export default function Home() {
 
