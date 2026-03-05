@@ -5,7 +5,7 @@ import { CHAKRAS } from '@/lib/chakras';
 import Navbar from '@/components/ui/Navbar';
 import React from "react";
 
-export default function MaderasPage() {
+export default function ArteRitualPage() {
     const count = CHAKRAS.length;
 
     return (
