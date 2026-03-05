@@ -106,10 +106,10 @@ export default function Home() {
                                 </div>
 
                                 <div className="flex flex-col items-center">
-                                    <Link href="/maderas">
+                                    <Link href="/arte-ritual">
                                         <Image
                                             src="/img/iconos/pngmaderas.png"
-                                            alt="Maderas"
+                                            alt="Artes Rituales"
                                             width={224}
                                             height={224}
                                             className="w-40 h-40 md:w-56 md:h-56 object-contain cursor-pointer hover:scale-105 transition-transform bg-transparent"

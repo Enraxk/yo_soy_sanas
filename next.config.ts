@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/maderas',
+        destination: '/arte-ritual',
+        permanent: true,
+      },
+    ];
+  },
   // Optimize build performance
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],

@@ -60,31 +60,31 @@ const Navbar = (): JSX.Element => {
           </TooltipContent>
         </Tooltip>
 
-        {/* Icono de Maderas */}
+        {/* Icono de Arte Ritual */}
         <Tooltip>
           <TooltipTrigger asChild>
-            <Link href="/maderas">
+            <Link href="/arte-ritual">
               <Button
                 variant="ghost"
                 size="sm"
                 className="rounded-full p-0 bg-transparent hover:bg-transparent border-none shadow-none transition-all duration-300 flex items-center justify-center"
                 style={{ 
                   backgroundColor: 'transparent !important', 
-                  border: isActive('/maderas') ? '2px solid rgba(255, 255, 255, 0.8)' : 'none !important', 
+                  border: isActive('/arte-ritual') ? '2px solid rgba(255, 255, 255, 0.8)' : 'none !important', 
                   width: '36px', 
                   height: '36px',
-                  boxShadow: isActive('/maderas') ? '0 0 12px rgba(255, 255, 255, 0.5)' : 'none'
+                  boxShadow: isActive('/arte-ritual') ? '0 0 12px rgba(255, 255, 255, 0.5)' : 'none'
                 }}
-                aria-label="Maderas"
+                aria-label="Arte Ritual"
               >
                 <Image
                   src="/img/iconos/pngmaderas.png"
-                  alt="Maderas"
+                  alt="Arte Ritual"
                   width={24}
                   height={24}
-                  className={`transition-all duration-300 ${getActiveStyles(isActive('/maderas'))}`}
+                  className={`transition-all duration-300 ${getActiveStyles(isActive('/arte-ritual'))}`}
                   style={{
-                    ...(isActive('/maderas') ? {
+                    ...(isActive('/arte-ritual') ? {
                       filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
                     } : {}),
                     display: 'block !important'
@@ -94,7 +94,7 @@ const Navbar = (): JSX.Element => {
             </Link>
           </TooltipTrigger>
           <TooltipContent sideOffset={8}>
-            Maderas {isActive('/maderas') && '(Activo)'}
+            Arte Ritual {isActive('/arte-ritual') && '(Activo)'}
           </TooltipContent>
         </Tooltip>
 
