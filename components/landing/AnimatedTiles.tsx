@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React from "react";
-import "../app/animated-sections.css";
+import "../../app/animated-sections.css";
 
 export default function AnimatedTiles() {
     // Array de gradientes de chakras

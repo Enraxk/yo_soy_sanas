@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Navbar from '@/components/ui/Navbar';
+import Navbar from '@/components/shared/Navbar';
 import { CHAKRAS } from '@/lib/chakras';
 import "./santras-scroll.css";
 import Image from 'next/image';
