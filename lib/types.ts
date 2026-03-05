@@ -37,43 +37,6 @@ export interface CarouselEvents {
 }
 
 /**
- * Estado de autenticación del usuario
- */
-export interface AuthState {
-  isAuthenticated: boolean;
-  email?: string;
-  role?: 'admin' | 'user';
-  isLoading: boolean;
-  error?: string;
-}
-
-/**
- * Credenciales de login
- */
-export interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
-/**
- * Respuesta del código de verificación
- */
-export interface CodeVerificationRequest {
-  email: string;
-  code: string;
-}
-
-/**
- * Respuesta genérica de la API
- */
-export interface ApiResponse<T = unknown> {
-  ok: boolean;
-  data?: T;
-  error?: string;
-  message?: string;
-}
-
-/**
  * Configuración de tema/chakra activo
  */
 export interface ThemeState {
@@ -109,8 +72,6 @@ export interface SantrasCarouselProps {
  */
 export interface NavigationProps {
   currentPath: string;
-  isAuthenticated?: boolean;
-  onAuthClick?: () => void;
 }
 
 /**
