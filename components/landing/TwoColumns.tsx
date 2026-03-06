@@ -1,16 +1,5 @@
 ﻿import React, { useEffect, useState, useRef } from "react";
-
-const bioText = [
-  "Pedro Manuel Lapuente Feliu es la persona que da vida a SANAS.",
-
-  "Es un hombre maduro y experimentado en la universidad cotidiana de la Vida, un autodidacta pleno que, a sus cincuenta y un años, conserva la mirada y el ánimo esencial con los que dio sus primeros pasos por las tierras madrileñas donde nació y creció. De origen humilde y obrero, se ha forjado a sí mismo con esfuerzo y determinación. Su espíritu y temperamento libertario han sido decisivos para que hoy su espiritualidad se manifieste en todas sus tareas y empeños vitales.",
-
-  "De profesión principal bombero forestal, ha podido atender también otra de sus grandes pasiones: el cuidado y la protección de los bienes naturales y humanos. Su vocación le permite poner al servicio de los demás sus altas cualidades y su extensa experiencia en esta noble y exigente labor.",
-
-  "Para Pedro —o SANAS—, reconocerse siempre como un ser humano más, que manifiesta sus talentos en armonía con la existencia consciente y creativa, es una bendición.",
-
-  "Hoy, todo ello representa su contribución más valiosa a la Vida."
-];
+import { BIO } from "@/lib/content";
 
 export default function TwoColumns() {
   const [isVisible, setIsVisible] = useState(false);
@@ -94,7 +83,7 @@ export default function TwoColumns() {
               fontFamily: "Gaya, serif",
             }}
           >
-            El Artista, el Ser
+            {BIO.heading}
           </h2>
           <div
             style={{
@@ -108,7 +97,7 @@ export default function TwoColumns() {
               gap: "1.2rem",
             }}
           >
-            {bioText.map((paragraph, index) => (
+            {BIO.paragraphs.map((paragraph, index) => (
               <p key={index} style={{ margin: 0 }}>
                 {paragraph}
               </p>
@@ -149,7 +138,7 @@ export default function TwoColumns() {
               fontWeight: "bold",
             }}
           >
-            Mi Visión
+            {BIO.visionCard.heading}
           </h3>
           <div
             className="subtitle"
@@ -159,7 +148,7 @@ export default function TwoColumns() {
               fontSize: "clamp(0.8rem, 1.2vw, 1rem)",
             }}
           >
-            Fotografía Creativa
+            {BIO.visionCard.subtitle}
           </div>
           <p
             style={{
@@ -168,7 +157,7 @@ export default function TwoColumns() {
               textAlign: "center",
             }}
           >
-            Espacio destinado para una fotografía que capture la esencia creativa de SANAS
+            {BIO.visionCard.placeholder}
           </p>
         </div>
       </div>

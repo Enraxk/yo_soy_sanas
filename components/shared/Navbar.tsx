@@ -1,18 +1,15 @@
 ﻿"use client";
 
-import React, {JSX, useState} from "react";
+import React, {JSX} from "react";
 import Link from "next/link";
-import { Settings, Home } from "lucide-react";
+import { Home } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 
 
-// Navbar simplificada - AdminAuth maneja su propio estado
 const Navbar = (): JSX.Element => {
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const pathname = usePathname();
 
   // Función para determinar si una ruta está activa

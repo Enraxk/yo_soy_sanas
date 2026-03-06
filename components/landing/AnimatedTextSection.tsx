@@ -1,24 +1,5 @@
 ﻿import React, { useEffect, useRef, useState } from "react";
-
-const text1 =
-  "SANAS es un artista autodidacta que ha creado esta serie de siete SANTRAS con la\n" +
-    "única intención de ofrecer una nueva y práctica herramienta de sanación y\n" +
-    "crecimiento interior para el observador.\n\n" +
-
-    "Su trabajo se sustenta en un tránsito existencial hacia lo más profundo de la psique\n" +
-    "humana. Esta introspección es fruto de una experiencia evolutiva consciente y de\n" +
-    "una creatividad desbordante, canalizada durante el intenso proceso de creación de\n" +
-    "la serie SANTRAS y otras obras del artista.\n\n" +
-
-    "Han sido dos años de intensa exigencia vital y regeneración para SANAS, de los\n" +
-    "cuales ha nacido esta maravillosa serie de siete SANTRAS.\n\n" +
-
-    "Con ellas, el artista ha alcanzado la serenidad y la salud que en algún momento\n" +
-    "perdió por circunstancias comunes de la vida moderna, las mismas que afectan a\n" +
-    "tantas personas y que también impulsaron su propio proceso evolutivo.\n\n" +
-
-    "Hoy, la vida continúa para SANAS con aceptación y confianza, agradecido por la\n" +
-    "oportunidad de volver a ser consciente del instante presente.";
+import { ABOUT_SANAS } from "@/lib/content";
 
 export default function AnimatedTextSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -76,8 +57,8 @@ export default function AnimatedTextSection() {
         <div style={{ width: '100%', height: '8px' }} />
       </div>
       <div className="text" style={{ fontSize: '1.35rem', lineHeight: 1.8 }}>
-        <h2 style={{ fontFamily: 'Gaya, sans-serif', fontSize: '2.2rem', marginBottom: '2rem' }}>El creador</h2>
-        <pre style={{ fontFamily: 'inherit', background: 'none', border: 'none', padding: 0, margin: 0, fontSize: '1.35rem', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}>{text1}</pre>
+        <h2 style={{ fontFamily: 'Gaya, sans-serif', fontSize: '2.2rem', marginBottom: '2rem' }}>{ABOUT_SANAS.heading}</h2>
+        <pre style={{ fontFamily: 'inherit', background: 'none', border: 'none', padding: 0, margin: 0, fontSize: '1.35rem', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}>{ABOUT_SANAS.body}</pre>
       </div>
     </section>
   );
