@@ -263,3 +263,58 @@
 body {
   overflow-x: hidden;
 }
+
+/* ─── Section layout utilities ──────────────────────────────────────────────
+   Reutilizable en todos los componentes del landing.
+   No sobreescriben estilos existentes — úsalos en componentes nuevos (Phase 5+).
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.sanas-section {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sanas-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1400px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .sanas-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.sanas-section-title {
+  font-family: 'Gaya', serif;
+  font-weight: normal;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.sanas-section-subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.7;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.sanas-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.sanas-card-gradient {
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  box-sizing: border-box;
+  color: white;
+}

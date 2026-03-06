@@ -1,13 +1,10 @@
 "use client";
 
 
-import { CHAKRAS } from '@/lib/chakras';
 import Navbar from '@/components/shared/Navbar';
 import React from "react";
 
 export default function ArteRitualPage() {
-    const count = CHAKRAS.length;
-
     return (
         <main className="min-h-screen p-6 flex flex-col">
             <Navbar />
