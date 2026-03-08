@@ -187,7 +187,7 @@ export default function LaUnionSection() {
           />
         </div>
         <p className="text-center text-white/50 text-sm mt-4">
-          <em>SANTRAS</em> · Acrilico sobre lienzo · 1M x 1.10M
+          <em>SANTRAS</em> · La Unión · Acrilico sobre lienzo · 1M x 1.10M
         </p>
       </div>
     </section>
