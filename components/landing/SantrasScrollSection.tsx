@@ -170,7 +170,7 @@ export default function SantrasScrollSection() {
     <section
       id="santras"
       ref={sectionRef}
-      style={{ height: `${CHAKRAS.length * 100}vh` }}
+      style={{ height: `${(CHAKRAS.length - 1) * 100 + 50}vh` }}
       className="relative"
     >
       {/* Sticky container */}
@@ -240,11 +240,30 @@ export default function SantrasScrollSection() {
               >
                 {chakra.sanskrit}
               </h2>
-              <p className="text-xs md:text-sm uppercase tracking-wider mb-3 md:mb-6"
+              <p className="text-xs md:text-sm uppercase tracking-wider mb-4 md:mb-6"
                 style={{ color: chakra.color, opacity: 0.85 }}>
-                {chakra.mantra} · {chakra.element}
+                {chakra.element}
               </p>
-              <p className="text-xs md:text-lg leading-relaxed text-white/75 max-w-xs md:max-w-sm mx-auto md:mx-0">
+              {/* Bija mantra destacado */}
+              <div className="mb-4 md:mb-8 flex items-center justify-center md:justify-start gap-4">
+                <span
+                  className="font-bold tracking-widest leading-none"
+                  style={{
+                    fontFamily: "'Gaya', serif",
+                    fontSize: "clamp(3rem, 10vw, 6rem)",
+                    color: chakra.color,
+                    opacity: 0.9,
+                    textShadow: `0 0 40px ${chakra.color}55`,
+                  }}
+                >
+                  {chakra.mantra}
+                </span>
+                <div className="text-left" style={{ color: chakra.color, opacity: 0.65 }}>
+                  <p className="text-xs uppercase tracking-widest leading-tight">Bija</p>
+                  <p className="text-xs uppercase tracking-widest leading-tight">Mantra</p>
+                </div>
+              </div>
+              <p className="text-xs md:text-base leading-relaxed text-white/60 max-w-xs md:max-w-sm mx-auto md:mx-0">
                 {chakra.description.split('\n')[0]}
               </p>
             </div>
