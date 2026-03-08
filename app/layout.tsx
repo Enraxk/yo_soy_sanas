@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { DEFAULT_SEO, ENV } from '@/lib/config';
+import Navbar from '@/components/shared/Navbar';
+import { StructuredData } from '@/components/shared/StructuredData';
 import './globals.css';
 
 const geistSans = Geist({
@@ -35,10 +37,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        <StructuredData />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <TooltipProvider>
+          <Navbar />
           {children}
         </TooltipProvider>
       </body>

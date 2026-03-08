@@ -1,137 +1,171 @@
-﻿"use client";
+"use client";
 
-import React, {JSX} from "react";
-import Link from "next/link";
-import { Home } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { Home, Mail, User } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
 
+type NavItem = {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+};
 
-const Navbar = (): JSX.Element => {
-  const pathname = usePathname();
+const NAV_ITEMS: NavItem[] = [
+  {
+    href: "#hero",
+    label: "Inicio",
+    icon: <Home className="w-5 h-5 text-white" />,
+  },
+  {
+    href: "#exposiciones",
+    label: "Exposiciones",
+    icon: (
+      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
+          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+    ),
+  },
+  {
+    href: "#santras",
+    label: "Santras",
+    icon: (
+      <Image
+        src="/img/iconos/pngchakras.png"
+        alt="Santras"
+        width={20}
+        height={20}
+        className="block"
+      />
+    ),
+  },
+  {
+    href: "#arte-ritual",
+    label: "Arte Ritual",
+    icon: (
+      <Image
+        src="/img/iconos/pngmaderas.png"
+        alt="Arte Ritual"
+        width={20}
+        height={20}
+        className="block"
+      />
+    ),
+  },
+  {
+    href: "#creador",
+    label: "El Creador",
+    icon: <User className="w-5 h-5 text-white" />,
+  },
+  {
+    href: "#contacto",
+    label: "Contacto",
+    icon: <Mail className="w-5 h-5 text-white" />,
+  },
+];
 
-  // Función para determinar si una ruta está activa
-  const isActive = (path: string) => {
-    if (path === '/') {
-      return pathname === '/';
+const SECTION_IDS = NAV_ITEMS.map((item) => item.href.replace("#", ""));
+
+const Navbar = (): React.JSX.Element => {
+  const [activeSection, setActiveSection] = useState<string>("hero");
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  useEffect(() => {
+    // Track which sections are currently intersecting
+    const visible = new Map<string, number>();
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            visible.set(entry.target.id, entry.intersectionRatio);
+          } else {
+            visible.delete(entry.target.id);
+          }
+        });
+
+        if (visible.size === 0) return;
+
+        // Pick the section with the highest intersection ratio
+        let best = "";
+        let bestRatio = -1;
+        visible.forEach((ratio, id) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            best = id;
+          }
+        });
+        if (best) setActiveSection(best);
+      },
+      {
+        threshold: [0.1, 0.3, 0.5],
+        rootMargin: "-10% 0px -10% 0px",
+      }
+    );
+
+    SECTION_IDS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observerRef.current!.observe(el);
+    });
+
+    return () => observerRef.current?.disconnect();
+  }, []);
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const id = href.replace("#", "");
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    return pathname.startsWith(path);
-  };
-
-  // Función para obtener las clases de resaltado
-  const getActiveStyles = (isActive: boolean) => {
-    return isActive
-      ? 'brightness-200 scale-110 saturate-300'
-      : 'hover:scale-105 hover:brightness-110';
   };
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] px-3 py-2 rounded-full" style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', backdropFilter: 'blur(10px)', position: 'fixed' }}>
-      <div className="flex items-center gap-2" style={{ justifyContent: 'center', alignItems: 'center' }}>
-        {/* Icono de Home */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Link href="/">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="rounded-full p-0 bg-transparent hover:bg-transparent border-none shadow-none flex items-center justify-center"
-                style={{ 
-                  backgroundColor: 'transparent !important', 
-                  border: isActive('/') ? '2px solid rgba(255, 255, 255, 0.8)' : 'none !important', 
-                  width: '36px', 
-                  height: '36px',
-                  boxShadow: isActive('/') ? '0 0 12px rgba(255, 255, 255, 0.5)' : 'none'
-                }}
-                aria-label="Inicio"
-              >
-                <Home className={`w-6 h-6 text-white transition-all duration-300 ${getActiveStyles(isActive('/'))}`}
-                      style={{ color: 'white !important' }} />
-              </Button>
-            </Link>
-          </TooltipTrigger>
-          <TooltipContent sideOffset={8}>
-            Inicio {isActive('/') && '(Activo)'}
-          </TooltipContent>
-        </Tooltip>
-
-        {/* Icono de Arte Ritual */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Link href="/arte-ritual">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="rounded-full p-0 bg-transparent hover:bg-transparent border-none shadow-none transition-all duration-300 flex items-center justify-center"
-                style={{ 
-                  backgroundColor: 'transparent !important', 
-                  border: isActive('/arte-ritual') ? '2px solid rgba(255, 255, 255, 0.8)' : 'none !important', 
-                  width: '36px', 
-                  height: '36px',
-                  boxShadow: isActive('/arte-ritual') ? '0 0 12px rgba(255, 255, 255, 0.5)' : 'none'
-                }}
-                aria-label="Arte Ritual"
-              >
-                <Image
-                  src="/img/iconos/pngmaderas.png"
-                  alt="Arte Ritual"
-                  width={24}
-                  height={24}
-                  className={`transition-all duration-300 ${getActiveStyles(isActive('/arte-ritual'))}`}
+    <nav
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] px-3 py-2 rounded-full"
+      style={{
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        backdropFilter: "blur(10px)",
+      }}
+      aria-label="Navegación principal"
+    >
+      <div className="flex items-center gap-1">
+        {NAV_ITEMS.map((item) => {
+          const isActive = activeSection === item.href.replace("#", "");
+          return (
+            <Tooltip key={item.href}>
+              <TooltipTrigger asChild>
+                <a
+                  href={item.href}
+                  onClick={(e) => handleClick(e, item.href)}
+                  aria-label={item.label}
+                  aria-current={isActive ? "page" : undefined}
+                  className="flex items-center justify-center rounded-full transition-all duration-300"
                   style={{
-                    ...(isActive('/arte-ritual') ? {
-                      filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
-                    } : {}),
-                    display: 'block !important'
+                    width: 36,
+                    height: 36,
+                    border: isActive
+                      ? "2px solid rgba(255, 255, 255, 0.8)"
+                      : "2px solid transparent",
+                    boxShadow: isActive
+                      ? "0 0 12px rgba(255, 255, 255, 0.5)"
+                      : "none",
+                    filter: isActive
+                      ? "brightness(2) saturate(3)"
+                      : "brightness(1)",
                   }}
-                />
-              </Button>
-            </Link>
-          </TooltipTrigger>
-          <TooltipContent sideOffset={8}>
-            Arte Ritual {isActive('/arte-ritual') && '(Activo)'}
-          </TooltipContent>
-        </Tooltip>
-
-        {/* Icono de Santras */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Link href="/santras">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="rounded-full p-0 bg-transparent hover:bg-transparent border-none shadow-none transition-all duration-300 flex items-center justify-center"
-                style={{ 
-                  backgroundColor: 'transparent !important', 
-                  border: isActive('/santras') ? '2px solid rgba(255, 255, 255, 0.8)' : 'none !important', 
-                  width: '36px', 
-                  height: '36px',
-                  boxShadow: isActive('/santras') ? '0 0 12px rgba(255, 255, 255, 0.5)' : 'none'
-                }}
-                aria-label="Santras"
-              >
-                <Image
-                  src="/img/iconos/pngchakras.png"
-                  alt="Santras"
-                  width={24}
-                  height={24}
-                  className={`transition-all duration-300 ${getActiveStyles(isActive('/santras'))}`}
-                  style={{
-                    ...(isActive('/santras') ? {
-                      filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) brightness(1.3)'
-                    } : {}),
-                    display: 'block !important'
-                  }}
-                />
-              </Button>
-            </Link>
-          </TooltipTrigger>
-          <TooltipContent sideOffset={8}>
-            Santras {isActive('/santras') && '(Activo)'}
-          </TooltipContent>
-        </Tooltip>
+                >
+                  {item.icon}
+                </a>
+              </TooltipTrigger>
+              <TooltipContent sideOffset={8}>
+                {item.label}
+                {isActive && " (Activo)"}
+              </TooltipContent>
+            </Tooltip>
+          );
+        })}
       </div>
     </nav>
   );

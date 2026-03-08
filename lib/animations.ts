@@ -32,7 +32,7 @@ export function heroEntrance(targets: string | Element | Element[]) {
 }
 
 /**
- * Fade in + slide up — general purpose scroll reveal.
+ * Fade in + slide up - general purpose scroll reveal.
  * Used for portfolio grid items, section headings, etc.
  */
 export function fadeInUp(targets: string | Element | Element[], delay = 0) {

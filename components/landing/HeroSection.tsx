@@ -16,7 +16,7 @@ export default function HeroSection() {
 
   return (
     <section
-      id="masthead"
+      id="hero"
       style={{
         width: '100vw',
         height: 'var(--app-full-height)',
@@ -29,7 +29,7 @@ export default function HeroSection() {
         justifyContent: 'center',
       }}
     >
-      {/* Background image — cover fills the full section */}
+      {/* Background image - cover fills the full section */}
       <Image
         src="/img/fondo/Fondo.jpeg"
         alt=""

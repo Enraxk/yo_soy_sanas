@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * useScrollAnime — IntersectionObserver + Anime.js scroll-triggered animations.
+ * useScrollAnime - IntersectionObserver + Anime.js scroll-triggered animations.
  *
  * Usage:
  *   const ref = useScrollAnime(fadeInUp);
@@ -52,7 +52,7 @@ export function useScrollAnime<T extends Element = HTMLDivElement>(
       { threshold },
     );
 
-    // Start hidden — CSS should set opacity:0 initially
+    // Start hidden - CSS should set opacity:0 initially
     observer.observe(el);
 
     return () => observer.disconnect();

@@ -1,4 +1,4 @@
-# Copilot instructions — yo_soy_sanas
+# Copilot instructions - yo_soy_sanas
 
 Purpose: give an AI coding agent the minimal, high‑value knowledge to be productive in this repository.
 
@@ -6,7 +6,7 @@ Purpose: give an AI coding agent the minimal, high‑value knowledge to be produ
 - Framework: **Next.js 15 (App Router)** + **React 19** + **TypeScript**.
 - Styling: Tailwind (custom gradients in `app/globals.css`) + shadcn/ui + Radix.
 - Main data: `lib/chakras.ts` (single source of truth for chakra metadata and images).
-- Dev commands: `npm run dev` (Next dev — uses turbopack), `npm run build`, `npm run start`, `npm run lint`.
+- Dev commands: `npm run dev` (Next dev - uses turbopack), `npm run build`, `npm run start`, `npm run lint`.
 
 ## Important patterns and conventions (do these first)
 - Editable content is client-side only and persisted in localStorage:
@@ -15,7 +15,7 @@ Purpose: give an AI coding agent the minimal, high‑value knowledge to be produ
   - Hook: `hooks/useSimpleEdit.ts` reads `localStorage` & polls/observes changes.
 - Two admin/auth approaches:
   - Simple local admin (used by default): `components/AdminAuth.tsx` + `components/SimpleAuth.tsx`. Good for local editing and demos.
-  - Optional email/code-based auth: `hooks/useAuth.ts` expects server endpoints at `/api/login` and `/api/verify-code` and relies on SMTP env vars in `lib/config.ts` (see `ENV` and `validateConfig()`). Those server endpoints are not present — implement them when enabling `NEXT_PUBLIC_ENABLE_AUTH=true`.
+  - Optional email/code-based auth: `hooks/useAuth.ts` expects server endpoints at `/api/login` and `/api/verify-code` and relies on SMTP env vars in `lib/config.ts` (see `ENV` and `validateConfig()`). Those server endpoints are not present - implement them when enabling `NEXT_PUBLIC_ENABLE_AUTH=true`.
 - Carousel and background sync:
   - Use `components/chakras/SantrasCarousel.tsx` and `hooks/useChakraCarousel.ts`.
   - `useChakraCarousel` supports `config` (autoplayDelay, pauseOnHover, loop) and `events` (onSlideChange, onPlay/onPause, onHover/onLeave).
@@ -29,9 +29,9 @@ Purpose: give an AI coding agent the minimal, high‑value knowledge to be produ
 ## Practical rules for the agent (do / don’t)
 - DO edit `lib/chakras.ts` to add/update chakras and add matching `public` assets; update `app/chakras/[chakra]/page.tsx` metadata if needed.
 - DO use existing hooks & UI components. Prefer `SantrasCarousel` + `useChakraCarousel` over ad-hoc implementations for consistency.
-- DO respect the client/server boundary: files with `"use client"` are client components — avoid moving server-sensitive code into them.
+- DO respect the client/server boundary: files with `"use client"` are client components - avoid moving server-sensitive code into them.
 - DO NOT change the local admin flow unless adding a server-backed auth alternative and documenting migration steps; the local admin relies on `localStorage` keys described above.
-- DO NOT assume API endpoints exist — check for `/app/api` implementations before updating `useAuth` usage; if enabling server auth, add `/api/login` and `/api/verify-code` and update `lib/config.ts` to validate envs.
+- DO NOT assume API endpoints exist - check for `/app/api` implementations before updating `useAuth` usage; if enabling server auth, add `/api/login` and `/api/verify-code` and update `lib/config.ts` to validate envs.
 
 ## Debugging & development tips
 - Run locally: `npm install` → `cp .env.example .env.local` → `npm run dev` (visit http://localhost:3000).

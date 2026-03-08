@@ -1,10 +1,10 @@
 /**
  * Form validation utilities for the commission contact form (Phase 6).
  *
- * Anti-spam strategy — 3 layers:
- *   1. Honeypot field   — bots fill hidden inputs; humans don't
- *   2. Min time delay   — bots submit instantly; require ≥2 s after page load
- *   3. Rate limiting    — localStorage caps attempts to 3 per 10 minutes
+ * Anti-spam strategy - 3 layers:
+ *   1. Honeypot field   - bots fill hidden inputs; humans don't
+ *   2. Min time delay   - bots submit instantly; require ≥2 s after page load
+ *   3. Rate limiting    - localStorage caps attempts to 3 per 10 minutes
  */
 
 // ─── Field validation rules ──────────────────────────────────────────────────
@@ -139,7 +139,7 @@ function saveRateState(state: RateLimitState): void {
   try {
     localStorage.setItem(LS_KEY, JSON.stringify(state));
   } catch {
-    // localStorage unavailable — fail open (allow submission)
+    // localStorage unavailable - fail open (allow submission)
   }
 }
 
@@ -187,7 +187,7 @@ export interface ContactFormData {
   email: string;
   phone: string;
   message: string;
-  honeypot: string; // hidden field — must be empty
+  honeypot: string; // hidden field - must be empty
 }
 
 export interface ValidationResult {

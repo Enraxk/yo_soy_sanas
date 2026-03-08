@@ -260,13 +260,17 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   overflow-x: hidden;
 }
 
 /* ─── Section layout utilities ──────────────────────────────────────────────
    Reutilizable en todos los componentes del landing.
-   No sobreescriben estilos existentes — úsalos en componentes nuevos (Phase 5+).
+   No sobreescriben estilos existentes - úsalos en componentes nuevos (Phase 5+).
    ─────────────────────────────────────────────────────────────────────────── */
 
 .sanas-section {

@@ -59,7 +59,7 @@ export const BIO = {
 
     "De profesión principal bombero forestal, ha podido atender también otra de sus grandes pasiones: el cuidado y la protección de los bienes naturales y humanos. Su vocación le permite poner al servicio de los demás sus altas cualidades y su extensa experiencia en esta noble y exigente labor.",
 
-    "Para Pedro —o SANAS—, reconocerse siempre como un ser humano más, que manifiesta sus talentos en armonía con la existencia consciente y creativa, es una bendición.",
+    "Para Pedro -o SANAS-, reconocerse siempre como un ser humano más, que manifiesta sus talentos en armonía con la existencia consciente y creativa, es una bendición.",
 
     "Hoy, todo ello representa su contribución más valiosa a la Vida.",
   ] as const,

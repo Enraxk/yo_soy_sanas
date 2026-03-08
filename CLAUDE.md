@@ -19,167 +19,224 @@ Setup: `npm install` then `cp .env.example .env.local`.
 
 - **Deployed on Vercel** at `yosoysanas.com`
 - **Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · shadcn/ui · Radix UI
-- **Animations:** Anime.js (to be added — see Roadmap)
-- **Contact form backend:** Next.js API Route + Resend (to be added — see Roadmap)
+- **Animations:** Anime.js v4 (already installed)
+- **Contact form backend:** Next.js API Route + Resend (already implemented)
 
 ## Architecture
 
-### Key data flow
+### Single-page scroll structure
 
-- `lib/chakras.ts` — single source of truth for all 7 chakra entries (`CHAKRAS[]`). Each entry maps to a page, carousel slide, and background gradient.
-- `lib/config.ts` — environment variables (`ENV`), feature flags, SEO defaults, routes, and `DEV_UTILS.log/warn/error` (only logs in development).
-- `lib/types.ts` — shared TypeScript types.
-- `app/chakras/[chakra]/page.tsx` — dynamic pages for each chakra using `CHAKRAS[].id` as the slug.
-- `components/chakras/` — `SantrasCarousel.tsx` (Embla carousel) and `ChakraCard.tsx`.
-- `hooks/useChakraCarousel.ts` — carousel state, autoplay, events.
-- `public/img/SANTRAS/` — chakra images (filename must match `santraImage` in `lib/chakras.ts`).
+The site is a **single-page app** with continuous scroll. All navigation uses anchor links (`#section`). Only two routes exist:
 
-### Target folder structure (after Roadmap Phase 3)
+- `/` - main page with all sections
+- `/api/contact` - form submission endpoint (serverless)
+
+### Sections (in order)
+
+```
+#hero           → Hero (HeroSection.tsx)
+#exposiciones   → Exposiciones carousel + map (ExposicionesSection.tsx)
+#santras        → 7 santras sticky scroll animation (SantrasScrollSection.tsx)
+#arte-ritual    → Arte Ritual section (ArteRitualSection.tsx)
+#creador        → About the artist (AboutSection.tsx)
+#contacto       → Contact/commissions form (ContactSection.tsx)
+```
+
+### Key data files
+
+- `lib/chakras.ts` - 7 chakra/santra entries (CHAKRAS[]). Source of truth for santra data.
+- `lib/exposiciones-data.ts` - exposiciones data (activas + pasadas).
+- `lib/animations.ts` - reusable Anime.js presets.
+- `lib/config.ts` - ENV variables, SEO defaults, routes.
+- `lib/types.ts` - shared TypeScript types.
+
+### Folder structure
 
 ```
 app/
-  (marketing)/          # Route group — landing and public pages
-  chakras/[chakra]/     # Dynamic chakra pages (no changes)
-  api/contact/          # API Route for commissions form (Phase 6)
+  (marketing)/
+    page.tsx              # Main page - 6 sections only
+  api/
+    contact/
+      route.ts            # Resend email handler (no changes needed)
+  layout.tsx
+  globals.css
 
 components/
-  landing/              # HeroSection, PortfolioGrid, AboutSection, ContactSection
-  chakras/              # SantrasCarousel, ChakraCard (no changes)
-  shared/               # Navbar, Footer, layout wrappers
-  ui/                   # shadcn/ui components (do not touch)
+  landing/
+    HeroSection.tsx
+    ExposicionesSection.tsx   # NUEVO
+    ExposicionCarrusel.tsx    # NUEVO
+    ExposicionMapa.tsx        # NUEVO
+    SantrasScrollSection.tsx  # NUEVO
+    ArteRitualSection.tsx     # NUEVO
+    AboutSection.tsx
+    ContactSection.tsx
+  shared/
+    Navbar.tsx            # Anchor links + IntersectionObserver active state
+    StructuredData.tsx    # JSON-LD schema.org (SEO)
+  ui/                     # shadcn/ui - do not touch
 
 lib/
-  animations.ts         # Reusable anime.js presets (Phase 4)
-  chakras.ts            # Unchanged
-  config.ts             # Clean up auth flags (Phase 1)
-  types.ts              # Unchanged
+  chakras.ts
+  exposiciones-data.ts    # NUEVO
+  animations.ts
+  config.ts
+  types.ts
 
 public/
-  img/SANTRAS/          # Chakra images (unchanged)
-  img/portfolio/        # Artwork images for landing (Phase 3)
+  img/
+    SANTRAS/              # Santra images (filename must match santraImage in chakras.ts)
+    exposiciones/         # Expo photos (already present)
+    arte-ritual/          # Arte ritual images
+    iconos/               # Navbar icons
 ```
 
-## Roadmap
+## Roadmap - Scroll-Only Redesign
 
-Work through phases in order. Each phase has a clear scope — do not mix phases.
+Work through phases in order. Each phase has a clear scope - do not mix phases.
 
-### Phase 1 — Remove login system ✅ START HERE
-The auth system was never completed. `/api/login` and `/api/verify-code` endpoints do not exist. The inline editing system uses `localStorage` with no real backend. This is dead code that adds confusion and bundle weight.
+### FASE 1 - Limpieza de rutas y archivos obsoletos ✅ COMPLETADA
 
-**Delete these files entirely:**
-- `components/AdminAuth.tsx`
-- `components/SimpleAuth.tsx`
-- `components/EditableText.tsx`
-- `hooks/useAuth.ts`
-- `hooks/useSimpleEdit.ts`
+- Deleted: `app/santras/`, `app/arte-ritual/`, `app/chakras/`, `app/galeria/`
+- Deleted: `components/landing/GaleriaButton.tsx`, `TwoColumns.tsx`, `AnimatedTextSection.tsx`, `PortfolioGrid.tsx`, `AnimatedTiles.tsx`
+- Deleted: `app/animated-sections.css`
+- Updated `next.config.ts` redirects: `/santras` → `/#santras`, `/arte-ritual` → `/#arte-ritual`, `/chakras/*` → `/#santras`
+- Cleaned `app/(marketing)/page.tsx`
 
-**Then:**
-- Remove all imports and usages of the above across the project
-- Clean up `ENABLE_AUTH` flag in `lib/config.ts`
-- Remove SMTP/auth-related variables from `.env.example`
-- Verify `npm run build` passes with no errors
+### FASE 2 - Nueva Navbar con anchor links
 
-### Phase 2 — Rename 'Madera' → 'Arte Ritual'
-Confirmed: this is a simple rename of the existing Madera entry in the chakra system. No new content or architecture needed.
+Replace the 3-icon route navbar with a 6-anchor navbar with smooth scroll and IntersectionObserver active state.
 
-- Update `id`, `label`, and `slug` in `lib/chakras.ts`
-- Update metadata in `app/chakras/[chakra]/page.tsx`
-- Add redirect `/chakras/madera` → `/chakras/arte-ritual` in `next.config`
-- Check for any hardcoded references in `ChakraCard` and `SantrasCarousel`
-- Update image filename in `public/img/SANTRAS/` if it changes (done by Pedro)
+| Icono | Label | Href |
+| ----- | ----- | ---- |
+| 🏠 | Home | `#hero` |
+| 🖼️ | Exposiciones | `#exposiciones` |
+| 🌸 | Santras | `#santras` |
+| 🌀 | Arte Ritual | `#arte-ritual` |
+| 👤 | El Creador | `#creador` |
+| ✉️ | Contacto | `#contacto` |
 
-### Phase 3 — Reorganize folder structure
-Apply the target folder structure described above in the Architecture section.
+- Use `<a href="#section">` - NOT `next/link`
+- Active state via `IntersectionObserver` - highlight the visible section's icon
+- Keep the pill/translucent floating style
+- Add `scroll-behavior: smooth` to `html` in globals.css
 
-- Create `app/(marketing)/` route group and move the main page
-- Create `components/landing/` with base structure
-- Create `components/shared/` and move Navbar/Footer
-- Create `public/img/portfolio/` for artwork images
-- Update all affected imports
-- Verify `npm run build` after reorganization
+### FASE 3 - Sección Exposiciones (Carrusel + Mapa + Info)
 
-### Phase 4 — Integrate Anime.js
-Install and set up Anime.js before building the landing components so animations are available during development.
+Full exposiciones section: active expo with description, OpenStreetMap iframe, Anime.js carousel. Past expos in a compact grid below.
 
-```bash
-npm install animejs
-npm install --save-dev @types/animejs
+**New files:**
+
+- `lib/exposiciones-data.ts` - Exposicion type + data array
+- `components/landing/ExposicionMapa.tsx` - iframe OpenStreetMap (no API key needed)
+- `components/landing/ExposicionCarrusel.tsx` - Anime.js autoplay carousel + dots + arrows
+- `components/landing/ExposicionesSection.tsx` - full section container
+
+**Layout (active expo):** 2 columns (description | map) + full-width carousel below. Past expos: compact grid, shown only if `activa: false` entries exist.
+
+**Exposicion type:**
+
+```ts
+type Exposicion = {
+  id: string; titulo: string; descripcion: string;
+  lugar: string; direccion: string;
+  fechaInicio: string; fechaFin: string; activa: boolean;
+  lat: number; lng: number;
+  imagenes: { src: string; alt: string }[];
+};
 ```
 
-- Create `lib/animations.ts` with reusable presets
-- Create `hooks/useScrollAnime.ts` — IntersectionObserver + anime.js for scroll-triggered animations
-- All components using anime.js must be `'use client'`
-- Always respect `prefers-reduced-motion` in every animated component
-- Run Lighthouse mobile performance test after integration
+**Current expo data:**
 
-**Planned animation uses:**
-- Hero: staggered entrance for title and subtitle
-- Portfolio grid: fade-in + translateY on scroll into viewport
-- Chakra carousel: scale + opacity transitions
-- Contact section: smooth entrance on scroll
+- id: `'arte-intruso-santras-2026'`
+- lugar: `'Centro de Humanidades de La Cabrera - Comunidad de Madrid'`
+- fechas: `2026-03-06` → `2026-03-08`
+- lat/lng: `40.8573, -3.6087`
+- List actual images with `ls public/img/exposiciones/` before writing the data file
 
-### Phase 5 — Redesign landing page
-The landing is the heart of the site. Artwork is the absolute protagonist. The commission CTA must be unmistakable.
+### FASE 4 - Sección Santras con animación sticky on-scroll
 
-**Design principles:**
-- Portfolio-first: artwork grid is the first thing visitors see after the hero
-- Palette based on existing chakra gradients in `globals.css`
-- Mixed typography: expressive serif for headings, clean sans for body
-- Organic/textured backgrounds — no flat generic backgrounds
-- Mobile-first, Vercel Edge optimized
-- Target feeling: mystical · spiritual · colorful · organic / natural
+The most complex section. 7 santras appear one by one as the user scrolls. The section occupies `700vh`. An inner container is `position: sticky; top: 0; height: 100vh`.
 
-**Landing section structure:**
-1. **Hero** — Sanas name + artistic tagline + hero artwork image. Anime.js entrance animation.
-2. **Portfolio Grid** — Artwork gallery with image, title, associated chakra. Use `next/image` with WebP and lazy load. Images are ready.
-3. **Chakras** — Visual access to the 7 chakra carousel/pages (including Arte Ritual).
-4. **About Sanas** — Brief philosophy and story. Photo pending from Pedro.
-5. **Contact / Commissions** — Form connected to API Route. CTA: "Encarga tu obra".
+**New file:** `components/landing/SantrasScrollSection.tsx`
 
-**Pending before starting this phase:**
-- Agree on typography with Sanas (1 serif + 1 sans — this defines the visual identity)
-- Receive Pedro's photo for the About section
+**Layout per frame:** Left column = text (santra number, name, mantra, descripcion). Right column = image sliding in from the right (Anime.js translateX + opacity).
 
-### Phase 6 — Commission form (API Route + Resend)
-A single file `app/api/contact/route.ts` acts as a Vercel serverless function. Receives form data and sends an email to Pedro via Resend.
+**Scroll logic:** `window.addEventListener('scroll', handler, { passive: true })`. Calculate `progress = scrolled / (height - vh)`, then `activeIndex = Math.floor(progress * 7)`. On index change: animate out previous frame, animate in new frame.
 
-**Stack:**
-- API Route: `app/api/contact/route.ts` — Next.js App Router, TypeScript
-- Validation: `zod` (already included via shadcn/ui)
-- Email: `@resend/node` SDK
+**Animations:**
 
-```bash
-npm install resend
+- Text: `translateX: [-30, 0], opacity: [0, 1]` (600ms easeOutCubic)
+- Image: `translateX: [80, 0], opacity: [0, 1]` (700ms easeOutExpo, delay 150ms)
+- Background: dynamic gradient per active santra (CSS transition)
+- Side indicator: 7 colored dots, active one scales up + fills with santra color
+
+**New fields needed in santra data (add to `lib/chakras.ts` or create `lib/santras-data.ts`):**
+
+```ts
+descripcion: string;   // 2-3 sentence explanation
+bgGradient: string;    // e.g. "linear-gradient(135deg, #2d1515, #4a1010)"
+color: string;         // hex color for the side indicator dot
 ```
 
-**Form fields:**
-- Full name (required)
-- Email (required)
-- Phone / WhatsApp (optional)
-- Description of desired artwork (required)
+**Mobile:** stack flex-col (text above, image below).
 
-**Environment variables required:**
+### FASE 5 - Sección Arte Ritual
+
+**New file:** `components/landing/ArteRitualSection.tsx`
+
+- `id="arte-ritual"` on the section element
+- Title: **"Arte Ritual"** in `<h2>`
+- Descriptive text (2-3 paragraphs about ritual art philosophy)
+- Grid of arte ritual works: image + title card
+- Entry animation: `opacity: 0 → 1` + `translateY: 40 → 0` on IntersectionObserver
+- Images from `public/img/arte-ritual/` - list directory before coding
+
+### FASE 6 - Sección El Creador
+
+Add `id="creador"` to `AboutSection.tsx` root `<section>`. Adjust spacing only if needed. No content changes.
+
+### FASE 7 - Sección Contacto
+
+Add `id="contacto"` to `ContactSection.tsx` root `<section>`. No functional changes.
+
+### FASE 8 - Reensamblar page.tsx
+
+Rewrite `app/(marketing)/page.tsx` with all 6 sections:
+
+```tsx
+<main>
+  <HeroSection />
+  <ExposicionesSection />
+  <SantrasScrollSection />
+  <ArteRitualSection />
+  <AboutSection />
+  <ContactSection />
+</main>
 ```
-RESEND_API_KEY=re_xxxxxxxxxxxx
-CONTACT_EMAIL=pedro@yosoysanas.com
-```
 
-Add both to `.env.local` for development and to Vercel Dashboard → Settings → Environment Variables for production.
+Remove `<Navbar />` from page.tsx - it belongs in `layout.tsx`.
 
-**Setup steps:**
-1. Create account at resend.com
-2. Verify domain `yosoysanas.com` (DNS record, one-time setup)
-3. Generate API key
-4. Implement `route.ts` with zod validation + `resend.emails.send()`
-5. Connect `ContactSection` component to the API Route with fetch + error handling
-6. End-to-end test: form submission → email received in Pedro's inbox
+### FASE 9 - SEO
+
+- Update `metadata` in `app/layout.tsx` with full keywords (Santras, Arte Ritual, Madera Sanadora, Pedro Manuel Lapuente...)
+- Create `components/shared/StructuredData.tsx` with JSON-LD (Person, VisualArtwork, ExhibitionEvent, WebSite)
+- Create `app/sitemap.ts` and `app/robots.ts`
+- Create OG image `public/img/og-image.jpg` (1200×630px)
+- Ensure keywords appear in `<h1>`, `<h2>`, `<h3>` in rendered DOM
+- Add descriptive `alt` text to all images following pattern:
+  `"MULADHARA - El Santra de la Raíz. Chakra raíz. Acuarela sobre lienzo por Sanas"`
 
 ## Important conventions
 
-- To add/edit a chakra: update `lib/chakras.ts`, add image to `public/img/SANTRAS/`, and update `app/chakras/[chakra]/page.tsx` metadata if needed.
-- Chakra gradient CSS variables are defined in `app/globals.css` (e.g., `--chakra-root-gradient`).
-- Do NOT add `/api/login` or `/api/verify-code` — these were part of the old auth system and have been intentionally removed.
-- Respect client/server boundary: files with `"use client"` cannot import server-only code.
-- All animated components must use `"use client"` and respect `prefers-reduced-motion`.
-- Use `next/image` for all artwork images — automatic WebP conversion and lazy loading.
+- **Anchor navigation only** - use `<a href="#section">` not `next/link` for in-page scroll.
+- **No new routes** - the site is single-page. Do not create new `app/` route folders.
+- **Anime.js is the animation library** - do not install Framer Motion or GSAP.
+- **All animated components must be `"use client"`** and respect `prefers-reduced-motion`.
+- **Use `next/image`** for all artwork images - automatic WebP and lazy loading.
+- **Do NOT touch `components/ui/`** - shadcn/ui components.
+- **Santras terminology** - artwork pieces are called **Santras** (not "chakras"). Correct: "santra del corazón". Wrong: "chakra del corazón".
+- **Do NOT add `/api/login` or `/api/verify-code`** - old auth system, intentionally removed.
 - Commit style: conventional commits with emoji prefix (`✨ feat(...)`, `🐛 fix(...)`, `♻️ refactor(...)`).
+- Chakra/santra gradient CSS variables defined in `app/globals.css`.

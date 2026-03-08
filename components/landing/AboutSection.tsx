@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { useScrollAnime } from '@/hooks/useScrollAnime';
 import { sectionEntrance } from '@/lib/animations';
 
@@ -11,7 +12,7 @@ const bioText = [
 
   'De profesión principal bombero forestal, ha podido atender también otra de sus grandes pasiones: el cuidado y la protección de los bienes naturales y humanos. Su vocación le permite poner al servicio de los demás sus altas cualidades y su extensa experiencia en esta noble y exigente labor.',
 
-  'Para Pedro —o SANAS—, reconocerse siempre como un ser humano más, que manifiesta sus talentos en armonía con la existencia consciente y creativa, es una bendición.',
+  'Para Pedro -o SANAS-, reconocerse siempre como un ser humano más, que manifiesta sus talentos en armonía con la existencia consciente y creativa, es una bendición.',
 
   'Hoy, todo ello representa su contribución más valiosa a la Vida.',
 ];
@@ -21,6 +22,7 @@ export default function AboutSection() {
 
   return (
     <section
+      id="creador"
       ref={sectionRef}
       style={{
         background: 'white',
@@ -31,33 +33,30 @@ export default function AboutSection() {
       <div
         className="max-w-5xl mx-auto flex flex-col md:flex-row gap-10 items-start"
       >
-        {/* Photo placeholder */}
+        {/* Photo */}
         <div className="flex-shrink-0 flex flex-col items-center w-full md:w-auto">
           <div
-            className="rounded-2xl flex flex-col items-center justify-center"
+            className="rounded-2xl overflow-hidden"
             style={{
               width: 'clamp(220px, 30vw, 320px)',
               aspectRatio: '1 / 1',
-              background: 'var(--chakra-crown-gradient)',
               boxShadow: '0 8px 32px rgba(125, 24, 204, 0.3)',
+              position: 'relative',
             }}
           >
-            <span
-              style={{
-                fontFamily: 'Gaya, sans-serif',
-                fontSize: 'clamp(4rem, 10vw, 7rem)',
-                color: 'white',
-                lineHeight: 1,
-              }}
-            >
-              S
-            </span>
+            <Image
+              src="/img/portfolio/sanas-pedro.jpeg"
+              alt="Pedro Manuel Lapuente Feliu (Sanas) - Artista visual"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 80vw, 320px"
+            />
           </div>
           <p
             className="mt-3 text-sm text-center"
             style={{ color: '#8B00FF', letterSpacing: '0.1em', fontFamily: 'Gaya, sans-serif' }}
           >
-            SANAS · Próximamente
+            Pedro Manuel Lapuente Feliu · SANAS
           </p>
         </div>
 

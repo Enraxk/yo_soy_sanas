@@ -16,7 +16,7 @@ const contactSchema = z.object({
     .max(2000),
 });
 
-// ── Resend client (lazy — only instantiated on first request) ──────────────
+// ── Resend client (lazy - only instantiated on first request) ──────────────
 function getResend() {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) throw new Error('RESEND_API_KEY no configurada');
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
       from: 'Sanas <noreply@noreply.yosoysanas.com>',
       to: contactEmail,
       replyTo: email,
-      subject: `Nueva encomienda de obra — ${nombre}`,
+      subject: `Nueva encomienda de obra - ${nombre}`,
       html: `
         <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 32px; background: #fafafa; border-radius: 12px;">
           <h1 style="color: #7d18cc; font-size: 1.6rem; margin-bottom: 8px;">

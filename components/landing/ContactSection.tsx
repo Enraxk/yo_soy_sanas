@@ -50,6 +50,7 @@ export default function ContactSection() {
 
   return (
     <section
+      id="contacto"
       ref={sectionRef}
       style={{
         background: 'var(--chakra-crown-gradient)',

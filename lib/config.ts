@@ -42,31 +42,36 @@ export const APP_CONFIG: AppConfig = {
  * Configuración SEO por defecto
  */
 export const DEFAULT_SEO = {
-  title: `${APP_CONFIG.siteName} - Galería de Chakras y Meditación`,
-  description: APP_CONFIG.description,
+  title: 'Yo Soy Sanas - Santras, Arte Ritual y Chakras Sanadores | Pedro Manuel Lapuente Feliu',
+  description:
+    'Serie Santras: siete obras pictóricas sobre los chakras por Pedro Manuel Lapuente (Sanas). ' +
+    'Arte ritual, geometría sagrada y meditación visual. Obra única, acuarela sobre lienzo.',
   keywords: [
-    'chakras',
-    'meditación',
-    'espiritualidad',
-    'santras',
-    'mindfulness',
-    'bienestar',
-    'yoga',
-    'sanación',
-    'energía',
-    'autoconocimiento'
+    'Santras',
+    'arte ritual',
+    'chakras sanadores',
+    'madera sanadora',
+    'Pedro Manuel Lapuente',
+    'Sanas artista',
+    'arte espiritual Madrid',
+    'acuarela chakras',
+    'geometría sagrada',
+    'arte meditación',
+    'yantras arte contemporáneo',
+    'obra única chakras',
+    'yosoysanas',
   ],
   openGraph: {
     type: 'website',
     locale: 'es_ES',
     url: ENV.BASE_URL,
-    site_name: APP_CONFIG.siteName,
+    site_name: 'Yo Soy Sanas',
     images: [
       {
-        url: `${ENV.BASE_URL}/og-image.jpg`,
+        url: `${ENV.BASE_URL}/img/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: APP_CONFIG.siteName,
+        alt: 'Santras - Serie de chakras por Sanas',
       },
     ],
   },

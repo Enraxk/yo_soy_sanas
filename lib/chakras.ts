@@ -9,6 +9,7 @@ export interface ChakraInfo {
   sanskrit: string;
   color: string;
   gradient: string;
+  bgGradient: string;   // dark background gradient for SantrasScrollSection
   element: string;
   mantra: string;
   location: string;
@@ -28,6 +29,7 @@ export const CHAKRAS: ChakraInfo[] = [
     sanskrit: 'Muladhara',
     color: '#FF0000',
     gradient: 'var(--chakra-root-gradient)',
+    bgGradient: 'linear-gradient(135deg, #2d0000 0%, #5a1010 100%)',
     element: 'Tierra',
     mantra: 'LAM',
     location: 'Base de la columna vertebral',
@@ -46,6 +48,7 @@ export const CHAKRAS: ChakraInfo[] = [
     sanskrit: 'Svadhisthana',
     color: '#FF7F00',
     gradient: 'var(--chakra-sacral-gradient)',
+    bgGradient: 'linear-gradient(135deg, #2d1200 0%, #5a2a00 100%)',
     element: 'Agua',
     mantra: 'VAM',
     location: 'Bajo el ombligo',
@@ -64,6 +67,7 @@ export const CHAKRAS: ChakraInfo[] = [
     sanskrit: 'Manipura',
     color: '#FFFF00',
     gradient: 'var(--chakra-solar-gradient)',
+    bgGradient: 'linear-gradient(135deg, #2d2d00 0%, #5a5000 100%)',
     element: 'Fuego',
     mantra: 'RAM',
     location: 'Estómago',
@@ -81,6 +85,7 @@ export const CHAKRAS: ChakraInfo[] = [
     sanskrit: 'Anahata',
     color: '#00FF00',
     gradient: 'var(--chakra-heart-gradient)',
+    bgGradient: 'linear-gradient(135deg, #002d00 0%, #0a4a0a 100%)',
     element: 'Aire',
     mantra: 'YAM',
     location: 'Centro del pecho',
@@ -99,6 +104,7 @@ export const CHAKRAS: ChakraInfo[] = [
     sanskrit: 'Vishuddha',
     color: '#00BFFF',
     gradient: 'var(--chakra-throat-gradient)',
+    bgGradient: 'linear-gradient(135deg, #001a2d 0%, #003d5a 100%)',
     element: 'Éter',
     mantra: 'HAM',
     location: 'Garganta',
@@ -116,6 +122,7 @@ export const CHAKRAS: ChakraInfo[] = [
     sanskrit: 'Ajna',
     color: '#4B0082',
     gradient: 'var(--chakra-third-eye-gradient)',
+    bgGradient: 'linear-gradient(135deg, #0d0025 0%, #1a004a 100%)',
     element: 'Luz',
     mantra: 'OM',
     location: 'Entre las cejas',
@@ -134,6 +141,7 @@ export const CHAKRAS: ChakraInfo[] = [
     sanskrit: 'Sahasrara',
     color: '#8B00FF',
     gradient: 'var(--chakra-crown-gradient)',
+    bgGradient: 'linear-gradient(135deg, #1a002d 0%, #3d0070 100%)',
     element: 'Pensamiento',
     mantra: 'AUM',
     location: 'Coronilla',
