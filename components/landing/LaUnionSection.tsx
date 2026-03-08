@@ -97,6 +97,24 @@ export default function LaUnionSection() {
             <p key={i}>{parrafo}</p>
           ))}
         </div>
+
+        {/* Yantra sagrado */}
+        <div className="mt-10 flex justify-center">
+          <div className="relative w-48 h-48 md:w-64 md:h-64 overflow-hidden ring-1 ring-purple-400/30 shadow-lg shadow-purple-900/40">
+            <Image
+              src="/img/yantra-tripura-bhairavi.jpg"
+              alt="Yantra sagrado - diagrama geometrico del tantra yoga"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 192px, 256px"
+            />
+          </div>
+        </div>
+        <div className="mt-4 text-center">
+          <p className="text-white/80 text-base font-medium">Yantra Tripura Bhairavi</p>
+          <p className="text-teal-400/80 text-base font-medium">Mantra</p>
+          <p className="text-purple-300/70 text-sm italic mt-1">Om Hreem Bhairavi Kalaum Hreem Svaha</p>
+        </div>
       </div>
 
       {/* Sección Bija Mantras */}
