@@ -170,6 +170,42 @@ export default function ArteRitualSection() {
           </p>
         </div>
 
+        {/* Enebro Sanador */}
+        <div className="max-w-3xl mx-auto text-center mb-20 space-y-5 border border-white/10 rounded-2xl p-8 bg-white/5">
+          <h3 className="aritual-reveal text-2xl font-semibold text-white tracking-wide">Enebro Sanador</h3>
+          <p className="aritual-reveal text-white/60 text-sm italic">Piezas exclusivas y unicas SANAS.</p>
+          <p className="aritual-reveal text-white/75 leading-relaxed">
+            SANAS es un artista terapeuta que transforma la muerte en sanadora belleza.
+            A consecuencia de su trabajo como Bombero Forestal, SANAS tiene acceso a materiales nobles
+            procedentes del trabajo preventivo inherente a su labor contra incendios.
+          </p>
+          <p className="aritual-reveal text-white/70 leading-relaxed">
+            La madera que se extrae de las areas cortafuegos son recuperadas y transformadas en piezas
+            artisticas unicas. Ademas del valor estetico que tienen estas piezas, hay que saber y sentir
+            que son herramientas terapeuticas de sanacion.
+          </p>
+          <p className="aritual-reveal text-white/70 leading-relaxed">
+            Pues en ellas confluyen la energia de la propia materia con la consagracion intencionada que
+            realiza SANAS en ellas. Asi esta Sagrada energia contenida en la materia tiene la capacidad
+            y el poder de otorgar una funcion psicomagica para el Ser que la recibe.
+          </p>
+          <p className="aritual-reveal text-white/75 leading-relaxed">
+            Madera de <strong className="text-white/90">Juniperus sp. (Enebro)</strong> esta puesta al
+            servicio Sagrado de sanacion en sus multiples formas y funciones. Solo SANAS es poseedor de
+            los conocimientos esotericos que dan continuidad a la energia vital de esta materia y que
+            ayuda a la proteccion sanadora de su cuidador.
+          </p>
+          <p className="aritual-reveal text-white/70 leading-relaxed">
+            GAIA es la dadora y SANAS conduce la energia recibida a todos los seres que necesitan
+            beneficiarse de su poder terapeutico. Arte y sanacion dentro de piezas artisticas unicas
+            y excepcionales.
+          </p>
+          <p className="aritual-reveal text-white/80 font-medium leading-relaxed">
+            Recibe su energia para tu cuidado.
+          </p>
+          <p className="aritual-reveal text-white/60 text-sm tracking-widest uppercase">SANAS</p>
+        </div>
+
         {/* Grid de obras */}
         <div ref={gridRef}>
           {/* Fila principal: Arte Ritual I y II */}
