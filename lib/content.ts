@@ -53,7 +53,7 @@ export const ABOUT_SANAS = {
 export const BIO = {
   heading: "El Artista, el Ser",
   paragraphs: [
-    "Pedro Manuel Lapuente Feliu es la persona que da vida a SANAS.",
+    "Pedro Feliü es la persona que da vida a SANAS.",
 
     "Es un hombre maduro y experimentado en la universidad cotidiana de la Vida, un autodidacta pleno que, a sus cincuenta y un años, conserva la mirada y el ánimo esencial con los que dio sus primeros pasos por las tierras madrileñas donde nació y creció. De origen humilde y obrero, se ha forjado a sí mismo con esfuerzo y determinación. Su espíritu y temperamento libertario han sido decisivos para que hoy su espiritualidad se manifieste en todas sus tareas y empeños vitales.",
 

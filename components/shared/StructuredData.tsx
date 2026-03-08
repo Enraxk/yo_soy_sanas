@@ -5,7 +5,7 @@ export function StructuredData() {
       {
         "@type": "Person",
         "@id": "https://yosoysanas.com/#sanas",
-        name: "Pedro Manuel Lapuente Feliu",
+        name: "Pedro Feliü",
         alternateName: "Sanas",
         description:
           "Artista visual autodidacta (Madrid, 1973). Su práctica se sitúa en la " +
@@ -34,7 +34,7 @@ export function StructuredData() {
       },
       {
         "@type": "ExhibitionEvent",
-        name: "Arte Intruso: Santras, por Pedro M. Lapuente (Sanas)",
+        name: "Arte Intruso: Santras, por Pedro Feliü (Sanas)",
         description:
           "Exposición de la serie Santras en el Centro de Humanidades de La Cabrera. " +
           "Siete obras pictóricas sobre los chakras principales como campos simbólicos " +
@@ -66,7 +66,7 @@ export function StructuredData() {
         url: "https://yosoysanas.com",
         name: "Yo Soy Sanas",
         description:
-          "Santras, Arte Ritual y Chakras Sanadores - Pedro Manuel Lapuente (Sanas)",
+          "Santras, Arte Ritual y Chakras Sanadores - Pedro Feliü (Sanas)",
         inLanguage: "es-ES",
         publisher: { "@id": "https://yosoysanas.com/#sanas" },
       },

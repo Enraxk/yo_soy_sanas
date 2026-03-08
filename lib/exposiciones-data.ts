@@ -41,7 +41,7 @@ export const exposiciones: Exposicion[] = [
       { src: "/img/exposiciones/expo6.jpeg", alt: "Arte Intruso: Santras - Santras de chakras en la sala" },
       { src: "/img/exposiciones/expo7.jpeg", alt: "Arte Intruso: Santras - Detalle de acuarela sobre lienzo" },
       { src: "/img/exposiciones/expo8.jpeg", alt: "Arte Intruso: Santras - Vista panorámica de la sala" },
-      { src: "/img/exposiciones/expo9.jpeg", alt: "Arte Intruso: Santras - Pedro Manuel Lapuente (Sanas) con su obra" },
+      { src: "/img/exposiciones/expo9.jpeg", alt: "Arte Intruso: Santras - Pedro Feliü (Sanas) con su obra" },
     ],
   },
 ];

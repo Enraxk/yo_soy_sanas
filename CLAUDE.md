@@ -218,9 +218,48 @@ Rewrite `app/(marketing)/page.tsx` with all 6 sections:
 
 Remove `<Navbar />` from page.tsx - it belongs in `layout.tsx`.
 
+---
+
+## Roadmap V2 — Adiciones y Retoques
+
+### V2-FASE 1 — Nueva sección "La Unión" ✅ COMPLETADA
+
+- Creado `components/landing/LaUnionSection.tsx` con `id="la-union"`
+- Insertado en `page.tsx` entre `<SantrasScrollSection />` y `<ArteRitualSection />`
+- Texto placeholder en el componente — **TODO: Pedro debe proporcionar texto final**
+- Imagen temporal: `/img/SANTRAS/SANTRAS.jpeg` — **TODO: subir `/img/santras/la-union.jpg`**
+
+### V2-FASE 2 — Fix Arte Ritual: Panel de Sentidos ✅ COMPLETADA
+
+- "Arte Ritual III" renombrado a "Panel de Sentidos" con `esPanel: true`
+- Layout: 2 obras en fila principal (2 cols) + Panel centrado debajo con descripción
+- Helper `ObraCard` extraído como componente interno
+
+### V2-FASE 3 — Nueva sección "Otras Obras" ✅ COMPLETADA
+
+- Creado `lib/otras-obras-data.ts` con tipo `OtraObra` y placeholders
+- Creado `components/landing/OtrasObrasSection.tsx` con grid 3→2→1 cols + stagger Anime.js
+- Insertado en `page.tsx` entre `<ArteRitualSection />` y `<AboutSection />`
+- Añadido item "Otras Obras" (`#otras-obras`) en `Navbar.tsx`
+- **TODO: crear carpeta `public/img/otras-obras/` y añadir imágenes reales**
+
+### V2-FASE 4 — Retoques menores ✅ COMPLETADA
+
+- Tagline Hero: "Obra única" → "Obra Pictórica"
+- Links "Explora mis creaciones": `/santras` y `/arte-ritual` → `#santras` y `#arte-ritual` con smooth scroll
+- Eliminado `import Link from 'next/link'` de HeroSection
+
+### V2-FASE 5 — El Creador: imágenes flotantes ✅ COMPLETADA (estructura)
+
+- Añadido contenedor de fotos flotantes en `AboutSection.tsx`
+- Dos divs con rotación (-6° y +4°), borde blanco, sombra, animación `easeOutBack`
+- Placeholders visuales activos
+- **TODO: subir `public/img/creador/foto-nueva-1.jpg` y `foto-nueva-2.jpg`**
+- **TODO: reemplazar los divs placeholder por `<Image>` cuando las fotos estén listas**
+
 ### FASE 9 - SEO
 
-- Update `metadata` in `app/layout.tsx` with full keywords (Santras, Arte Ritual, Madera Sanadora, Pedro Manuel Lapuente...)
+- Update `metadata` in `app/layout.tsx` with full keywords (Santras, Arte Ritual, Madera Sanadora, Pedro Feliü...)
 - Create `components/shared/StructuredData.tsx` with JSON-LD (Person, VisualArtwork, ExhibitionEvent, WebSite)
 - Create `app/sitemap.ts` and `app/robots.ts`
 - Create OG image `public/img/og-image.jpg` (1200×630px)
@@ -239,4 +278,5 @@ Remove `<Navbar />` from page.tsx - it belongs in `layout.tsx`.
 - **Santras terminology** - artwork pieces are called **Santras** (not "chakras"). Correct: "santra del corazón". Wrong: "chakra del corazón".
 - **Do NOT add `/api/login` or `/api/verify-code`** - old auth system, intentionally removed.
 - Commit style: conventional commits with emoji prefix (`✨ feat(...)`, `🐛 fix(...)`, `♻️ refactor(...)`).
+- **No em dashes (—)** — never use the `—` character in UI text, copy, or code strings. Use a regular hyphen `-` or a colon `:` instead, unless explicitly requested.
 - Chakra/santra gradient CSS variables defined in `app/globals.css`.

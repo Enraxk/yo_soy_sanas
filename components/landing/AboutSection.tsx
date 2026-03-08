@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useScrollAnime } from '@/hooks/useScrollAnime';
 import { sectionEntrance } from '@/lib/animations';
+import { animate, stagger } from 'animejs';
 
 const bioText = [
-  'Pedro Manuel Lapuente Feliu es la persona que da vida a SANAS.',
+  'Pedro Feliü es la persona que da vida a SANAS.',
 
   'Es un hombre maduro y experimentado en la universidad cotidiana de la Vida, un autodidacta pleno que, a sus cincuenta y un años, conserva la mirada y el ánimo esencial con los que dio sus primeros pasos por las tierras madrileñas donde nació y creció. De origen humilde y obrero, se ha forjado a sí mismo con esfuerzo y determinación. Su espíritu y temperamento libertario han sido decisivos para que hoy su espiritualidad se manifieste en todas sus tareas y empeños vitales.',
 
@@ -19,6 +20,42 @@ const bioText = [
 
 export default function AboutSection() {
   const sectionRef = useScrollAnime<HTMLElement>(sectionEntrance, 0.15);
+  const photosRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const container = photosRef.current;
+    if (!section || !container) return;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const photos = container.querySelectorAll<HTMLElement>('.floating-photo');
+    photos.forEach((p) => { p.style.opacity = '0'; });
+
+    if (prefersReduced) {
+      photos.forEach((p) => { p.style.opacity = '1'; });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            animate(Array.from(photos), {
+              opacity: [0, 1],
+              translateY: [30, 0],
+              delay: stagger(200),
+              duration: 800,
+              ease: 'easeOutCubic',
+            });
+          }, 400);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
@@ -46,7 +83,7 @@ export default function AboutSection() {
           >
             <Image
               src="/img/portfolio/sanas-pedro.jpeg"
-              alt="Pedro Manuel Lapuente Feliu (Sanas) - Artista visual"
+              alt="Pedro Feliü (Sanas) - Artista visual"
               fill
               className="object-cover"
               sizes="(max-width: 768px) 80vw, 320px"
@@ -56,7 +93,7 @@ export default function AboutSection() {
             className="mt-3 text-sm text-center"
             style={{ color: '#8B00FF', letterSpacing: '0.1em', fontFamily: 'Gaya, sans-serif' }}
           >
-            Pedro Manuel Lapuente Feliu · SANAS
+            Pedro Feliü · SANAS
           </p>
         </div>
 
@@ -84,6 +121,44 @@ export default function AboutSection() {
             {bioText.map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Fotos flotantes */}
+      <div
+        ref={photosRef}
+        className="relative mt-16 h-64 md:h-80 max-w-5xl mx-auto overflow-visible"
+      >
+        {/* Foto flotante 1 */}
+        <div
+          className="floating-photo absolute left-[5%] top-0 w-40 md:w-56 border-4 border-white shadow-2xl rounded-sm overflow-hidden"
+          style={{ transform: 'rotate(-6deg)', zIndex: 2 }}
+        >
+          <div className="relative aspect-square">
+            <Image
+              src="/img/portfolio/aux1.jpeg"
+              alt="Pedro Feliü - SANAS"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 160px, 224px"
+            />
+          </div>
+        </div>
+
+        {/* Foto flotante 2 */}
+        <div
+          className="floating-photo absolute right-[5%] top-8 w-36 md:w-48 border-4 border-white shadow-2xl rounded-sm overflow-hidden"
+          style={{ transform: 'rotate(4deg)', zIndex: 2 }}
+        >
+          <div className="relative aspect-square">
+            <Image
+              src="/img/portfolio/aux2.jpeg"
+              alt="Pedro Feliü - SANAS"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 144px, 192px"
+            />
           </div>
         </div>
       </div>

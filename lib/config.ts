@@ -42,16 +42,16 @@ export const APP_CONFIG: AppConfig = {
  * Configuración SEO por defecto
  */
 export const DEFAULT_SEO = {
-  title: 'Yo Soy Sanas - Santras, Arte Ritual y Chakras Sanadores | Pedro Manuel Lapuente Feliu',
+  title: 'Yo Soy Sanas - Santras, Arte Ritual y Chakras Sanadores | Pedro Feliü',
   description:
-    'Serie Santras: siete obras pictóricas sobre los chakras por Pedro Manuel Lapuente (Sanas). ' +
+    'Serie Santras: siete obras pictóricas sobre los chakras por Pedro Feliü (Sanas). ' +
     'Arte ritual, geometría sagrada y meditación visual. Obra única, acuarela sobre lienzo.',
   keywords: [
     'Santras',
     'arte ritual',
     'chakras sanadores',
     'madera sanadora',
-    'Pedro Manuel Lapuente',
+    'Pedro Feliü',
     'Sanas artista',
     'arte espiritual Madrid',
     'acuarela chakras',
