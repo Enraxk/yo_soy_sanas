@@ -42,7 +42,7 @@ export const APP_CONFIG: AppConfig = {
  * Configuración SEO por defecto
  */
 export const DEFAULT_SEO = {
-  title: 'Yo Soy Sanas - Santras, Arte Ritual y Chakras Sanadores | Pedro Feliü',
+  title: 'Yo Soy Sanas - Galería de Santras y Arte Ritual',
   description:
     'Serie Santras: siete obras pictóricas sobre los chakras por Pedro Feliü (Sanas). ' +
     'Arte ritual, geometría sagrada y meditación visual. Obra única, acuarela sobre lienzo.',
