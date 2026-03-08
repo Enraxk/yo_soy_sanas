@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la /e/Documentos/Eneko/Proyectos/yo_soy_sanas/components/*.tsx)",
+      "Bash(grep -l \"import\\\\|AdminAuth\\\\|SimpleAuth\" /e/Documentos/Eneko/Proyectos/yo_soy_sanas/components/*.tsx)",
+      "Bash(npm run build)",
+      "Bash(npm run lint)",
+      "Bash(mkdir -p \"app/\\(marketing\\)\")",
+      "Bash(mv \"app/page.tsx\" \"app/\\(marketing\\)/page.tsx\")",
+      "Bash(mkdir -p \"components/landing\" \"components/shared\")",
+      "Bash(mv \"components/AnimatedTiles.tsx\" \"components/landing/AnimatedTiles.tsx\")",
+      "Bash(mv \"components/AnimatedTextSection.tsx\" \"components/landing/AnimatedTextSection.tsx\")",
+      "Bash(mv \"components/TwoColumns.tsx\" \"components/landing/TwoColumns.tsx\")",
+      "Bash(mv \"components/GaleriaButton.tsx\" \"components/landing/GaleriaButton.tsx\")",
+      "Bash(mv \"components/ui/Navbar.tsx\" \"components/shared/Navbar.tsx\")",
+      "Bash(rm \"components/AnimatedHeader.tsx\")",
+      "Bash(npm install animejs)",
+      "Bash(node -e \"const p = require\\(''./node_modules/animejs/package.json''\\); console.log\\(p.version, p.types || p.typings || ''no types field''\\)\")",
+      "Bash(python3 -c \":*)"
+    ]
+  }
+}
