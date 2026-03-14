@@ -23,9 +23,12 @@ export const metadata: Metadata = {
   openGraph: DEFAULT_SEO.openGraph,
   twitter: DEFAULT_SEO.twitter,
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
     shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
   metadataBase: new URL(ENV.BASE_URL),
 };
@@ -39,6 +42,7 @@ export default function RootLayout({
     <html lang="es">
       <head>
         <StructuredData />
+        <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
