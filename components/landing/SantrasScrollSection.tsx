@@ -214,6 +214,7 @@ export default function SantrasScrollSection() {
                   alt={`${chakra.sanskrit} - El Santra del ${chakra.element}. Acuarela sobre lienzo por Sanas`}
                   fill
                   className="object-contain drop-shadow-2xl"
+                  style={{ objectPosition: "center center" }}
                   sizes="(max-width: 768px) 80vw, 55vw"
                   priority={i === 0}
                 />
@@ -277,14 +278,25 @@ export default function SantrasScrollSection() {
           aria-label="Navegación de Santras"
         >
           {CHAKRAS.map((chakra, i) => (
-            <div
+            <button
               key={i}
-              className="chakra-side-dot rounded-full border-2 transition-all duration-300"
+              type="button"
+              className="chakra-side-dot rounded-full border-2 transition-all duration-300 cursor-pointer p-0"
               role="listitem"
               title={chakra.sanskrit}
+              aria-label={`Ir a ${chakra.sanskrit}`}
+              onClick={() => {
+                const section = sectionRef.current;
+                if (!section) return;
+                const rect = section.getBoundingClientRect();
+                const sectionTop = window.scrollY + rect.top;
+                const total = rect.height - window.innerHeight;
+                const targetScroll = sectionTop + ((i + 0.5) / CHAKRAS.length) * total;
+                window.scrollTo({ top: targetScroll, behavior: "smooth" });
+              }}
               style={{
-                width: 10,
-                height: 10,
+                width: 14,
+                height: 14,
                 background: i === 0 ? chakra.color : "transparent",
                 borderColor: i === 0 ? chakra.color : "rgba(255,255,255,0.3)",
                 transform: i === 0 ? "scale(1.5)" : "scale(1)",
@@ -308,6 +320,28 @@ export default function SantrasScrollSection() {
               }}
             />
           ))}
+        </div>
+
+        {/* Scroll hint indicator */}
+        <div
+          className="absolute bottom-12 md:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 transition-opacity duration-500 pointer-events-none"
+          style={{ opacity: 1 }}
+        >
+          <p
+            className="text-white/50 text-xs uppercase tracking-widest transition-opacity duration-500"
+            style={{ opacity: activeIndex === 0 ? 1 : 0 }}
+          >
+            Desliza para explorar
+          </p>
+          <svg
+            className="w-5 h-5 text-white/40 animate-bounce"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
         </div>
       </div>
     </section>

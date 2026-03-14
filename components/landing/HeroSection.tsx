@@ -141,16 +141,6 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Scroll indicator */}
-          <div
-            className="text-base md:text-lg text-white text-center flex flex-col items-center"
-            style={{ fontFamily: 'Gaya, sans-serif' }}
-          >
-            Sobre el creador
-            <span className="scroll-arrow mt-1 text-2xl" style={{ color: '#fff', opacity: 0.8 }}>
-              &#x25BC;
-            </span>
-          </div>
         </div>
       </div>
     </section>
