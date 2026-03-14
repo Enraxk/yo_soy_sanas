@@ -87,13 +87,6 @@ export const DEFAULT_SEO = {
  */
 export const ROUTES = {
   HOME: '/',
-  GALERIA: '/galeria',
-  CHAKRAS: '/chakras',
-  COLLECTIONS: '/collections',
-
-  // Dynamic Routes
-  CHAKRA_DETAIL: (chakraId: string) => `/chakras/${chakraId}`,
-  GALERIA_DETAIL: (chakraId: string) => `/galeria/${chakraId}`,
 } as const;
 
 /**
