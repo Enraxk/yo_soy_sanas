@@ -4,6 +4,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { DEFAULT_SEO, ENV } from '@/lib/config';
 import Navbar from '@/components/shared/Navbar';
 import { StructuredData } from '@/components/shared/StructuredData';
+import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 
 const geistSans = Geist({
@@ -51,6 +52,7 @@ export default function RootLayout({
           <Navbar />
           {children}
         </TooltipProvider>
+        <Analytics />
       </body>
     </html>
   );
