@@ -227,7 +227,7 @@ export default function SantrasScrollSection() {
               style={{ opacity: 0 }}
             >
               <span className="block text-xs uppercase tracking-widest mb-2 md:mb-3"
-                style={{ color: chakra.color, opacity: 0.8 }}>
+                style={{ color: chakra.color }}>
                 Santra {i + 1} de {CHAKRAS.length}
               </span>
               <h2
@@ -242,7 +242,7 @@ export default function SantrasScrollSection() {
                 {chakra.sanskrit}
               </h2>
               <p className="text-xs md:text-sm uppercase tracking-wider mb-4 md:mb-6"
-                style={{ color: chakra.color, opacity: 0.85 }}>
+                style={{ color: chakra.color }}>
                 {chakra.element}
               </p>
               {/* Bija mantra destacado */}
@@ -253,18 +253,17 @@ export default function SantrasScrollSection() {
                     fontFamily: "'Gaya', serif",
                     fontSize: "clamp(3rem, 10vw, 6rem)",
                     color: chakra.color,
-                    opacity: 0.9,
                     textShadow: `0 0 40px ${chakra.color}55`,
                   }}
                 >
                   {chakra.mantra}
                 </span>
-                <div className="text-left" style={{ color: chakra.color, opacity: 0.65 }}>
+                <div className="text-left" style={{ color: chakra.color }}>
                   <p className="text-xs uppercase tracking-widest leading-tight">Bija</p>
                   <p className="text-xs uppercase tracking-widest leading-tight">Mantra</p>
                 </div>
               </div>
-              <p className="text-xs md:text-base leading-relaxed text-white/60 max-w-xs md:max-w-sm mx-auto md:mx-0">
+              <p className="text-xs md:text-base leading-relaxed text-white/80 max-w-xs md:max-w-sm mx-auto md:mx-0">
                 {chakra.description.split('\n')[0]}
               </p>
             </div>
@@ -274,7 +273,8 @@ export default function SantrasScrollSection() {
         {/* Side indicator dots */}
         <div
           className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20"
-          role="list"
+          role="tablist"
+          aria-orientation="vertical"
           aria-label="Navegación de Santras"
         >
           {CHAKRAS.map((chakra, i) => (
@@ -282,8 +282,8 @@ export default function SantrasScrollSection() {
               key={i}
               type="button"
               className="chakra-side-dot rounded-full border-2 transition-all duration-300 cursor-pointer p-0"
-              role="listitem"
-              title={chakra.sanskrit}
+              role="tab"
+              aria-selected={i === activeIndex}
               aria-label={`Ir a ${chakra.sanskrit}`}
               onClick={() => {
                 const section = sectionRef.current;

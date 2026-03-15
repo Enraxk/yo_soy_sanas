@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { heroEntrance } from '@/lib/animations';
+import VisitCounter from './VisitCounter';
 
 export default function HeroSection() {
   const titleRef = useRef<HTMLDivElement>(null);
@@ -32,7 +33,6 @@ export default function HeroSection() {
         src="/img/fondo/Fondo.jpeg"
         alt=""
         fill
-        priority
         aria-hidden="true"
         style={{ objectFit: 'cover', objectPosition: 'center', opacity: 1 }}
       />
@@ -68,6 +68,7 @@ export default function HeroSection() {
               width={1280}
               height={400}
               priority
+              sizes="(max-width: 768px) 90vw, 1400px"
               className="w-full h-auto object-contain"
               style={{ display: 'block' }}
             />
@@ -96,18 +97,15 @@ export default function HeroSection() {
 
           <div className="flex flex-row items-end justify-center gap-8 md:gap-24 w-full max-w-xs md:max-w-2xl px-4 md:px-4 mb-6 md:mb-8">
             <div className="flex flex-col items-center">
-              <a
-                href="#santras"
-                onClick={(e) => { e.preventDefault(); document.getElementById('santras')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-              >
+              <a href="#santras">
                 <Image
                   src="/img/iconos/pngchakras.png"
                   alt="Santras"
                   width={224}
                   height={224}
+                  sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, 224px"
                   className="w-24 h-24 sm:w-32 sm:h-32 md:w-56 md:h-56 object-contain cursor-pointer hover:scale-105 transition-transform"
                   style={{ background: 'transparent' }}
-                  priority
                 />
               </a>
               <span
@@ -119,15 +117,13 @@ export default function HeroSection() {
             </div>
 
             <div className="flex flex-col items-center">
-              <a
-                href="#arte-ritual"
-                onClick={(e) => { e.preventDefault(); document.getElementById('arte-ritual')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-              >
+              <a href="#arte-ritual">
                 <Image
                   src="/img/iconos/pngmaderas.png"
                   alt="Artes Rituales"
                   width={224}
                   height={224}
+                  sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, 224px"
                   className="w-24 h-24 sm:w-32 sm:h-32 md:w-56 md:h-56 object-contain cursor-pointer hover:scale-105 transition-transform"
                   style={{ background: 'transparent' }}
                 />
@@ -142,6 +138,11 @@ export default function HeroSection() {
           </div>
 
         </div>
+      </div>
+
+      {/* Visit counter */}
+      <div style={{ position: 'absolute', bottom: '1rem', right: '1.5rem', zIndex: 3 }}>
+        <VisitCounter />
       </div>
     </section>
   );

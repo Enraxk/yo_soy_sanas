@@ -163,7 +163,7 @@ export function ExposicionCarrusel({ imagenes }: { imagenes: Imagen[] }) {
       </div>
 
       {/* Dots */}
-      <div className="flex justify-center gap-2 mt-4" role="tablist" aria-label="Diapositivas">
+      <div className="flex justify-center gap-0 mt-4" role="tablist" aria-label="Diapositivas">
         {imagenes.map((_, i) => (
           <button
             key={i}
@@ -171,13 +171,18 @@ export function ExposicionCarrusel({ imagenes }: { imagenes: Imagen[] }) {
             aria-selected={i === current}
             aria-label={`Ir a imagen ${i + 1}`}
             onClick={() => goTo(i, i > current ? 1 : -1)}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: i === current ? 20 : 8,
-              height: 8,
-              background: i === current ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.3)",
-            }}
-          />
+            className="flex items-center justify-center"
+            style={{ width: 44, height: 44 }}
+          >
+            <span
+              className="rounded-full transition-all duration-300 block"
+              style={{
+                width: i === current ? 20 : 8,
+                height: 8,
+                background: i === current ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.3)",
+              }}
+            />
+          </button>
         ))}
       </div>
     </div>
