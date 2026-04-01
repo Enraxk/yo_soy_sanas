@@ -27,7 +27,7 @@ export const exposiciones: Exposicion[] = [
     direccion: "C/ Real, s/n, 28751 La Cabrera, Madrid",
     fechaInicio: "2026-02-26",
     fechaFin: "2026-03-22",
-    activa: true,
+    activa: false,
     lat: 40.872994,
     lng: -3.605838,
     urlExterno: "https://www.comunidad.madrid/actividades/2026/exposiciones-arte-intruso-santras-pedro-m-lapuente-sanas-1",
