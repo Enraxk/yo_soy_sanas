@@ -34,7 +34,10 @@ function ObraCard({ obra }: { obra: OtraObra }) {
           <h3 className="text-white font-semibold text-lg" style={{ fontFamily: "'Gaya', serif" }}>
             {obra.titulo}
           </h3>
-          {obra.tecnica && <p className="text-white/50 text-sm mt-0.5">{obra.tecnica}</p>}
+          {obra.descripcion && (
+            <p className="text-white/40 text-sm mt-1 italic">{obra.descripcion}</p>
+          )}
+          {obra.tecnica && <p className="text-white/50 text-sm mt-1">{obra.tecnica}</p>}
         </div>
       )}
     </div>
