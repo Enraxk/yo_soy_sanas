@@ -82,7 +82,7 @@ export default function AboutSection() {
             }}
           >
             <Image
-              src="/img/portfolio/sanas-pedro.jpeg"
+              src="/img/portfolio/sanas-pedro2.jpeg"
               alt="Pedro Feliü (Sanas) - Artista visual"
               fill
               className="object-cover"
