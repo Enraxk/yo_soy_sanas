@@ -1,3 +1,14 @@
+/**
+ * @fileoverview Datos de las exposiciones de Sanas: fuente de verdad de la sección `#exposiciones`.
+ * @module lib/exposiciones-data
+ */
+
+/**
+ * Una exposición, activa o pasada.
+ *
+ * Las fechas van en ISO (`AAAA-MM-DD`). `activa` se marca a mano: la página se genera estática y
+ * calcularla por fecha la dejaría congelada en la del build.
+ */
 export type Exposicion = {
   id: string;
   titulo: string;
@@ -11,10 +22,47 @@ export type Exposicion = {
   lng: number;
   urlExterno?: string;
   urlExternoLabel?: string;
+  /** Texto libre de la inauguración, tal como lo da el cartel. */
+  inauguracion?: string;
+  /** Horario de visitas, en texto libre. */
+  horario?: string;
+  /** Entidad colaboradora que figura en el cartel. */
+  colaboracion?: string;
+  /** Cartel oficial; es vertical, por eso no entra en el carrusel 16:9. */
+  cartel?: { src: string; alt: string };
   imagenes: { src: string; alt: string }[];
 };
 
 export const exposiciones: Exposicion[] = [
+  {
+    id: "santras-espacio-ronda-2026",
+    titulo: "Santras",
+    descripcion:
+      "Segunda exposición pública de Pedro Feliü (Sanas). La serie Santras reúne siete obras " +
+      "únicas, una por cada uno de los siete centros energéticos, junto a La Unión, la pieza " +
+      "que las integra. Arte, espiritualidad y naturaleza en una sala de Madrid.",
+    lugar: "Espacio Ronda Madrid",
+    direccion: "Ronda de Segovia, 50, 28005 Madrid (Metro Puerta de Toledo)",
+    fechaInicio: "2026-10-17",
+    fechaFin: "2026-11-03",
+    activa: true,
+    lat: 40.4069018,
+    lng: -3.7130981,
+    inauguracion: "Martes 20 de octubre, 19:30 h",
+    horario: "Lunes a domingo, de 10:00 a 14:00 y de 17:00 a 21:00",
+    colaboracion: "Fundación Peace Dream",
+    cartel: {
+      src: "/img/exposiciones/santras-ronda-cartel.webp",
+      alt: "Cartel de la exposición Santras de Pedro Feliü (Sanas) en Espacio Ronda Madrid, del 17 de octubre al 3 de noviembre de 2026",
+    },
+    imagenes: [
+      { src: "/img/exposiciones/ronda1.jpeg", alt: "Santras en Espacio Ronda: los santras de la raíz, del flujo y del poder interior en la sala" },
+      { src: "/img/exposiciones/ronda2.jpeg", alt: "Santras en Espacio Ronda: el santra del poder interior y el santra del corazón" },
+      { src: "/img/exposiciones/ronda3.jpeg", alt: "Santras en Espacio Ronda: el santra del corazón junto al cartel de la exposición" },
+      { src: "/img/exposiciones/ronda4.jpeg", alt: "Santras en Espacio Ronda: los santras de la voz, de la visión y de la unidad" },
+      { src: "/img/exposiciones/ronda5.jpeg", alt: "Santras en Espacio Ronda: La Unión, la obra que integra los siete Santras" },
+    ],
+  },
   {
     id: "arte-intruso-santras-2026",
     titulo: "Arte Intruso: Santras",
@@ -46,10 +94,12 @@ export const exposiciones: Exposicion[] = [
   },
 ];
 
+/** Devuelve las exposiciones marcadas como activas, en el orden del array. */
 export function getExposicionesActivas(): Exposicion[] {
   return exposiciones.filter((e) => e.activa);
 }
 
+/** Devuelve las exposiciones ya cerradas, en el orden del array. */
 export function getExposicionesPasadas(): Exposicion[] {
   return exposiciones.filter((e) => !e.activa);
 }

@@ -7,11 +7,19 @@ import { ExposicionCarrusel } from "./ExposicionCarrusel";
 import { ExposicionMapa } from "./ExposicionMapa";
 import Image from "next/image";
 
+/**
+ * Formatea una fecha ISO (`AAAA-MM-DD`) en castellano largo, p. ej. "17 de octubre de 2026".
+ *
+ * Notes:
+ *   Se fija el mediodía UTC: `new Date("2026-10-17")` es la medianoche UTC, y un navegador al
+ *   oeste de Greenwich la pintaba como el día 16.
+ */
 function formatFecha(iso: string): string {
-  return new Date(iso).toLocaleDateString("es-ES", {
+  return new Date(`${iso}T12:00:00Z`).toLocaleDateString("es-ES", {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: "UTC",
   });
 }
 
@@ -132,15 +140,53 @@ export default function ExposicionesSection() {
                 <p className="text-white/70 text-sm leading-relaxed mb-5">
                   {expo.descripcion}
                 </p>
-                <div className="space-y-2 text-sm text-white/60">
-                  <p>
-                    <span className="text-white/40 mr-2">📍</span>
-                    {expo.lugar}
-                  </p>
-                  <p>
-                    <span className="text-white/40 mr-2">📅</span>
-                    {formatFecha(expo.fechaInicio)} - {formatFecha(expo.fechaFin)}
-                  </p>
+                <div className="flex flex-col sm:flex-row gap-6">
+                  <div className="space-y-2 text-sm text-white/60 flex-1">
+                    <p>
+                      <span className="text-white/40 mr-2">📍</span>
+                      {expo.lugar}
+                      <span className="block pl-7 text-white/45">{expo.direccion}</span>
+                    </p>
+                    <p>
+                      <span className="text-white/40 mr-2">📅</span>
+                      {formatFecha(expo.fechaInicio)} - {formatFecha(expo.fechaFin)}
+                    </p>
+                    {expo.inauguracion && (
+                      <p>
+                        <span className="text-white/40 mr-2">✨</span>
+                        Inauguración: {expo.inauguracion}
+                      </p>
+                    )}
+                    {expo.horario && (
+                      <p>
+                        <span className="text-white/40 mr-2">🕒</span>
+                        {expo.horario}
+                      </p>
+                    )}
+                    {expo.colaboracion && (
+                      <p className="text-white/40 text-xs pt-1">
+                        Con la colaboración de {expo.colaboracion}
+                      </p>
+                    )}
+                  </div>
+                  {expo.cartel && (
+                    <a
+                      href={expo.cartel.src}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block shrink-0 w-32 sm:w-36 self-start rounded-lg overflow-hidden border border-white/10 hover:border-white/30 transition-colors"
+                      aria-label="Ver el cartel de la exposición a tamaño completo"
+                    >
+                      <Image
+                        src={expo.cartel.src}
+                        alt={expo.cartel.alt}
+                        width={1131}
+                        height={1600}
+                        className="w-full h-auto"
+                        sizes="144px"
+                      />
+                    </a>
+                  )}
                 </div>
                 {expo.urlExterno && (
                   <a
@@ -149,7 +195,7 @@ export default function ExposicionesSection() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 mt-5 text-xs text-white/50 hover:text-white/90 transition-colors underline underline-offset-4"
                   >
-                    {expo.urlExternoLabel ?? "Ver informacion oficial"}
+                    {expo.urlExternoLabel ?? "Ver información oficial"}
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>

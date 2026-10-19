@@ -34,6 +34,31 @@ export function StructuredData() {
       },
       {
         "@type": "ExhibitionEvent",
+        name: "Santras, por Pedro Feliü (Sanas)",
+        description:
+          "Exposición de la serie Santras en Espacio Ronda Madrid: siete obras únicas, una por " +
+          "cada centro energético, y La Unión. Inauguración el 20 de octubre a las 19:30.",
+        startDate: "2026-10-17",
+        endDate: "2026-11-03",
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        eventStatus: "https://schema.org/EventScheduled",
+        image: "https://yosoysanas.com/img/exposiciones/santras-ronda-cartel.webp",
+        location: {
+          "@type": "Place",
+          name: "Espacio Ronda Madrid",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Ronda de Segovia, 50",
+            addressLocality: "Madrid",
+            postalCode: "28005",
+            addressRegion: "Madrid",
+            addressCountry: "ES",
+          },
+        },
+        performer: { "@id": "https://yosoysanas.com/#sanas" },
+      },
+      {
+        "@type": "ExhibitionEvent",
         name: "Arte Intruso: Santras, por Pedro Feliü (Sanas)",
         description:
           "Exposición de la serie Santras en el Centro de Humanidades de La Cabrera. " +
