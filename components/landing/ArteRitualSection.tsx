@@ -6,6 +6,9 @@
  * El título y las tarjetas entran con fundido y subida al hacer scroll (Anime.js, `outCubic`).
  * Con reduced-motion no se ocultan ni se animan: el estado oculto lo pone el efecto en JS, solo
  * cuando va a animar.
+ *
+ * El zoom al pasar el ratón va con `motion-safe:` (`motion-safe:group-hover:scale-105`): con
+ * reduced-motion no hay zoom (fase 1a, 19/10/2026, `tests/motion-safe.spec.ts`).
  */
 "use client";
 
@@ -58,7 +61,7 @@ function ObraCard({ obra }: { obra: (typeof ARTE_RITUAL_OBRAS)[number] }) {
           src={obra.imagen}
           alt={obra.alt}
           fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          className="object-cover transition-transform duration-700 motion-safe:group-hover:scale-105"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
@@ -240,7 +243,7 @@ export default function ArteRitualSection() {
                       src={panel.imagen}
                       alt={panel.alt}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 motion-safe:group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, 384px"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
@@ -273,7 +276,7 @@ export default function ArteRitualSection() {
                         src={extra.imagen}
                         alt={extra.alt}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="object-cover transition-transform duration-700 motion-safe:group-hover:scale-105"
                         sizes="(max-width: 640px) 100vw, 384px"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
@@ -301,7 +304,7 @@ export default function ArteRitualSection() {
           </p>
           <a
             href="#contacto"
-            className="inline-block px-8 py-3 rounded-full text-white text-sm font-medium transition-all duration-300 hover:scale-105"
+            className="inline-block px-8 py-3 rounded-full text-white text-sm font-medium transition-all duration-300 motion-safe:hover:scale-105"
             style={{
               background: "linear-gradient(135deg, #7d18cc, #8B00FF)",
               boxShadow: "0 4px 20px rgba(139, 0, 255, 0.3)",

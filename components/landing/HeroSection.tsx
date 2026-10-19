@@ -6,6 +6,8 @@
  * ⚠ El estado inicial oculto va en la clase `motion-safe:opacity-0`, NUNCA en
  * `style={{ opacity: 0 }}`: la animación que lo revela se salta con reduced-motion y, con el estilo
  * en línea, la sección se quedaba en blanco (corregido el 19/10/2026, `tests/reduced-motion.spec.ts`).
+ *
+ * El zoom de los dos iconos al pasar el ratón va con `motion-safe:hover:scale-105`.
  */
 'use client';
 
@@ -119,7 +121,7 @@ export default function HeroSection() {
                   width={224}
                   height={224}
                   sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, 224px"
-                  className="w-24 h-24 sm:w-32 sm:h-32 md:w-56 md:h-56 object-contain cursor-pointer hover:scale-105 transition-transform"
+                  className="w-24 h-24 sm:w-32 sm:h-32 md:w-56 md:h-56 object-contain cursor-pointer motion-safe:hover:scale-105 transition-transform"
                   style={{ background: 'transparent' }}
                 />
               </a>
@@ -139,7 +141,7 @@ export default function HeroSection() {
                   width={224}
                   height={224}
                   sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, 224px"
-                  className="w-24 h-24 sm:w-32 sm:h-32 md:w-56 md:h-56 object-contain cursor-pointer hover:scale-105 transition-transform"
+                  className="w-24 h-24 sm:w-32 sm:h-32 md:w-56 md:h-56 object-contain cursor-pointer motion-safe:hover:scale-105 transition-transform"
                   style={{ background: 'transparent' }}
                 />
               </a>

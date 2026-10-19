@@ -1,3 +1,9 @@
+/*
+ * Estilos globales de yosoysanas.com: Tailwind v4, tokens de shadcn y utilidades de las secciones.
+ *
+ * Reduced-motion: las animaciones y el scroll suave de aquí se apagan con
+ * `prefers-reduced-motion: reduce` (ver `.bg-fade-layer` y el `scroll-behavior` de `html`).
+ */
 @import "tailwindcss";
 
 
@@ -262,8 +268,11 @@
   }
 }
 
-html {
-  scroll-behavior: smooth;
+/* Scroll suave solo si no se pide reducir el movimiento (fase 1a, 19/10/2026) */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {

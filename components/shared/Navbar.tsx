@@ -1,9 +1,19 @@
+/**
+ * @fileoverview Navbar flotante de iconos con tooltip para saltar entre las secciones.
+ * @module components/shared/Navbar
+ *
+ * @remarks
+ * Solo navegación por anclas: los enlaces son `<a href="#seccion">` y el clic hace el salto a mano
+ * para poder elegir suave o instantáneo según reduced-motion. La sección activa la decide un
+ * `IntersectionObserver` por la mayor proporción visible.
+ */
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Home, Mail, User } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { prefersReducedMotion } from "@/lib/animations";
 
 type NavItem = {
   href: string;
@@ -77,6 +87,13 @@ const NAV_ITEMS: NavItem[] = [
 
 const SECTION_IDS = NAV_ITEMS.map((item) => item.href.replace("#", ""));
 
+/**
+ * Pinta la navbar flotante y marca la sección que ocupa más pantalla.
+ *
+ * @remarks
+ * Al pulsar un icono salta a su sección con `scrollIntoView`. El salto es suave salvo con
+ * reduced-motion, que es instantáneo (fase 1a, 19/10/2026, `tests/motion-safe.spec.ts`).
+ */
 const Navbar = (): React.JSX.Element => {
   const [activeSection, setActiveSection] = useState<string>("hero");
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -127,7 +144,7 @@ const Navbar = (): React.JSX.Element => {
     const id = href.replace("#", "");
     const target = document.getElementById(id);
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.scrollIntoView({ behavior: prefersReducedMotion() ? "instant" : "smooth", block: "start" });
     }
   };
 

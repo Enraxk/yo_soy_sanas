@@ -5,7 +5,8 @@
  * @remarks
  * Los datos salen de `lib/exposiciones-data.ts`. Los bloques `.expo-reveal` y las tarjetas de las
  * pasadas entran con fundido y subida (Anime.js, `outCubic`); con reduced-motion se muestran sin
- * animar, porque el estado oculto solo lo pone el efecto cuando va a animar.
+ * animar, porque el estado oculto solo lo pone el efecto cuando va a animar. El pulso del punto
+ * "En curso" va con `motion-safe:animate-pulse`.
  */
 "use client";
 
@@ -32,6 +33,7 @@ function formatFecha(iso: string): string {
   });
 }
 
+/** Pinta las exposiciones activas y pasadas con sus entradas al hacer scroll. */
 export default function ExposicionesSection() {
   const activas = getExposicionesActivas();
   const pasadas = getExposicionesPasadas();
@@ -131,7 +133,7 @@ export default function ExposicionesSection() {
               {/* Columna izquierda - info */}
               <div className="expo-reveal flex flex-col justify-center">
                 <div className="inline-flex items-center gap-2 mb-4">
-                  <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                  <span className="inline-block w-2 h-2 rounded-full bg-green-400 motion-safe:animate-pulse" />
                   <span className="text-green-400 text-sm font-medium uppercase tracking-wider">
                     En curso
                   </span>

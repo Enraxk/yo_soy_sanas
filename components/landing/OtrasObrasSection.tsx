@@ -5,6 +5,9 @@
  * @remarks
  * Las tarjetas entran escalonadas con fundido y subida (Anime.js, `outCubic`). Con reduced-motion
  * se muestran sin animar.
+ *
+ * El zoom al pasar el ratón va con `motion-safe:` (`motion-safe:group-hover:scale-105`): con
+ * reduced-motion no hay zoom (fase 1a, 19/10/2026, `tests/motion-safe.spec.ts`).
  */
 "use client";
 
@@ -31,7 +34,7 @@ function ObraCard({ obra }: { obra: OtraObra }) {
             src={obra.imagen}
             alt={obra.alt}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             onError={() => setImgError(true)}
           />

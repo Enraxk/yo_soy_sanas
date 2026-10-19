@@ -5,7 +5,9 @@
  * @remarks
  * La sección mide `(n - 1) * 100 + 50` vh y su contenido es `sticky`: el avance del scroll elige
  * el fotograma activo. El que sale se va con `inCubic` y el que entra llega con `outCubic` (texto)
- * y `outExpo` (imagen). Con reduced-motion los fotogramas se cambian sin transición.
+ * y `outExpo` (imagen). Con reduced-motion los fotogramas se cambian sin transición, la flecha
+ * "Desliza para explorar" no rebota (`motion-safe:animate-bounce`) y los puntos laterales saltan
+ * sin scroll suave.
  */
 "use client";
 
@@ -13,7 +15,14 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { animate } from "animejs";
 import { CHAKRAS } from "@/lib/chakras";
+import { prefersReducedMotion } from "@/lib/animations";
 
+/**
+ * Pinta los 7 Santras con scroll fijo y cambia de fotograma según el avance del scroll.
+ *
+ * @remarks
+ * Los puntos laterales llevan al centro del tramo de scroll de cada Santra.
+ */
 export default function SantrasScrollSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
@@ -301,7 +310,7 @@ export default function SantrasScrollSection() {
                 const sectionTop = window.scrollY + rect.top;
                 const total = rect.height - window.innerHeight;
                 const targetScroll = sectionTop + ((i + 0.5) / CHAKRAS.length) * total;
-                window.scrollTo({ top: targetScroll, behavior: "smooth" });
+                window.scrollTo({ top: targetScroll, behavior: prefersReducedMotion() ? "instant" : "smooth" });
               }}
               style={{
                 width: 14,
@@ -343,7 +352,7 @@ export default function SantrasScrollSection() {
             Desliza para explorar
           </p>
           <svg
-            className="w-5 h-5 text-white/40 animate-bounce"
+            className="w-5 h-5 text-white/40 motion-safe:animate-bounce"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
