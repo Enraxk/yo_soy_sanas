@@ -4,7 +4,10 @@
  *
  * @remarks
  * La sección entra con `sectionEntrance` (vía `useScrollAnime`) y las fotos giradas suben
- * escalonadas 400 ms después (Anime.js, `outCubic`).
+ * escalonadas 400 ms después (Anime.js, `outCubic`). El giro de esas fotos vive en el
+ * `transform` en línea y sobrevive a la entrada porque Anime.js lee los transforms en línea antes
+ * de animar; ⚠ con `waapi.animate` o una transición CSS sobre `transform` se perdería
+ * (`tests/fotos-giradas.spec.ts`).
  *
  * ⚠ El estado inicial oculto va en la clase `motion-safe:opacity-0`, NUNCA en
  * `style={{ opacity: 0 }}`: la animación que lo revela se salta con reduced-motion y, con el estilo
