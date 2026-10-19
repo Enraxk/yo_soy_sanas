@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Carrusel de fotos de una exposición, con flechas, puntos y pase automático.
+ * @module components/landing/ExposicionCarrusel
+ *
+ * @remarks
+ * La foto que sale se va con `inCubic` y la que entra llega con `outCubic`, desplazándose 40 px.
+ * Con reduced-motion el cambio es un corte, sin desplazamiento.
+ */
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -45,7 +53,7 @@ export function ExposicionCarrusel({ imagenes }: { imagenes: Imagen[] }) {
         opacity: [1, 0],
         translateX: [0, outX],
         duration: 350,
-        ease: "easeInCubic",
+        ease: "inCubic",
         onComplete: () => {
           currentSlide.style.opacity = "0";
           currentSlide.style.transform = "translateX(0)";
@@ -59,7 +67,7 @@ export function ExposicionCarrusel({ imagenes }: { imagenes: Imagen[] }) {
         opacity: [0, 1],
         translateX: [inX, "0px"],
         duration: 500,
-        ease: "easeOutCubic",
+        ease: "outCubic",
         delay: 100,
         onComplete: () => {
           setCurrent(next);
@@ -106,7 +114,7 @@ export function ExposicionCarrusel({ imagenes }: { imagenes: Imagen[] }) {
             opacity: [0, 1],
             translateY: [30, 0],
             duration: 700,
-            ease: "easeOutCubic",
+            ease: "outCubic",
           });
           observer.disconnect();
         }

@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Sección `#exposiciones`: la exposición activa (info, cartel, mapa, carrusel) y las pasadas.
+ * @module components/landing/ExposicionesSection
+ *
+ * @remarks
+ * Los datos salen de `lib/exposiciones-data.ts`. Los bloques `.expo-reveal` y las tarjetas de las
+ * pasadas entran con fundido y subida (Anime.js, `outCubic`); con reduced-motion se muestran sin
+ * animar, porque el estado oculto solo lo pone el efecto cuando va a animar.
+ */
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -49,7 +58,7 @@ export default function ExposicionesSection() {
             translateY: [30, 0],
             duration: 700,
             delay: stagger(120),
-            ease: "easeOutCubic",
+            ease: "outCubic",
           });
           observer.disconnect();
         }
@@ -82,7 +91,7 @@ export default function ExposicionesSection() {
             translateY: [30, 0],
             duration: 600,
             delay: stagger(100),
-            ease: "easeOutCubic",
+            ease: "outCubic",
           });
           observer.disconnect();
         }

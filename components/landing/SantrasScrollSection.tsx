@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Sección `#santras`: los 7 Santras con scroll fijo, un fotograma por Santra.
+ * @module components/landing/SantrasScrollSection
+ *
+ * @remarks
+ * La sección mide `(n - 1) * 100 + 50` vh y su contenido es `sticky`: el avance del scroll elige
+ * el fotograma activo. El que sale se va con `inCubic` y el que entra llega con `outCubic` (texto)
+ * y `outExpo` (imagen). Con reduced-motion los fotogramas se cambian sin transición.
+ */
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -86,7 +95,7 @@ export default function SantrasScrollSection() {
           animate(prevFrame, {
             opacity: [1, 0],
             duration: 350,
-            ease: "easeInCubic",
+            ease: "inCubic",
             onComplete: () => { prevFrame.style.opacity = "0"; },
           });
           const prevImg = prevFrame.querySelector<HTMLElement>(".santra-image-wrapper");
@@ -96,14 +105,14 @@ export default function SantrasScrollSection() {
                 translateY: [0, "30px"],
                 opacity: [1, 0],
                 duration: 350,
-                ease: "easeInCubic",
+                ease: "inCubic",
               });
             } else {
               animate(prevImg, {
                 translateX: [0, newIndex > prev ? "-40px" : "40px"],
                 opacity: [1, 0],
                 duration: 350,
-                ease: "easeInCubic",
+                ease: "inCubic",
               });
             }
           }
@@ -116,7 +125,7 @@ export default function SantrasScrollSection() {
         animate(nextFrame, {
           opacity: [0, 1],
           duration: 600,
-          ease: "easeOutCubic",
+          ease: "outCubic",
         });
 
         const nextText = nextFrame.querySelector<HTMLElement>(".santra-text");
@@ -126,14 +135,14 @@ export default function SantrasScrollSection() {
               translateY: ["40px", "0px"],
               opacity: [0, 1],
               duration: 600,
-              ease: "easeOutCubic",
+              ease: "outCubic",
             });
           } else {
             animate(nextText, {
               translateX: ["-30px", "0px"],
               opacity: [0, 1],
               duration: 600,
-              ease: "easeOutCubic",
+              ease: "outCubic",
             });
           }
         }
@@ -146,7 +155,7 @@ export default function SantrasScrollSection() {
               opacity: [0, 1],
               duration: 700,
               delay: 100,
-              ease: "easeOutExpo",
+              ease: "outExpo",
             });
           } else {
             animate(nextImg, {
@@ -154,7 +163,7 @@ export default function SantrasScrollSection() {
               opacity: [0, 1],
               duration: 700,
               delay: 150,
-              ease: "easeOutExpo",
+              ease: "outExpo",
             });
           }
         }

@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Sección `#otras-obras`: rejilla de obras sueltas leída de `lib/otras-obras-data.ts`.
+ * @module components/landing/OtrasObrasSection
+ *
+ * @remarks
+ * Las tarjetas entran escalonadas con fundido y subida (Anime.js, `outCubic`). Con reduced-motion
+ * se muestran sin animar.
+ */
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -44,6 +52,7 @@ function ObraCard({ obra }: { obra: OtraObra }) {
   );
 }
 
+/** Pinta la rejilla de Otras Obras con su entrada escalonada al hacer scroll. */
 export default function OtrasObrasSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -75,7 +84,7 @@ export default function OtrasObrasSection() {
             translateY: [40, 0],
             delay: stagger(100),
             duration: 600,
-            ease: "easeOutCubic",
+            ease: "outCubic",
           });
           observer.disconnect();
         }

@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Sección `#arte-ritual`: introducción, el bloque "Enebro Sanador" y la rejilla de obras.
+ * @module components/landing/ArteRitualSection
+ *
+ * @remarks
+ * El título y las tarjetas entran con fundido y subida al hacer scroll (Anime.js, `outCubic`).
+ * Con reduced-motion no se ocultan ni se animan: el estado oculto lo pone el efecto en JS, solo
+ * cuando va a animar.
+ */
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -64,6 +73,7 @@ function ObraCard({ obra }: { obra: (typeof ARTE_RITUAL_OBRAS)[number] }) {
   );
 }
 
+/** Pinta la sección Arte Ritual con sus entradas al hacer scroll. */
 export default function ArteRitualSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -89,7 +99,7 @@ export default function ArteRitualSection() {
             translateY: [30, 0],
             duration: 700,
             delay: stagger(120),
-            ease: "easeOutCubic",
+            ease: "outCubic",
           });
           observer.disconnect();
         }
@@ -121,7 +131,7 @@ export default function ArteRitualSection() {
             translateY: [40, 0],
             duration: 700,
             delay: stagger(150),
-            ease: "easeOutCubic",
+            ease: "outCubic",
           });
           observer.disconnect();
         }

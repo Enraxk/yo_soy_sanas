@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Sección `#creador`: foto, biografía de Pedro Feliü (Sanas) y dos fotos giradas.
+ * @module components/landing/AboutSection
+ *
+ * @remarks
+ * La sección entra con `sectionEntrance` (vía `useScrollAnime`) y las fotos giradas suben
+ * escalonadas 400 ms después (Anime.js, `outCubic`).
+ */
 'use client';
 
 import React, { useEffect, useRef } from 'react';
@@ -45,7 +53,7 @@ export default function AboutSection() {
               translateY: [30, 0],
               delay: stagger(200),
               duration: 800,
-              ease: 'easeOutCubic',
+              ease: 'outCubic',
             });
           }, 400);
           observer.disconnect();

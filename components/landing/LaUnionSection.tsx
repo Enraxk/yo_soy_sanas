@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Sección `#la-union`: texto de origen de los Santras, yantra, Bija Mantras y la obra La Unión.
+ * @module components/landing/LaUnionSection
+ *
+ * @remarks
+ * Los tres bloques (texto, Bija, obra) entran escalonados al hacer scroll (Anime.js, `outCubic`).
+ */
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -40,7 +47,7 @@ export default function LaUnionSection() {
               opacity: [0, 1],
               translateY: [30, 0],
               duration: 700,
-              ease: "easeOutCubic",
+              ease: "outCubic",
             });
           }
           if (bijaRef.current) {
@@ -49,7 +56,7 @@ export default function LaUnionSection() {
               translateY: [20, 0],
               duration: 700,
               delay: 200,
-              ease: "easeOutCubic",
+              ease: "outCubic",
             });
           }
           if (imageRef.current) {
@@ -58,7 +65,7 @@ export default function LaUnionSection() {
               scale: [0.95, 1],
               duration: 800,
               delay: 400,
-              ease: "easeOutCubic",
+              ease: "outCubic",
             });
           }
           observer.disconnect();
