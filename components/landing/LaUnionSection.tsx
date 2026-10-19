@@ -4,6 +4,10 @@
  *
  * @remarks
  * Los tres bloques (texto, Bija, obra) entran escalonados al hacer scroll (Anime.js, `outCubic`).
+ *
+ * ⚠ El estado inicial oculto va en la clase `motion-safe:opacity-0`, NUNCA en
+ * `style={{ opacity: 0 }}`: la animación que lo revela se salta con reduced-motion y, con el estilo
+ * en línea, la sección se quedaba en blanco (corregido el 19/10/2026, `tests/reduced-motion.spec.ts`).
  */
 "use client";
 
@@ -27,6 +31,7 @@ const BIJA_MANTRAS = [
   { numero: 7, chakra: "Corona - Sahasrara",     mantra: "OM",  color: "#8B00FF", significado: "Conexión espiritual." },
 ];
 
+/** Pinta La Unión y anima la entrada de sus tres bloques al asomar la sección. */
 export default function LaUnionSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -87,8 +92,7 @@ export default function LaUnionSection() {
       {/* Bloque de texto principal */}
       <div
         ref={textRef}
-        className="max-w-3xl mx-auto text-center mb-16"
-        style={{ opacity: 0 }}
+        className="max-w-3xl mx-auto text-center mb-16 motion-safe:opacity-0"
       >
         <span className="text-sm uppercase tracking-widest text-purple-400 mb-4 block">
           La serie completa
@@ -127,8 +131,7 @@ export default function LaUnionSection() {
       {/* Sección Bija Mantras */}
       <div
         ref={bijaRef}
-        className="max-w-4xl mx-auto mb-20"
-        style={{ opacity: 0 }}
+        className="max-w-4xl mx-auto mb-20 motion-safe:opacity-0"
       >
         <div className="text-center mb-10">
           <span className="text-sm uppercase tracking-widest text-purple-400 mb-3 block">
@@ -182,7 +185,7 @@ export default function LaUnionSection() {
       </div>
 
       {/* Imagen de la obra "La Unión" */}
-      <div ref={imageRef} className="max-w-2xl mx-auto" style={{ opacity: 0 }}>
+      <div ref={imageRef} className="max-w-2xl mx-auto motion-safe:opacity-0">
         <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-white/5">
           {/* TODO: sustituir por la imagen real cuando el artista la proporcione */}
           <Image

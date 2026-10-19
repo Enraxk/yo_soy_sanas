@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Sección `#contacto`: formulario "Encarga tu obra".
+ * @module components/landing/ContactSection
+ *
+ * @remarks
+ * ⚠ El estado inicial oculto va en la clase `motion-safe:opacity-0`, NUNCA en
+ * `style={{ opacity: 0 }}`: la animación que lo revela se salta con reduced-motion y, con el estilo
+ * en línea, la sección se quedaba en blanco (corregido el 19/10/2026, `tests/reduced-motion.spec.ts`).
+ */
 'use client';
 
 import React, { useState } from 'react';
@@ -6,6 +15,12 @@ import { sectionEntrance } from '@/lib/animations';
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
 
+/**
+ * Pinta el formulario de encargo y gestiona su envío a `/api/contact` (idle, enviando, éxito, error).
+ *
+ * @remarks
+ * La sección entra con `sectionEntrance` (vía `useScrollAnime`) al asomar un 15 %.
+ */
 export default function ContactSection() {
   const sectionRef = useScrollAnime<HTMLElement>(sectionEntrance, 0.15);
 
@@ -52,10 +67,10 @@ export default function ContactSection() {
     <section
       id="contacto"
       ref={sectionRef}
+      className="motion-safe:opacity-0"
       style={{
         background: 'var(--chakra-crown-gradient)',
         padding: '5rem 1rem',
-        opacity: 0,
       }}
     >
       <div className="max-w-2xl mx-auto text-center">

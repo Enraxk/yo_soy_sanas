@@ -7,7 +7,7 @@
  * la página sin desbordar y con la exposición activa a la vista pasa estos tests.
  */
 
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 test.describe("humo", () => {
   test("no hay scroll horizontal", async ({ page }) => {

@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Sección `#hero`: la portada de la página única.
+ * @module components/landing/HeroSection
+ *
+ * @remarks
+ * ⚠ El estado inicial oculto va en la clase `motion-safe:opacity-0`, NUNCA en
+ * `style={{ opacity: 0 }}`: la animación que lo revela se salta con reduced-motion y, con el estilo
+ * en línea, la sección se quedaba en blanco (corregido el 19/10/2026, `tests/reduced-motion.spec.ts`).
+ */
 'use client';
 
 import React, { useEffect, useRef } from 'react';
@@ -5,6 +14,12 @@ import Image from 'next/image';
 import { heroEntrance } from '@/lib/animations';
 import VisitCounter from './VisitCounter';
 
+/**
+ * Pinta la portada: fondo, logo con el lema, accesos a Santras y Arte Ritual y el contador de visitas.
+ *
+ * @remarks
+ * El bloque del logo entra con `heroEntrance` (fundido y subida de 40 px, `outExpo`) al montar.
+ */
 export default function HeroSection() {
   const titleRef = useRef<HTMLDivElement>(null);
 
@@ -59,8 +74,8 @@ export default function HeroSection() {
         <div className="flex flex-col items-center w-full px-4">
           <div
             ref={titleRef}
-            className="relative w-full"
-            style={{ maxWidth: 'clamp(280px, 90vw, 1400px)', opacity: 0 }}
+            className="relative w-full motion-safe:opacity-0"
+            style={{ maxWidth: 'clamp(280px, 90vw, 1400px)' }}
           >
             <Image
               src="/img/fondo/yosoysanas-logo2.jpeg"

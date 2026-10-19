@@ -11,6 +11,10 @@
  * El easing va en la clave `ease` con un nombre del catálogo de v4 (`'outCubic'`, `'outExpo'`).
  * Hasta el 19/10/2026 llevaban la clave `easing` con nombres de v3 (`'easeOutExpo'`): v4 ignora
  * esa clave y aplicaba su curva por defecto, `'out(2)'`. Lo vigila `tests/easing.spec.ts`.
+ *
+ * ⚠ Que el preset no haga nada con reduced-motion NO revela el elemento: si el JSX lo pinta con
+ * `opacity: 0`, se queda invisible. El estado inicial oculto va en la clase `motion-safe:opacity-0`,
+ * que con reduced-motion no aplica (ver `components/landing/HeroSection.tsx`).
  */
 
 import { animate, stagger } from 'animejs';

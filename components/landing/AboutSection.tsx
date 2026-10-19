@@ -5,6 +5,10 @@
  * @remarks
  * La sección entra con `sectionEntrance` (vía `useScrollAnime`) y las fotos giradas suben
  * escalonadas 400 ms después (Anime.js, `outCubic`).
+ *
+ * ⚠ El estado inicial oculto va en la clase `motion-safe:opacity-0`, NUNCA en
+ * `style={{ opacity: 0 }}`: la animación que lo revela se salta con reduced-motion y, con el estilo
+ * en línea, la sección se quedaba en blanco (corregido el 19/10/2026, `tests/reduced-motion.spec.ts`).
  */
 'use client';
 
@@ -26,6 +30,7 @@ const bioText = [
   'Hoy, todo ello representa su contribución más valiosa a la Vida.',
 ];
 
+/** Pinta El creador y anima la entrada de la sección y de sus fotos giradas. */
 export default function AboutSection() {
   const sectionRef = useScrollAnime<HTMLElement>(sectionEntrance, 0.15);
   const photosRef = useRef<HTMLDivElement>(null);
@@ -69,10 +74,10 @@ export default function AboutSection() {
     <section
       id="creador"
       ref={sectionRef}
+      className="motion-safe:opacity-0"
       style={{
         background: 'white',
         padding: '5rem 1rem',
-        opacity: 0,
       }}
     >
       <div
