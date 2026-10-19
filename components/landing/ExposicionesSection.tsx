@@ -205,7 +205,7 @@ export default function ExposicionesSection() {
 
               {/* Columna derecha - mapa */}
               <div className="expo-reveal">
-                <ExposicionMapa lat={expo.lat} lng={expo.lng} lugar={expo.lugar} />
+                <ExposicionMapa lat={expo.lat} lng={expo.lng} lugar={expo.lugar} query={expo.mapQuery} />
               </div>
             </div>
 

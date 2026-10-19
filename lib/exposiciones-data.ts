@@ -20,6 +20,8 @@ export type Exposicion = {
   activa: boolean;
   lat: number;
   lng: number;
+  /** Dirección que busca el mapa; si falta, el mapa usa `lat` y `lng`. */
+  mapQuery?: string;
   urlExterno?: string;
   urlExternoLabel?: string;
   /** Texto libre de la inauguración, tal como lo da el cartel. */
@@ -48,6 +50,7 @@ export const exposiciones: Exposicion[] = [
     activa: true,
     lat: 40.4069018,
     lng: -3.7130981,
+    mapQuery: "Ronda de Segovia, 50, Arganzuela, 28005 Madrid, España",
     inauguracion: "Martes 20 de octubre, 19:30 h",
     horario: "Lunes a domingo, de 10:00 a 14:00 y de 17:00 a 21:00",
     colaboracion: "Fundación Peace Dream",
