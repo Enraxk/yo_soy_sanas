@@ -5,6 +5,11 @@
  * @remarks
  * La foto que sale se va con `inCubic` y la que entra llega con `outCubic`, desplazándose 40 px.
  * Con reduced-motion el cambio es un corte, sin desplazamiento.
+ *
+ * El pase automático (cada 4 s) cumple WCAG 2.2.2 desde el 19/10/2026: lleva un botón de pausar y
+ * reanudar, se para mientras el ratón está encima o el foco del teclado está dentro, se para al
+ * tocarlo en una pantalla táctil, y no arranca solo con reduced-motion. Lo vigila
+ * `tests/carrusel.spec.ts`.
  */
 "use client";
 
@@ -14,13 +19,33 @@ import { animate } from "animejs";
 
 type Imagen = { src: string; alt: string };
 
+const AUTOPLAY_INTERVAL_MS = 4000;
+
+/**
+ * Pinta el carrusel de fotos de una exposición y gobierna su pase automático.
+ *
+ * @remarks
+ * El pase tiene dos capas de pausa. La elección del usuario (`userPlaying`: el botón o un toque)
+ * es un estado y cambia lo que dice el botón. El ratón encima y el foco del teclado dentro son
+ * refs que solo se miran en cada tick: pausan sin pintar nada y el pase sigue al irse.
+ *
+ * El foco solo pausa si es `:focus-visible`, es decir, de teclado. Con el foco de un clic, pulsar
+ * "Reanudar" con el ratón dejaba el pase parado hasta hacer clic fuera.
+ *
+ * Con reduced-motion el pase arranca parado (`userPlaying` vale `null` hasta que el usuario
+ * elige) y el botón permite activarlo a quien lo quiera.
+ */
 export function ExposicionCarrusel({ imagenes }: { imagenes: Imagen[] }) {
   const [current, setCurrent] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [userPlaying, setUserPlaying] = useState<boolean | null>(null);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isPausedRef = useRef(false);
+  const isHoveredRef = useRef(false);
+  const isKeyboardFocusRef = useRef(false);
+  const isPlaying = userPlaying ?? !reducedMotion;
 
   const goTo = useCallback(
     (next: number, direction: 1 | -1 = 1) => {
@@ -86,19 +111,44 @@ export function ExposicionCarrusel({ imagenes }: { imagenes: Imagen[] }) {
     goTo((current - 1 + imagenes.length) % imagenes.length, -1);
   }, [current, goTo, imagenes.length]);
 
-  // Autoplay
+  // Preferencia de reduced-motion, también si cambia con la página abierta
   useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReducedMotion(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
+
+  // Pase automático: ratón encima o foco de teclado dentro lo saltan sin pararlo
+  useEffect(() => {
+    if (!isPlaying) return;
     autoplayRef.current = setInterval(() => {
-      if (!isPausedRef.current) next();
-    }, 4000);
+      if (!isHoveredRef.current && !isKeyboardFocusRef.current) next();
+    }, AUTOPLAY_INTERVAL_MS);
     return () => {
       if (autoplayRef.current) clearInterval(autoplayRef.current);
     };
-  }, [next]);
+  }, [next, isPlaying]);
 
-  // Pause on hover
-  const handleMouseEnter = () => { isPausedRef.current = true; };
-  const handleMouseLeave = () => { isPausedRef.current = false; };
+  const handleMouseEnter = () => { isHoveredRef.current = true; };
+  const handleMouseLeave = () => { isHoveredRef.current = false; };
+
+  const handleFocus = (e: React.FocusEvent<HTMLDivElement>) => {
+    isKeyboardFocusRef.current = e.target.matches(":focus-visible");
+  };
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+      isKeyboardFocusRef.current = false;
+    }
+  };
+
+  // Un toque en la pantalla pausa el pase como el botón; el toque sobre el propio botón lo gestiona su clic
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "touch") return;
+    if ((e.target as Element).closest("[data-autoplay-toggle]")) return;
+    setUserPlaying(false);
+  };
 
   // Entry animation when section enters viewport
   useEffect(() => {
@@ -132,6 +182,9 @@ export function ExposicionCarrusel({ imagenes }: { imagenes: Imagen[] }) {
       className="relative w-full select-none"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onPointerDown={handlePointerDown}
     >
       {/* Slides */}
       <div className="relative w-full overflow-hidden rounded-2xl aspect-[16/9]">
@@ -167,6 +220,17 @@ export function ExposicionCarrusel({ imagenes }: { imagenes: Imagen[] }) {
           className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition-colors"
         >
           ▶
+        </button>
+
+        {/* Pausar / reanudar el pase automático (WCAG 2.2.2) */}
+        <button
+          type="button"
+          data-autoplay-toggle
+          onClick={() => setUserPlaying(!isPlaying)}
+          aria-label={isPlaying ? "Pausar el pase de fotos" : "Reanudar el pase de fotos"}
+          className="absolute right-3 bottom-3 z-10 w-11 h-11 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition-colors"
+        >
+          <span aria-hidden="true">{isPlaying ? "❚❚" : "▶"}</span>
         </button>
       </div>
 
